@@ -1,42 +1,69 @@
-# Projekt: TTC Berkum - Astro Migration
+# TTC Berkum e. V. – Webseite
 
-Dieses Projekt ist eine Migration der bestehenden Joomla-Webseite des TTC Berkum zu **Astro**. Der Fokus liegt auf Performance, Barrierefreiheit und einem modernen, reinen CSS-Design-System.
+Vereinswebsite des TTC Berkum (Peine), migriert von Joomla zu **Astro**. Statisch gebaut, automatisch via **Cloudflare Pages** deployed.
 
-## Projektübersicht
-- **Framework:** Astro (v5+)
-- **Styling:** Reines CSS (Vanilla), Nexus Design System
-- **Content:** Markdown-basierte Content Collections (News)
-- **Deployment:** (Noch offen)
+> **Vollständige Projekt-Doku, alle Zugänge und Setup-Schritte:** [docs/projekt-status.md](docs/projekt-status.md)
 
-## Seitenstruktur (Sitemap)
-- [x] **Startseite** (`/`) - Hero & Übersicht (Real Content)
-- [x] **Aktuelle Saison** (`/aktuelle-saison`) - Platzhalter für Liga-Widgets
-- [x] **Trainingszeiten** (`/trainingszeiten`) - Hallenadresse & Zeiten (Real Content)
-- [x] **News** (`/news`) - Archiv & Einzelansicht (Demo Content)
-- [x] **Über uns** (`/ueber-uns`) - Vorstand mit Kontaktdaten (Real Content)
-- [x] **Kontakt** (`/kontakt`) - Formular & Kontaktdaten (Real Content)
-- [ ] **Impressum** (`/impressum`) - Rechtliches
-- [ ] **Datenschutz** (`/datenschutz`) - Rechtliches
+## Eckdaten
 
-## Technische Hinweise
-- **Dark Mode:** Implementiert als in-memory Variable (kein `localStorage` auf Wunsch des Nutzers). Das Farbschema wird über `data-theme="dark"` am `<html>`-Element gesteuert.
-- **Legacy Links:** Die Migration der alten Joomla-URLs (Aliase) erfolgt in einem späteren Schritt über Astro-Redirects.
-- **Design:** Nutzung von CSS Custom Properties für Farben und ein fluider Type Scale via `clamp()`.
+- **Live:** [ttc-berkum.pages.dev](https://ttc-berkum.pages.dev) (eigene Domain folgt)
+- **Repo:** [github.com/ttcberkum/webseite](https://github.com/ttcberkum/webseite) (Branch: `main`)
+- **Framework:** Astro v5+, statischer Build (`output: 'static'`)
+- **Hosting:** Cloudflare Pages (Account: `ttcberkum@gmail.com`)
+- **Termine:** Google-Kalender per iCal-Feed (Env: `GOOGLE_CALENDAR_ICAL_URL`)
+- **Auto-Deploy:** Cron jede 4 h via GitHub Action `.github/workflows/scheduled-rebuild.yml`
 
-## Status-Tabelle
+## Branding
 
-| Seite | Status | Typ |
-| :--- | :--- | :--- |
-| Startseite | Erledigt | Astro Page |
-| Layout (Base) | Erledigt | Astro Layout |
-| Design System | Erledigt | CSS |
-| News-Archiv | Erledigt | Content Collection |
-| Über uns | Erledigt | Astro Page |
-| Trainingszeiten | Erledigt | Astro Page |
-| Kontakt | Erledigt | Astro Page |
-| Aktuelle Saison | Erledigt | Astro Page |
+- **Primärfarbe:** `#c8102e` (klassisches Vereinsrot, nicht großflächig — nur als Akzent)
+- **Schriften:** **Anton** (Headlines, Display) + **Dosis** (Body)
+- **Logo + Hero-Bild:** Original aus dem alten Joomla-Auftritt unter `public/images/`
+
+## Seitenstruktur
+
+| Pfad | Inhalt |
+| :--- | :--- |
+| `/` | Hero, Highlights, Bild-Slider, Trainingsplan, Aktuelles & Termine |
+| `/aktuelle-saison` | Click-TT/myTischtennis-Links (Verein-ID `1130350`) |
+| `/mitglied-werden` | spg-direkt.de Online-Anmeldungs-iframe |
+| `/trainingszeiten` | Mo/Fr 17:00–22:00 + Sa Kader, Sporthalle Rosenthal |
+| `/termine` | Google-Kalender, gruppiert nach Monat + Archiv-Toggle |
+| `/news` | Markdown Content Collection |
+| `/kelle` | PDF-Archiv der Vereinszeitschrift (`public/pdfs/kellen/`) |
+| `/spielregeln` | Vollständiges Regelwerk (5 Abschnitte) |
+| `/vorgaberechner` | TTR-Vorgaberechner (clientseitig) |
+| `/storchencam` | Live-Bild (60 s Refresh) + 24-Slot-Stunden-Archiv |
+| `/ueber-uns` | Vereinsgeschichte, Vorstand, Slider |
+| `/kontakt` | Kontaktdaten, Anfahrtshinweis |
+| `/impressum`, `/datenschutz` | Rechtliches |
+
+## Technische Konventionen
+
+- **Dark Mode:** in-memory `data-theme="dark"` am `<html>`, kein `localStorage`
+- **Scroll-Reveal:** Klasse `.reveal` + IntersectionObserver im BaseLayout — Animation mit `--delay: <ms>` per Inline-Style
+- **Slider:** wiederverwendbare Komponente `src/components/ImageSlider.astro`
+- **Saison-URL:** automatisch aus Datum berechnet, `src/lib/season.ts`
+- **Termin-Convention:** Titel-Präfix in eckigen Klammern → Kategorie, z. B. `[Punktspiel] …`, `[Event] …`
+
+## Wartung
+
+- **Termine pflegen:** Google-Kalender-App, Anleitung in [docs/termine-pflegen.md](docs/termine-pflegen.md)
+- **News:** Markdown-Datei in `src/content/news/` (Schema: `title`, `date`, `description?`)
+- **Kelle:** PDF nach `public/pdfs/kellen/` (Namens-Schema: `Kelle <Nr> <Jahr>.pdf`)
+- **Sofort-Build auslösen:** GitHub Actions → „Scheduled Rebuild" → „Run workflow"
 
 ## Entwicklungs-Befehle
-- `npm run dev` - Startet den lokalen Dev-Server
-- `npm run build` - Erstellt den Produktions-Build
-- `npm run preview` - Lokale Vorschau des Builds
+
+```bash
+npm install                 # einmalig
+npm run dev                 # localhost:4321
+npm run build               # Produktions-Build → dist/
+npm run preview             # Build-Vorschau
+
+# Mit echtem Kalender-Feed lokal testen:
+GOOGLE_CALENDAR_ICAL_URL="https://calendar.google.com/calendar/ical/.../basic.ics" npm run dev
+```
+
+## Git-Identität für dieses Repo
+
+Lokal konfiguriert auf `TTC Berkum <ttcberkum@gmail.com>`. Andere Repos auf demselben Rechner bleiben unter persönlicher Identität.
