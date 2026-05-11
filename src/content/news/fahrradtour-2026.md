@@ -8,4 +8,4 @@ Am Sonntag, den 14.06.2025 um 10:00 Uhr findet unsere jährliche Fahrradtour sta
 
 **Treffpunkt:** DGH Berkum (Kegelbahn)
 
-Wir freuen uns auf eine rege Teilnahme und einen schönen gemeinsamen Tag!
+Wir freuen uns auf eine rege Teilnahme und einen tollen gemeinsamen Tag!
