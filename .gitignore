@@ -33,3 +33,9 @@ pnpm-debug.log*
 # Windows thumbnail cache
 Thumbs.db
 public/**/Thumbs.db
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
