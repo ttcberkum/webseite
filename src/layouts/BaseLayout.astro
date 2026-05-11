@@ -11,6 +11,7 @@ const { title, description = "Migration der TTC Berkum Webseite zu Astro" } = As
 const navItems = [
   { name: 'Startseite', href: '/' },
   { name: 'Aktuelle Saison', href: '/aktuelle-saison' },
+  { name: 'Mitglied werden', href: '/mitglied-werden' },
   { name: 'Trainingszeiten', href: '/trainingszeiten' },
   { name: 'News', href: '/news' },
   { name: 'Über uns', href: '/ueber-uns' },
@@ -92,6 +93,14 @@ const navItems = [
 						<ul role="list">
 							<li><a href="/impressum">Impressum</a></li>
 							<li><a href="/datenschutz">Datenschutz</a></li>
+						</ul>
+					</div>
+					<div class="footer-links">
+						<h4>Sonstiges</h4>
+						<ul role="list">
+							<li><a href="/spielregeln">Spielregeln</a></li>
+							<li><a href="/vorgaberechner">Vorgaberechner</a></li>
+							<li><a href="/storchencam">Storchencam Berkum</a></li>
 						</ul>
 					</div>
 				</div>
@@ -258,7 +267,7 @@ const navItems = [
 
 	@media (min-width: 768px) {
 		.footer-grid {
-			grid-template-columns: 2fr 1fr 1fr;
+			grid-template-columns: 2fr 1fr 1fr 1fr;
 		}
 	}
 
