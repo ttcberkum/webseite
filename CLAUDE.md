@@ -9,11 +9,12 @@ Dieses Projekt ist eine Migration der bestehenden Joomla-Webseite des TTC Berkum
 - **Deployment:** (Noch offen)
 
 ## Seitenstruktur (Sitemap)
-- [x] **Startseite** (`/`) - Hero & Übersicht
-- [ ] **Über uns** (`/ueber-uns`) - Vereinsgeschichte & Vorstand
-- [ ] **Leistungen** (`/leistungen`) - Trainingszeiten & Angebote
-- [ ] **News** (`/news`) - Archiv der Markdown-Artikel
-- [ ] **Kontakt** (`/kontakt`) - Kontaktformular & Anfahrt
+- [x] **Startseite** (`/`) - Hero & Übersicht (Real Content)
+- [x] **Aktuelle Saison** (`/aktuelle-saison`) - Platzhalter für Liga-Widgets
+- [x] **Trainingszeiten** (`/trainingszeiten`) - Hallenadresse & Zeiten (Real Content)
+- [x] **News** (`/news`) - Archiv & Einzelansicht (Demo Content)
+- [x] **Über uns** (`/ueber-uns`) - Vorstand mit Kontaktdaten (Real Content)
+- [x] **Kontakt** (`/kontakt`) - Formular & Kontaktdaten (Real Content)
 - [ ] **Impressum** (`/impressum`) - Rechtliches
 - [ ] **Datenschutz** (`/datenschutz`) - Rechtliches
 
@@ -29,10 +30,11 @@ Dieses Projekt ist eine Migration der bestehenden Joomla-Webseite des TTC Berkum
 | Startseite | Erledigt | Astro Page |
 | Layout (Base) | Erledigt | Astro Layout |
 | Design System | Erledigt | CSS |
-| News-Archiv | Ausstehend | Content Collection |
-| Über uns | Ausstehend | Astro Page |
-| Leistungen | Ausstehend | Astro Page |
-| Kontakt | Ausstehend | Astro Page |
+| News-Archiv | Erledigt | Content Collection |
+| Über uns | Erledigt | Astro Page |
+| Trainingszeiten | Erledigt | Astro Page |
+| Kontakt | Erledigt | Astro Page |
+| Aktuelle Saison | Erledigt | Astro Page |
 
 ## Entwicklungs-Befehle
 - `npm run dev` - Startet den lokalen Dev-Server
