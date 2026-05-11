@@ -1,0 +1,169 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Kontakt" description="So erreichst du den TTC Berkum.">
+	<div class="page-header section">
+		<div class="container text-center">
+			<span class="badge">Kontakt</span>
+			<h1>Schreib uns eine Nachricht</h1>
+			<p class="lead-text">Wir freuen uns auf deine Anfrage.</p>
+		</div>
+	</div>
+
+	<section class="section pt-0">
+		<div class="container">
+			<div class="contact-grid">
+				<div class="contact-info animate-fade-up">
+					<h2>So findest du uns</h2>
+					<p>Komm gerne einfach zu den Trainingszeiten vorbei oder schreib uns vorab eine E-Mail.</p>
+					
+					<div class="info-blocks">
+						<div class="info-block">
+							<div class="icon">📍</div>
+							<div>
+								<strong>Sporthalle Peine</strong><br/>
+								Pechschwarte 64<br/>
+								31226 Peine
+							</div>
+						</div>
+						<div class="info-block">
+							<div class="icon">✉️</div>
+							<div>
+								<strong>E-Mail</strong><br/>
+								<a href="mailto:ttcberkum@gmail.com">ttcberkum@gmail.com</a>
+							</div>
+						</div>
+						<div class="info-block">
+							<div class="icon">📞</div>
+							<div>
+								<strong>Telefon (1. Vorsitzender)</strong><br/>
+								<a href="tel:+491724350397">+49 172 4350397</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="contact-form-container card animate-fade-up delay-200">
+					<h3>Kontaktformular</h3>
+					<form class="contact-form" action="#" method="POST" onsubmit="event.preventDefault(); alert('Demo-Formular: Nachricht würde jetzt gesendet.');">
+						<div class="form-group">
+							<label for="name">Name</label>
+							<input type="text" id="name" name="name" required placeholder="Dein Name" />
+						</div>
+						<div class="form-group">
+							<label for="email">E-Mail</label>
+							<input type="email" id="email" name="email" required placeholder="deine@email.de" />
+						</div>
+						<div class="form-group">
+							<label for="subject">Betreff</label>
+							<select id="subject" name="subject">
+								<option value="training">Probetraining</option>
+								<option value="mitgliedschaft">Mitgliedschaft</option>
+								<option value="sonstiges">Sonstiges</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="message">Nachricht</label>
+							<textarea id="message" name="message" rows="5" required placeholder="Deine Nachricht an uns..."></textarea>
+						</div>
+						<button type="submit" class="btn btn-primary">Nachricht senden</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.page-header {
+		background: var(--gradient-hero);
+		padding: var(--space-16) 0 var(--space-8);
+		border-bottom: 1px solid var(--color-border);
+		margin-bottom: var(--space-12);
+	}
+	
+	.text-center { text-align: center; }
+	.pt-0 { padding-top: 0; }
+
+	.lead-text {
+		font-size: var(--text-xl);
+		max-width: 600px;
+		margin: 0 auto;
+	}
+
+	.contact-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: var(--space-12);
+	}
+
+	@media (min-width: 992px) {
+		.contact-grid {
+			grid-template-columns: 1fr 1fr;
+			gap: var(--space-16);
+		}
+	}
+
+	.info-blocks {
+		margin-top: var(--space-8);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-6);
+	}
+
+	.info-block {
+		display: flex;
+		gap: var(--space-4);
+		align-items: flex-start;
+	}
+
+	.icon {
+		font-size: 1.5rem;
+		background: var(--color-surface);
+		width: 48px;
+		height: 48px;
+		display: grid;
+		place-items: center;
+		border-radius: 12px;
+		border: 1px solid var(--color-border);
+	}
+
+	.contact-form {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-4);
+		margin-top: var(--space-4);
+	}
+
+	.form-group {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+	}
+
+	label {
+		font-weight: 600;
+		font-size: var(--text-sm);
+	}
+
+	input, select, textarea {
+		padding: var(--space-3);
+		border: 1px solid var(--color-border);
+		border-radius: 8px;
+		background: var(--color-bg);
+		color: var(--color-text);
+		transition: border-color var(--transition-fast);
+	}
+
+	input:focus, select:focus, textarea:focus {
+		outline: none;
+		border-color: var(--color-primary);
+		box-shadow: 0 0 0 2px rgba(1, 105, 111, 0.2);
+	}
+
+	button[type="submit"] {
+		margin-top: var(--space-2);
+		width: 100%;
+	}
+</style>

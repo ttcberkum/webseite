@@ -1,0 +1,298 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = "Migration der TTC Berkum Webseite zu Astro" } = Astro.props;
+
+const navItems = [
+  { name: 'Startseite', href: '/' },
+  { name: 'Aktuelle Saison', href: '/aktuelle-saison' },
+  { name: 'Trainingszeiten', href: '/trainingszeiten' },
+  { name: 'News', href: '/news' },
+  { name: 'Über uns', href: '/ueber-uns' },
+  { name: 'Kontakt', href: '/kontakt' },
+];
+---
+
+<!doctype html>
+<html lang="de">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title} | TTC Berkum</title>
+	</head>
+	<body>
+		<a href="#main-content" class="skip-link">Zum Inhalt springen</a>
+
+		<header class="site-header">
+			<div class="container header-container">
+				<a href="/" class="logo" aria-label="Zur Startseite">
+					<div class="logo-mark">
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</div>
+					<span class="logo-text">TTC Berkum</span>
+				</a>
+
+				<nav class="site-nav">
+					<ul role="list">
+						{navItems.map(item => (
+							<li>
+								<a href={item.href} class={Astro.url.pathname === item.href ? 'active' : ''}>
+									{item.name}
+								</a>
+							</li>
+						))}
+					</ul>
+				</nav>
+
+				<button id="theme-toggle" aria-label="Farbschema umschalten" class="theme-toggle">
+					<svg class="sun" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+					<svg class="moon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+				</button>
+			</div>
+		</header>
+
+		<main id="main-content">
+			<slot />
+		</main>
+
+		<footer class="site-footer">
+			<div class="container">
+				<div class="footer-grid">
+					<div class="footer-brand">
+						<div class="logo">
+							<div class="logo-mark">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								</svg>
+							</div>
+							<span class="logo-text">TTC Berkum</span>
+						</div>
+						<p>Dein Tischtennisverein mit Leidenschaft und Tradition seit 1978.</p>
+					</div>
+					<div class="footer-links">
+						<h4>Schnelllinks</h4>
+						<ul role="list">
+							{navItems.map(item => (
+								<li><a href={item.href}>{item.name}</a></li>
+							))}
+						</ul>
+					</div>
+					<div class="footer-links">
+						<h4>Rechtliches</h4>
+						<ul role="list">
+							<li><a href="/impressum">Impressum</a></li>
+							<li><a href="/datenschutz">Datenschutz</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="footer-bottom">
+					<p>&copy; {new Date().getFullYear()} TTC Berkum. Alle Rechte vorbehalten.</p>
+				</div>
+			</div>
+		</footer>
+
+		<script>
+			// Theme Toggle Logic
+			let theme = 'light';
+			const toggle = document.getElementById('theme-toggle');
+			
+			toggle?.addEventListener('click', () => {
+				theme = theme === 'light' ? 'dark' : 'light';
+				document.documentElement.setAttribute('data-theme', theme);
+			});
+
+			// Header scroll effect
+			const header = document.querySelector('.site-header');
+			window.addEventListener('scroll', () => {
+				if (window.scrollY > 20) {
+					header?.classList.add('scrolled');
+				} else {
+					header?.classList.remove('scrolled');
+				}
+			});
+		</script>
+	</body>
+</html>
+
+<style>
+	.site-header {
+		position: sticky;
+		top: 0;
+		z-index: 50;
+		padding: var(--space-4) 0;
+		background-color: transparent;
+		transition: all var(--transition-normal);
+	}
+
+	.site-header.scrolled {
+		background-color: var(--glass-bg);
+		backdrop-filter: blur(16px);
+		-webkit-backdrop-filter: blur(16px);
+		border-bottom: 1px solid var(--glass-border);
+		padding: var(--space-3) 0;
+		box-shadow: var(--shadow-sm);
+	}
+
+	.header-container {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-4);
+	}
+
+	.logo {
+		display: flex;
+		align-items: center;
+		gap: var(--space-3);
+		text-decoration: none;
+		color: var(--color-text);
+	}
+
+	.logo-mark {
+		display: grid;
+		place-items: center;
+		width: 40px;
+		height: 40px;
+		background: var(--gradient-primary);
+		border-radius: 10px;
+		color: white;
+		box-shadow: 0 4px 12px rgba(1, 105, 111, 0.2);
+	}
+
+	.logo-text {
+		font-weight: 800;
+		font-size: var(--text-lg);
+		letter-spacing: -0.02em;
+	}
+
+	.site-nav {
+		display: none;
+	}
+	
+	@media (min-width: 768px) {
+		.site-nav {
+			display: block;
+			margin: 0 auto;
+		}
+	}
+
+	.site-nav ul {
+		display: flex;
+		gap: var(--space-2);
+		background: var(--color-surface);
+		padding: var(--space-1) var(--space-2);
+		border-radius: 100px;
+		border: 1px solid var(--color-border);
+		box-shadow: var(--shadow-sm);
+	}
+
+	.site-nav a {
+		display: block;
+		padding: var(--space-2) var(--space-4);
+		text-decoration: none;
+		color: var(--color-text-muted);
+		font-weight: 500;
+		font-size: var(--text-sm);
+		border-radius: 100px;
+		transition: all var(--transition-fast);
+	}
+
+	.site-nav a:hover {
+		color: var(--color-text);
+		background: var(--color-surface-hover);
+	}
+
+	.site-nav a.active {
+		background: var(--color-primary);
+		color: white;
+	}
+
+	.theme-toggle {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 50%;
+		width: 40px;
+		height: 40px;
+		cursor: pointer;
+		color: var(--color-text);
+		display: grid;
+		place-items: center;
+		transition: all var(--transition-bounce);
+		box-shadow: var(--shadow-sm);
+	}
+
+	.theme-toggle:hover {
+		transform: rotate(15deg) scale(1.1);
+		border-color: var(--color-primary);
+		color: var(--color-primary);
+	}
+
+	.theme-toggle .moon { display: none; }
+	:global([data-theme="dark"]) .theme-toggle .sun { display: none; }
+	:global([data-theme="dark"]) .theme-toggle .moon { display: block; }
+
+	/* Footer */
+	.site-footer {
+		background-color: var(--color-surface);
+		border-top: 1px solid var(--color-border);
+		padding: var(--space-16) 0 var(--space-8);
+		margin-top: var(--space-24);
+	}
+
+	.footer-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: var(--space-8);
+		margin-bottom: var(--space-12);
+	}
+
+	@media (min-width: 768px) {
+		.footer-grid {
+			grid-template-columns: 2fr 1fr 1fr;
+		}
+	}
+
+	.footer-brand p {
+		margin-top: var(--space-4);
+		max-width: 300px;
+	}
+
+	.footer-links h4 {
+		font-size: var(--text-base);
+		margin-bottom: var(--space-4);
+	}
+
+	.footer-links ul {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+	}
+
+	.footer-links a {
+		text-decoration: none;
+		color: var(--color-text-muted);
+		transition: color var(--transition-fast);
+	}
+
+	.footer-links a:hover {
+		color: var(--color-primary);
+	}
+
+	.footer-bottom {
+		padding-top: var(--space-8);
+		border-top: 1px solid var(--color-border);
+		text-align: center;
+		color: var(--color-text-muted);
+		font-size: var(--text-sm);
+	}
+</style>

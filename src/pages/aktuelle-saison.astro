@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Aktuelle Saison" description="Ergebnisse und Tabellen der aktuellen Saison.">
+	<div class="page-header section">
+		<div class="container text-center">
+			<span class="badge">Saison 2025/2026</span>
+			<h1>Aktuelle Saison</h1>
+			<p class="lead-text">Tabellen, Spielpläne und Bilanzen unserer Mannschaften.</p>
+		</div>
+	</div>
+
+	<section class="section pt-0">
+		<div class="container text-center">
+			<div class="card glass-panel" style="max-width: 600px; margin: 0 auto;">
+				<h2>Hier entstehen die Liga-Inhalte</h2>
+				<p>Die Tabellen und Spielpläne der aktuellen Mannschaften werden in Kürze hier eingebunden (z.B. per myTischtennis-Widget).</p>
+				<div style="margin-top: 2rem;">
+					<a href="/" class="btn btn-primary">Zurück zur Startseite</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.page-header {
+		background: var(--gradient-hero);
+		padding: var(--space-16) 0 var(--space-8);
+		border-bottom: 1px solid var(--color-border);
+		margin-bottom: var(--space-12);
+	}
+	
+	.text-center { text-align: center; }
+	.pt-0 { padding-top: 0; }
+
+	.lead-text {
+		font-size: var(--text-xl);
+		max-width: 600px;
+		margin: 0 auto;
+	}
+</style>

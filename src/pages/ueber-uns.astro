@@ -1,0 +1,232 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Über uns" description="Lerne den TTC Berkum kennen.">
+	<div class="page-header section">
+		<div class="container text-center">
+			<span class="badge">Seit 1978</span>
+			<h1>Unser Verein</h1>
+			<p class="lead-text">Mehr als nur ein Tischtennisverein. Wir sind eine Gemeinschaft.</p>
+		</div>
+	</div>
+
+	<section class="section pt-0">
+		<div class="container">
+			<div class="about-grid">
+				<div class="about-content animate-fade-up">
+					<h2>Unsere Geschichte</h2>
+					<p>Der TTC Berkum wurde 1978 von einer kleinen Gruppe tischtennisbegeisterter Freunde gegründet. Was damals in einer kleinen Schulturnhalle begann, hat sich heute zu einem etablierten Verein im Rhein-Sieg-Kreis entwickelt.</p>
+					<p>Mit viel Engagement unserer Mitglieder konnten wir nicht nur sportliche Erfolge feiern, sondern auch ein reges Vereinsleben aufbauen, das weit über die Plattenkante hinausgeht.</p>
+					
+					<div class="stats-row mt-8">
+						<div class="stat-box">
+							<span class="stat-number">45+</span>
+							<span class="stat-label">Jahre Erfahrung</span>
+						</div>
+						<div class="stat-box">
+							<span class="stat-number">120</span>
+							<span class="stat-label">Aktive Mitglieder</span>
+						</div>
+						<div class="stat-box">
+							<span class="stat-number">6</span>
+							<span class="stat-label">Mannschaften</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="about-visual glass-panel animate-fade-up delay-200">
+					<!-- Abstract Placeholder for Team Image -->
+					<div class="abstract-team-image">
+						<div class="circle c1"></div>
+						<div class="circle c2"></div>
+						<div class="circle c3"></div>
+						<div class="circle c4"></div>
+						<div class="circle c5"></div>
+						<div class="caption">Die 1. Mannschaft (Saison 25/26)</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section bg-surface">
+		<div class="container">
+			<div class="text-center mb-12 animate-fade-up">
+				<h2>Der Vorstand</h2>
+				<p>Die Gesichter hinter dem TTC Berkum</p>
+			</div>
+			
+			<div class="board-grid">
+				<div class="card text-center animate-fade-up delay-100">
+					<div class="avatar">EB</div>
+					<h3>Erik Böker</h3>
+					<p class="role">1. Vorsitzender</p>
+					<a href="mailto:erik.boeker@gmail.com" class="email-link">erik.boeker@gmail.com</a>
+				</div>
+				<div class="card text-center animate-fade-up delay-200">
+					<div class="avatar">PK</div>
+					<h3>Peter Krätzig</h3>
+					<p class="role">2. Vorsitzender</p>
+					<a href="mailto:peter.kraetzig@arcor.de" class="email-link">peter.kraetzig@arcor.de</a>
+				</div>
+				<div class="card text-center animate-fade-up delay-300">
+					<div class="avatar">CD</div>
+					<h3>Christian Dröse</h3>
+					<p class="role">Kassenwart</p>
+					<a href="mailto:christian.droese@arcor.de" class="email-link">christian.droese@arcor.de</a>
+				</div>
+				<div class="card text-center animate-fade-up delay-400">
+					<div class="avatar">CD</div>
+					<h3>Cedric Doppelhammer</h3>
+					<p class="role">Schriftführer</p>
+					<a href="mailto:ceddy.doppelhammer@yahoo.de" class="email-link">ceddy.doppelhammer@yahoo.de</a>
+				</div>
+				<div class="card text-center animate-fade-up delay-500">
+					<div class="avatar">SH</div>
+					<h3>Sascha Henke</h3>
+					<p class="role">Sportwart</p>
+					<a href="mailto:sascha-henke@web.de" class="email-link">sascha-henke@web.de</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.page-header {
+		background: var(--gradient-hero);
+		padding: var(--space-16) 0 var(--space-8);
+		border-bottom: 1px solid var(--color-border);
+		margin-bottom: var(--space-12);
+	}
+	
+	.text-center { text-align: center; }
+	.pt-0 { padding-top: 0; }
+	.mb-12 { margin-bottom: var(--space-12); }
+	.mt-8 { margin-top: var(--space-8); }
+	.bg-surface { background-color: var(--color-surface); }
+
+	.lead-text {
+		font-size: var(--text-xl);
+		max-width: 600px;
+		margin: 0 auto;
+	}
+
+	.about-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: var(--space-12);
+		align-items: center;
+	}
+
+	@media (min-width: 992px) {
+		.about-grid {
+			grid-template-columns: 1fr 1fr;
+			gap: var(--space-16);
+		}
+	}
+
+	.stats-row {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--space-4);
+	}
+
+	.stat-box {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		padding: var(--space-4);
+		border-radius: 12px;
+		text-align: center;
+	}
+
+	.stat-number {
+		display: block;
+		font-size: var(--text-3xl);
+		font-weight: 800;
+		color: var(--color-primary);
+		line-height: 1;
+		margin-bottom: var(--space-2);
+	}
+
+	.stat-label {
+		font-size: var(--text-xs);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		font-weight: 600;
+		color: var(--color-text-muted);
+	}
+
+	.about-visual {
+		padding: var(--space-4);
+		aspect-ratio: 4/3;
+	}
+
+	.abstract-team-image {
+		width: 100%;
+		height: 100%;
+		background: var(--color-surface-hover);
+		border-radius: 16px;
+		position: relative;
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.circle {
+		position: absolute;
+		border-radius: 50%;
+		background: var(--color-primary);
+		opacity: 0.2;
+	}
+
+	.c1 { width: 150px; height: 150px; left: 10%; top: 20%; }
+	.c2 { width: 120px; height: 120px; right: 20%; top: 10%; background: var(--color-accent); }
+	.c3 { width: 200px; height: 200px; bottom: -50px; left: 30%; }
+	.c4 { width: 80px; height: 80px; right: 10%; bottom: 20%; }
+	.c5 { width: 100px; height: 100px; left: 50%; top: 40%; background: var(--color-accent); }
+
+	.caption {
+		position: absolute;
+		bottom: var(--space-4);
+		left: var(--space-4);
+		background: var(--glass-bg);
+		padding: var(--space-2) var(--space-4);
+		border-radius: 100px;
+		font-size: var(--text-sm);
+		font-weight: 600;
+		backdrop-filter: blur(4px);
+	}
+
+	.board-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: var(--space-8);
+	}
+
+	.avatar {
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+		background: var(--gradient-primary);
+		color: white;
+		display: grid;
+		place-items: center;
+		font-size: var(--text-xl);
+		font-weight: 700;
+		margin: 0 auto var(--space-4);
+	}
+
+	.role {
+		color: var(--color-primary);
+		font-weight: 600;
+		margin-bottom: var(--space-2);
+	}
+
+	.email-link {
+		font-size: var(--text-sm);
+		color: var(--color-text-muted);
+	}
+</style>

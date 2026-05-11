@@ -1,0 +1,274 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Willkommen" description="Willkommen auf der neuen Webseite des TTC Berkum.">
+	<section class="hero-section">
+		<div class="hero-bg"></div>
+		<div class="container hero-container">
+			<div class="hero-content animate-fade-up">
+				<span class="badge">Neuer Auftritt 2026</span>
+				<h1 class="hero-title">Tischtennis in <br/>Peine erleben.</h1>
+				<p class="hero-text">
+					TTC Berkum e. V. – Tischtennis mit Action und Teamgeist! 
+					Egal ob Anfänger oder ambitionierter Spieler – bei uns bist du richtig!
+				</p>
+				<div class="hero-actions">
+					<a href="/trainingszeiten" class="btn btn-primary">Kostenloses Schnuppertraining</a>
+					<a href="/ueber-uns" class="btn btn-outline">Verein kennenlernen</a>
+				</div>
+			</div>
+			
+			<div class="hero-visual animate-fade-up delay-200">
+				<div class="glass-panel visual-card">
+					<div class="visual-content">
+						<div class="abstract-shape shape-1"></div>
+						<div class="abstract-shape shape-2"></div>
+						<div class="visual-text">
+							<h3>Trainingszeiten</h3>
+							<ul role="list" class="time-list">
+								<li>
+									<span class="day">Dienstag</span>
+									<span class="time">18:00 - 22:00</span>
+								</li>
+								<li>
+									<span class="day">Freitag</span>
+									<span class="time">18:00 - 22:00</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="features-section section">
+		<div class="container">
+			<div class="section-header animate-fade-up">
+				<h2>Warum TTC Berkum?</h2>
+				<p>Mehr als nur Sport: Punktspiele, Vereinsmeisterschaften, Fahrradtouren, Boßeln und Events.</p>
+			</div>
+			
+			<div class="grid">
+				<div class="card animate-fade-up delay-100">
+					<div class="card-icon">🏓</div>
+					<h3>Für jedes Level</h3>
+					<p>Egal ob Anfänger oder ambitionierter Spieler – bei uns bist du richtig. Jugend & Erwachsene.</p>
+					<a href="/trainingszeiten" class="card-link">Trainingszeiten →</a>
+				</div>
+				<div class="card animate-fade-up delay-200">
+					<div class="card-icon">🏆</div>
+					<h3>Aktiver Ligabetrieb</h3>
+					<p>Training und Wettkämpfe von Kreisklasse bis Bezirksliga. Erfahrene Spieler und Nachwuchstalente.</p>
+					<a href="/aktuelle-saison" class="card-link">Aktuelle Saison →</a>
+				</div>
+				<div class="card animate-fade-up delay-300">
+					<div class="card-icon">🤝</div>
+					<h3>Starke Gemeinschaft</h3>
+					<p>Trainingspartner auf jedem Niveau und ein reges Vereinsleben neben der Platte.</p>
+					<a href="/ueber-uns" class="card-link">Über uns →</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="cta-section section">
+		<div class="container">
+			<div class="cta-box glass-panel">
+				<h2>Bereit für den ersten Aufschlag?</h2>
+				<p>Starte jetzt mit einem kostenlosen Schnuppertraining – Schläger gibt’s in der Halle. Tischtennis verbindet!</p>
+				<a href="/kontakt" class="btn btn-primary">Jetzt Kontakt aufnehmen</a>
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.hero-section {
+		position: relative;
+		padding: var(--space-24) 0 var(--space-32);
+		overflow: hidden;
+	}
+
+	.hero-bg {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: var(--gradient-hero);
+		z-index: -1;
+		border-bottom-left-radius: 50% 10%;
+		border-bottom-right-radius: 50% 10%;
+	}
+
+	.hero-container {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: var(--space-12);
+		align-items: center;
+	}
+
+	@media (min-width: 992px) {
+		.hero-container {
+			grid-template-columns: 1fr 1fr;
+			gap: var(--space-16);
+		}
+	}
+
+	.hero-title {
+		font-size: var(--text-hero);
+		background: var(--gradient-primary);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		color: transparent;
+	}
+
+	.hero-text {
+		font-size: var(--text-lg);
+		max-width: 500px;
+		margin-bottom: var(--space-8);
+	}
+
+	.hero-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-4);
+	}
+
+	.visual-card {
+		position: relative;
+		height: 400px;
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.visual-content {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		padding: var(--space-8);
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+	}
+
+	.abstract-shape {
+		position: absolute;
+		border-radius: 50%;
+		filter: blur(40px);
+		z-index: -1;
+		opacity: 0.6;
+	}
+
+	.shape-1 {
+		top: -20px;
+		right: -20px;
+		width: 200px;
+		height: 200px;
+		background: var(--color-primary);
+	}
+
+	.shape-2 {
+		bottom: 50px;
+		left: -50px;
+		width: 250px;
+		height: 250px;
+		background: var(--color-accent);
+	}
+
+	.visual-text {
+		background: var(--color-surface);
+		padding: var(--space-6);
+		border-radius: 16px;
+		box-shadow: var(--shadow-md);
+	}
+
+	.visual-text h3 {
+		font-size: var(--text-lg);
+		margin-bottom: var(--space-4);
+	}
+
+	.time-list li {
+		display: flex;
+		justify-content: space-between;
+		padding: var(--space-2) 0;
+		border-bottom: 1px solid var(--color-border);
+	}
+	.time-list li:last-child {
+		border-bottom: none;
+	}
+
+	.day {
+		font-weight: 500;
+	}
+
+	.time {
+		color: var(--color-text-muted);
+	}
+
+	.section-header {
+		text-align: center;
+		max-width: 600px;
+		margin: 0 auto var(--space-16);
+	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: var(--space-8);
+	}
+
+	.card-icon {
+		font-size: 3rem;
+		margin-bottom: var(--space-4);
+		background: var(--color-surface-hover);
+		width: 80px;
+		height: 80px;
+		display: grid;
+		place-items: center;
+		border-radius: 20px;
+	}
+
+	.card h3 {
+		margin-bottom: var(--space-3);
+	}
+
+	.card p {
+		flex-grow: 1;
+	}
+
+	.card-link {
+		text-decoration: none;
+		color: var(--color-primary);
+		font-weight: 600;
+		margin-top: var(--space-4);
+		display: inline-flex;
+		align-items: center;
+	}
+
+	.card-link:hover {
+		color: var(--color-primary-light);
+	}
+
+	.cta-box {
+		padding: var(--space-16) var(--space-8);
+		text-align: center;
+		background: var(--gradient-hero);
+		border-radius: 32px;
+	}
+
+	.cta-box h2 {
+		margin-bottom: var(--space-4);
+	}
+
+	.cta-box p {
+		max-width: 500px;
+		margin: 0 auto var(--space-8);
+		font-size: var(--text-lg);
+	}
+</style>
