@@ -1,77 +1,273 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const sections = [
+	{
+		num: '01',
+		title: 'Satz',
+		rules: [
+			'Ein Satz endet, wenn ein Spieler 11 Punkte erzielt hat.',
+			'Bei einem Spielstand von 10:10 geht es in die Satzverlängerung.',
+			'Der Satz wird dann von dem Spieler gewonnen, der zuerst zwei Punkte Vorsprung hat (z. B. 12:10, 13:11).',
+			'Nach jedem Satz wechseln die Spieler die Seiten. Im entscheidenden letzten Satz findet der Seitenwechsel statt, sobald ein Spieler 5 Punkte erzielt hat.',
+		],
+	},
+	{
+		num: '02',
+		title: 'Spiel',
+		rules: [
+			'Im Mannschaftsspielbetrieb gewinnt derjenige das Spiel, der zuerst drei Sätze für sich entscheidet.',
+			'Maximal können also fünf Sätze gespielt werden.',
+			'Bei Turnieren können auch andere Formate, wie zwei oder vier Gewinnsätze, festgelegt werden.',
+		],
+	},
+	{
+		num: '03',
+		title: 'Aufschlag',
+		rules: [
+			'Das Aufschlagrecht wird ausgelost.',
+			'Der Gewinner der Auslosung kann zwischen Aufschlag, Rückschlag oder Seitenwahl entscheiden.',
+			'Der Ball muss zu Beginn frei auf der geöffneten Hand liegen.',
+			'Der Ball muss mindestens 16 cm senkrecht hochgeworfen werden.',
+			'Vor dem Schlag darf der Ball nichts berühren.',
+			'Der Aufschläger muss den Ball so spielen, dass er zuerst auf der eigenen',
+			'und dann auf der gegnerischen Tischhälfte aufspringt.',
+			'Der Ball darf nicht von Körper, Kleidung oder dem Doppelpartner verdeckt sein.',
+			'Ein Netzaufschlag wird wiederholt,',
+			'vorausgesetzt der Aufschlag war ansonsten regelgerecht.',
+			'Berührt der Ball das Netz und geht ins Aus, erhält der Rückschläger einen Punkt.',
+			'Wird der hochgeworfene Ball nicht getroffen, ist es ein Fehler.',
+			'Im Einzel gibt es keine Einschränkungen bezüglich Schlagart oder Aufschlagseite.',
+			'Der Aufschläger muss warten, bis der Gegner bereit ist.',
+			'Jeder Spieler schlägt zweimal auf, bevor das Aufschlagrecht wechselt.',
+			'In der Satzverlängerung (ab 10:10) wird nach jedem Punkt gewechselt.',
+		],
+	},
+	{
+		num: '04',
+		title: 'Ballwechsel',
+		rules: [
+			'Nach dem Aufschlag muss der Ball direkt auf die gegnerische Tischhälfte gespielt werden.',
+			'Der Ball darf nur einmal auf der eigenen Tischhälfte aufspringen.',
+			'Der Ball darf nicht aus der Luft angenommen werden.',
+			'Vor dem Auftreffen auf der Gegnerseite darf der Ball nur Netz oder Netzpfosten berühren.',
+			'Ein Ballwechsel zählt nur, wenn der Ball die gegnerische Spielhälfte (einschließlich Oberkante) trifft.',
+			'Berührt der Ball die Seite des Tisches, ist es ein Fehler.',
+			'Es ist nicht erlaubt, sich während des Schlagens mit der freien Hand aufzustützen.',
+		],
+	},
+	{
+		num: '05',
+		title: 'Besonderheiten beim Doppel',
+		rules: [
+			'Das erste aufschlagende Doppelpaar bestimmt, welcher Partner beginnt.',
+			'Die Rückschläger stellen sich danach auf.',
+			'Bei jedem Aufschlagwechsel wird die Reihenfolge der Spieler geändert.',
+			'Im nächsten Satz entscheidet das zuvor rückschlagende Paar über den Aufschläger.',
+			'Der Aufschlag muss diagonal ausgeführt werden.',
+			'Die Doppelpartner schlagen abwechselnd.',
+			'Im Entscheidungssatz werden beim Seitenwechsel (bei 5 Punkten) auch die Rückschlagreihenfolgen angepasst.',
+			'Wird ein Irrtum beim Wechsel erst nach dem Ballwechsel bemerkt, zählen die gespielten Punkte trotzdem.',
+		],
+	},
+];
+
+const letter = (i: number) => String.fromCharCode(97 + i);
 ---
 
-<BaseLayout title="Spielregeln" description="Die offiziellen Tischtennis-Regeln des DTTB.">
+<BaseLayout title="Spielregeln" description="Regelwerk Tischtennis – die offiziellen Spielregeln für Satz, Spiel, Aufschlag, Ballwechsel und Doppel.">
 	<div class="page-header section">
-		<div class="container text-center">
-			<span class="badge">Wissen</span>
-			<h1>Spielregeln</h1>
-			<p class="lead-text">Alles Wissenswerte über die offiziellen Regeln des Tischtennissports.</p>
+		<div class="container">
+			<span class="badge">Regelwerk</span>
+			<h1>Regelwerk Tischtennis</h1>
+			<p class="lead-text">Die wichtigsten Regeln auf einen Blick – kompakt zusammengefasst für Trainings­einsteiger und Punktspielerinnen.</p>
 		</div>
 	</div>
 
-	<section class="section pt-0">
-		<div class="container">
-			<div class="card glass-panel">
-				<h2>Offizielle DTTB-Regeln</h2>
-				<p>Tischtennis wird nach den offiziellen Regeln des Deutschen Tischtennis-Bundes (DTTB) gespielt. Hier findest du die wichtigsten Grundlagen im Überblick:</p>
-				
-				<div class="rules-grid">
-					<div class="rule-box">
-						<h3>Satz & Spiel</h3>
-						<p>Ein Satz endet, wenn ein Spieler 11 Punkte erreicht hat. Man muss jedoch 2 Punkte Vorsprung haben. Ein Spiel besteht meistens aus 3 oder 4 Gewinnsätzen (Best-of-5 oder Best-of-7).</p>
-					</div>
-					<div class="rule-box">
-						<h3>Der Aufschlag</h3>
-						<p>Der Ball muss beim Aufschlag mindestens 16 cm senkrecht hochgeworfen werden. Er muss erst auf der eigenen, dann auf der gegnerischen Tischhälfte aufspringen.</p>
-					</div>
-					<div class="rule-box">
-						<h3>Seitenwechsel</h3>
-						<p>Nach jedem Satz werden die Seiten gewechselt. Im entscheidenden letzten Satz findet der Seitenwechsel statt, sobald ein Spieler 5 Punkte erreicht hat.</p>
-					</div>
-				</div>
+	<section class="section rules">
+		<div class="container rules-container">
+			<nav class="rules-toc" aria-label="Inhaltsverzeichnis">
+				<p class="toc-label">Inhalt</p>
+				<ul role="list">
+					{sections.map(s => (
+						<li><a href={`#regel-${s.num}`}><span class="toc-num">{s.num}</span> {s.title}</a></li>
+					))}
+				</ul>
+			</nav>
 
-				<div style="margin-top: 3rem; text-align: center;">
-					<a href="https://www.tischtennis.de/spielbetrieb/regeln-satzung.html" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Vollständiges Regelwerk beim DTTB (extern)</a>
-				</div>
+			<div class="rules-content">
+				{sections.map((section, sIdx) => (
+					<article id={`regel-${section.num}`} class={`rule-section animate-fade-up delay-${(sIdx + 1) * 100}`}>
+						<header class="rule-head">
+							<span class="rule-num">{section.num}</span>
+							<h2>{section.title}</h2>
+						</header>
+						<ul role="list" class="rule-list">
+							{section.rules.map((rule, i) => (
+								<li>
+									<span class="rule-letter">{letter(i)})</span>
+									<span class="rule-text">{rule}</span>
+								</li>
+							))}
+						</ul>
+					</article>
+				))}
 			</div>
 		</div>
 	</section>
 </BaseLayout>
 
 <style>
-	.page-header {
-		background: var(--gradient-hero);
-		padding: var(--space-16) 0 var(--space-8);
-		border-bottom: 1px solid var(--color-border);
-		margin-bottom: var(--space-12);
-	}
-	
-	.text-center { text-align: center; }
-	.pt-0 { padding-top: 0; }
-
-	.lead-text {
-		font-size: var(--text-xl);
-		max-width: 600px;
-		margin: 0 auto;
-	}
-
-	.rules-grid {
+	.rules-container {
 		display: grid;
 		grid-template-columns: 1fr;
-		gap: 2rem;
-		margin-top: 2rem;
+		gap: var(--space-12);
 	}
 
-	@media (min-width: 768px) {
-		.rules-grid {
-			grid-template-columns: repeat(3, 1fr);
+	@media (min-width: 992px) {
+		.rules-container {
+			grid-template-columns: 240px 1fr;
+			gap: var(--space-16);
+			align-items: start;
 		}
 	}
 
-	.rule-box h3 {
+	/* Inhaltsverzeichnis links */
+	.rules-toc {
+		background: var(--color-surface-alt);
+		border-radius: var(--radius-lg);
+		padding: var(--space-6);
+	}
+
+	@media (min-width: 992px) {
+		.rules-toc {
+			position: sticky;
+			top: 96px;
+		}
+	}
+
+	.toc-label {
+		font-family: var(--font-display);
+		text-transform: uppercase;
+		letter-spacing: 0.12em;
 		color: var(--color-primary);
-		margin-bottom: 1rem;
+		font-size: 0.95rem;
+		margin: 0 0 var(--space-4);
+	}
+
+	.rules-toc ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+	}
+
+	.rules-toc a {
+		display: flex;
+		align-items: center;
+		gap: var(--space-3);
+		text-decoration: none;
+		color: var(--color-text);
+		font-weight: 600;
+		padding: 6px 0;
+		transition: color var(--transition-fast);
+	}
+
+	.rules-toc a:hover { color: var(--color-primary); }
+
+	.toc-num {
+		font-family: var(--font-display);
+		font-weight: 400;
+		color: var(--color-primary);
+		font-size: 1.125rem;
+		letter-spacing: 0.04em;
+	}
+
+	/* Regel-Abschnitte */
+	.rules-content {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-12);
+	}
+
+	.rule-section {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		padding: var(--space-8) var(--space-8) var(--space-8) var(--space-10);
+		position: relative;
+		scroll-margin-top: 100px;
+	}
+
+	.rule-head {
+		display: flex;
+		align-items: center;
+		gap: var(--space-5);
+		padding-bottom: var(--space-5);
+		margin-bottom: var(--space-5);
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.rule-num {
+		font-family: var(--font-display);
+		font-weight: 400;
+		font-size: 3rem;
+		line-height: 1;
+		color: var(--color-primary);
+		letter-spacing: 0.02em;
+	}
+
+	.rule-head h2 {
+		margin: 0;
+		text-align: left;
+		font-size: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
+		text-transform: uppercase;
+		color: var(--color-text);
+	}
+
+	.rule-list {
+		list-style: none;
+		counter-reset: rule-counter;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-3);
+	}
+
+	.rule-list li {
+		display: grid;
+		grid-template-columns: 28px 1fr;
+		gap: var(--space-3);
+		align-items: start;
+		padding: var(--space-2) 0;
+	}
+
+	.rule-letter {
+		font-family: var(--font-display);
+		font-weight: 400;
+		font-size: 1.125rem;
+		color: var(--color-primary);
+		letter-spacing: 0.02em;
+		padding-top: 2px;
+	}
+
+	.rule-text {
+		color: var(--color-text);
+		line-height: 1.6;
+	}
+
+	@media (max-width: 575px) {
+		.rule-section {
+			padding: var(--space-6) var(--space-5);
+		}
+		.rule-head {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: var(--space-2);
+		}
+		.rule-num { font-size: 2.5rem; }
 	}
 </style>

@@ -2,148 +2,85 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Mitglied werden" description="Werde Mitglied beim TTC Berkum e. V. – Tischtennis mit Action und Teamgeist!">
+<BaseLayout title="Mitglied werden" description="Werde Mitglied beim TTC Berkum e. V. – Anmeldung direkt online über das Vereinsportal.">
 	<div class="page-header section">
-		<div class="container text-center">
+		<div class="container">
 			<span class="badge">Mitgliedschaft</span>
-			<h1>Werde Teil unserer Gemeinschaft</h1>
-			<p class="lead-text">Tischtennis verbindet! Wir freuen uns auf dich.</p>
+			<h1>Mitglied werden</h1>
+			<p class="lead-text">Anmeldung direkt online: einfach das Formular ausfüllen und absenden. Wir melden uns kurz darauf bei dir.</p>
 		</div>
 	</div>
 
-	<section class="section pt-0">
+	<section class="section signup">
 		<div class="container">
-			<div class="grid">
-				<div class="card animate-fade-up">
-					<h2>Deine Vorteile</h2>
-					<ul class="benefit-list">
-						<li>Regelmäßiges Training für alle Leistungsklassen</li>
-						<li>Teilnahme am Punktspielbetrieb</li>
-						<li>Teilnahme an Vereinsmeisterschaften und Events</li>
-						<li>Fahrradtouren, Boßeln und geselliges Beisammensein</li>
-						<li>Starke Gemeinschaft mit erfahrenen Partnern</li>
-					</ul>
-				</div>
-
-				<div class="card animate-fade-up delay-100">
-					<h2>Mitgliedsbeiträge</h2>
-					<div class="fees">
-						<div class="fee-item">
-							<span class="label">Erwachsene</span>
-							<span class="amount">90,00 € <small>pro Jahr</small></span>
-						</div>
-						<div class="fee-item">
-							<span class="label">Jugendliche</span>
-							<span class="amount">60,00 € <small>pro Jahr</small></span>
-						</div>
-					</div>
-					<p class="info-text">Die Beiträge werden jährlich per Lastschrift eingezogen.</p>
-				</div>
+			<div class="intro">
+				<p>Lieber persönlich vorbeischauen? Komm einfach zu unseren <a href="/trainingszeiten">Trainingszeiten</a> – Schläger und Bälle sind in der Halle. Fragen gerne an <a href="mailto:ttcberkum@gmail.com">ttcberkum@gmail.com</a>.</p>
 			</div>
 
-			<div class="cta-box glass-panel animate-fade-up delay-200" style="margin-top: 3rem;">
-				<h2>Jetzt online anmelden</h2>
-				<p>Der schnellste Weg in unseren Verein: Nutze unser Online-Anmeldeformular.</p>
-				<div style="margin-top: 2rem;">
-					<a href="/kontakt" class="btn btn-primary">Zum Anmeldeformular</a>
-				</div>
+			<div class="signup-frame">
+				<iframe
+					title="Anmeldeformular für neue Mitglieder (spg-direkt)"
+					src="https://online.spg-direkt.de/start/164f40c3-0736-4d21-a972-d4fb11c237aa"
+					width="100%"
+					height="800"
+					loading="lazy"
+				></iframe>
 			</div>
+
+			<p class="hint">Das Anmeldeformular wird über das externe Portal <em>spg-direkt.de</em> bereitgestellt. Bei technischen Problemen mit dem Formular schreib uns einfach eine kurze Mail an <a href="mailto:ttcberkum@gmail.com">ttcberkum@gmail.com</a>.</p>
 		</div>
 	</section>
 </BaseLayout>
 
 <style>
-	.page-header {
-		background: var(--gradient-hero);
-		padding: var(--space-16) 0 var(--space-8);
-		border-bottom: 1px solid var(--color-border);
-		margin-bottom: var(--space-12);
-	}
-	
-	.text-center { text-align: center; }
-	.pt-0 { padding-top: 0; }
-
-	.lead-text {
-		font-size: var(--text-xl);
-		max-width: 600px;
-		margin: 0 auto;
+	.intro {
+		max-width: 720px;
+		margin: 0 auto var(--space-10);
+		text-align: center;
 	}
 
-	.grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: var(--space-8);
-	}
-
-	@media (min-width: 768px) {
-		.grid {
-			grid-template-columns: 1fr 1fr;
-		}
-	}
-
-	.benefit-list {
-		margin-top: 1.5rem;
-		list-style: none;
-		padding: 0;
-	}
-
-	.benefit-list li {
-		position: relative;
-		padding-left: 2rem;
-		margin-bottom: 1rem;
-		line-height: 1.4;
-	}
-
-	.benefit-list li::before {
-		content: '🏓';
-		position: absolute;
-		left: 0;
-		top: 0;
-	}
-
-	.fees {
-		margin-top: 1.5rem;
-		display: flex;
-		flex-direction: column;
-		gap: 1.5rem;
-	}
-
-	.fee-item {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding-bottom: 1rem;
-		border-bottom: 1px solid var(--color-border);
-	}
-
-	.fee-item .label {
-		font-weight: 700;
+	.intro p {
 		font-size: var(--text-lg);
 	}
 
-	.fee-item .amount {
-		font-weight: 800;
-		font-size: var(--text-2xl);
+	.intro a {
 		color: var(--color-primary);
+		font-weight: 700;
+		text-decoration: none;
 	}
 
-	.fee-item .amount small {
-		font-size: var(--text-xs);
-		color: var(--color-text-muted);
-		font-weight: 400;
+	.intro a:hover { text-decoration: underline; }
+
+	.signup-frame {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+		box-shadow: var(--shadow-md);
+	}
+
+	.signup-frame iframe {
 		display: block;
-		text-align: right;
+		width: 100%;
+		height: 800px;
+		border: 0;
+		background: #fff;
 	}
 
-	.info-text {
-		margin-top: 1.5rem;
+	.hint {
+		max-width: 720px;
+		margin: var(--space-8) auto 0;
+		text-align: center;
 		font-size: var(--text-sm);
 		color: var(--color-text-muted);
 	}
 
-	.cta-box {
-		padding: var(--space-12);
-		text-align: center;
-		border-radius: 24px;
+	.hint a {
+		color: var(--color-primary);
+		font-weight: 600;
+	}
+
+	@media (max-width: 575px) {
+		.signup-frame iframe { height: 1000px; }
 	}
 </style>

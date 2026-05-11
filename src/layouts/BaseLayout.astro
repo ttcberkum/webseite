@@ -6,17 +6,33 @@ interface Props {
 	description?: string;
 }
 
-const { title, description = "Migration der TTC Berkum Webseite zu Astro" } = Astro.props;
+const { title, description = "TTC Berkum e. V. – Tischtennis in Peine. Training für Jugend und Erwachsene, Punktspielbetrieb und Vereinsleben seit 1954." } = Astro.props;
 
 const navItems = [
-  { name: 'Startseite', href: '/' },
+  { name: 'Home', href: '/' },
   { name: 'Aktuelle Saison', href: '/aktuelle-saison' },
   { name: 'Mitglied werden', href: '/mitglied-werden' },
   { name: 'Trainingszeiten', href: '/trainingszeiten' },
+  {
+    name: 'Sonstiges',
+    href: '#',
+    children: [
+      { name: 'Die Kelle', href: '/kelle' },
+      { name: 'Spielregeln', href: '/spielregeln' },
+      { name: 'Vorgaberechner', href: '/vorgaberechner' },
+      { name: 'Storchencam Berkum', href: '/storchencam' },
+    ],
+  },
+  { name: 'Termine', href: '/termine' },
   { name: 'News', href: '/news' },
   { name: 'Über uns', href: '/ueber-uns' },
   { name: 'Kontakt', href: '/kontakt' },
 ];
+
+const isActive = (href: string) => {
+  if (href === '/') return Astro.url.pathname === '/';
+  return Astro.url.pathname.startsWith(href);
+};
 ---
 
 <!doctype html>
@@ -24,41 +40,75 @@ const navItems = [
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title} | TTC Berkum</title>
+		<title>{title} | TTC Berkum e. V.</title>
 	</head>
 	<body>
 		<a href="#main-content" class="skip-link">Zum Inhalt springen</a>
 
-		<header class="site-header">
+		<header class="site-header" id="site-header">
 			<div class="container header-container">
-				<a href="/" class="logo" aria-label="Zur Startseite">
-					<div class="logo-mark">
-						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-					</div>
-					<span class="logo-text">TTC Berkum</span>
+				<a href="/" class="logo" aria-label="TTC Berkum Startseite">
+					<img src="/images/logo.svg" alt="TTC Berkum Logo" width="120" height="44" />
 				</a>
 
-				<nav class="site-nav">
+				<nav class="site-nav" aria-label="Hauptnavigation">
 					<ul role="list">
 						{navItems.map(item => (
-							<li>
-								<a href={item.href} class={Astro.url.pathname === item.href ? 'active' : ''}>
+							<li class={item.children ? 'has-children' : ''}>
+								<a href={item.href} class={isActive(item.href) ? 'active' : ''}>
 									{item.name}
+									{item.children && (
+										<svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true">
+											<path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+										</svg>
+									)}
 								</a>
+								{item.children && (
+									<ul role="list" class="dropdown">
+										{item.children.map(child => (
+											<li>
+												<a href={child.href} class={isActive(child.href) ? 'active' : ''}>{child.name}</a>
+											</li>
+										))}
+									</ul>
+								)}
 							</li>
 						))}
 					</ul>
 				</nav>
 
-				<button id="theme-toggle" aria-label="Farbschema umschalten" class="theme-toggle">
-					<svg class="sun" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-					<svg class="moon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-				</button>
+				<div class="header-actions">
+					<button id="theme-toggle" aria-label="Farbschema umschalten" class="theme-toggle" type="button">
+						<svg class="sun" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+						<svg class="moon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+					</button>
+
+					<button id="mobile-toggle" aria-label="Menü öffnen" aria-expanded="false" class="mobile-toggle" type="button">
+						<span></span>
+						<span></span>
+						<span></span>
+					</button>
+				</div>
+			</div>
+
+			<div class="mobile-menu" id="mobile-menu" hidden>
+				<ul role="list">
+					{navItems.map(item => (
+						<li>
+							<a href={item.href} class={isActive(item.href) ? 'active' : ''}>{item.name}</a>
+							{item.children && (
+								<ul role="list" class="mobile-sub">
+									{item.children.map(child => (
+										<li><a href={child.href} class={isActive(child.href) ? 'active' : ''}>{child.name}</a></li>
+									))}
+								</ul>
+							)}
+						</li>
+					))}
+				</ul>
 			</div>
 		</header>
 
@@ -70,198 +120,398 @@ const navItems = [
 			<div class="container">
 				<div class="footer-grid">
 					<div class="footer-brand">
-						<div class="logo">
-							<div class="logo-mark">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-								</svg>
-							</div>
-							<span class="logo-text">TTC Berkum</span>
-						</div>
-						<p>Dein Tischtennisverein mit Leidenschaft und Tradition seit 1978.</p>
+						<img src="/images/logo.svg" alt="TTC Berkum" width="140" height="52" />
+						<p>Tischtennis in Peine mit Action und Teamgeist – seit 1954.</p>
+						<address class="footer-address">
+							TTC Berkum e. V.<br/>
+							Pechschwarte 64<br/>
+							31226 Peine
+						</address>
 					</div>
 					<div class="footer-links">
-						<h4>Schnelllinks</h4>
+						<h4>Verein</h4>
 						<ul role="list">
-							{navItems.map(item => (
-								<li><a href={item.href}>{item.name}</a></li>
-							))}
-						</ul>
-					</div>
-					<div class="footer-links">
-						<h4>Rechtliches</h4>
-						<ul role="list">
-							<li><a href="/impressum">Impressum</a></li>
-							<li><a href="/datenschutz">Datenschutz</a></li>
+							<li><a href="/ueber-uns">Über uns</a></li>
+							<li><a href="/mitglied-werden">Mitglied werden</a></li>
+							<li><a href="/trainingszeiten">Trainingszeiten</a></li>
+							<li><a href="/aktuelle-saison">Aktuelle Saison</a></li>
+							<li><a href="/termine">Termine</a></li>
 						</ul>
 					</div>
 					<div class="footer-links">
 						<h4>Sonstiges</h4>
 						<ul role="list">
+							<li><a href="/news">News</a></li>
+							<li><a href="/kelle">Die Kelle</a></li>
 							<li><a href="/spielregeln">Spielregeln</a></li>
 							<li><a href="/vorgaberechner">Vorgaberechner</a></li>
 							<li><a href="/storchencam">Storchencam Berkum</a></li>
 						</ul>
 					</div>
+					<div class="footer-links">
+						<h4>Kontakt</h4>
+						<ul role="list">
+							<li><a href="mailto:ttcberkum@gmail.com">ttcberkum@gmail.com</a></li>
+							<li><a href="tel:+491724350397">+49 172 4350397</a></li>
+							<li><a href="/kontakt">Kontaktseite</a></li>
+						</ul>
+					</div>
 				</div>
 				<div class="footer-bottom">
-					<p>&copy; {new Date().getFullYear()} TTC Berkum. Alle Rechte vorbehalten.</p>
+					<p>&copy; {new Date().getFullYear()} TTC Berkum e. V. — Alle Rechte vorbehalten.</p>
+					<ul role="list" class="footer-legal">
+						<li><a href="/impressum">Impressum</a></li>
+						<li><a href="/datenschutz">Datenschutz</a></li>
+					</ul>
 				</div>
 			</div>
 		</footer>
 
 		<script>
-			// Theme Toggle Logic
-			let theme = 'light';
+			// Theme toggle (in-memory, kein localStorage)
+			let theme: 'light' | 'dark' = 'light';
 			const toggle = document.getElementById('theme-toggle');
-			
 			toggle?.addEventListener('click', () => {
 				theme = theme === 'light' ? 'dark' : 'light';
 				document.documentElement.setAttribute('data-theme', theme);
 			});
 
-			// Header scroll effect
-			const header = document.querySelector('.site-header');
-			window.addEventListener('scroll', () => {
-				if (window.scrollY > 20) {
-					header?.classList.add('scrolled');
-				} else {
-					header?.classList.remove('scrolled');
+			// Header scroll state
+			const header = document.getElementById('site-header');
+			const onScroll = () => {
+				if (window.scrollY > 20) header?.classList.add('scrolled');
+				else header?.classList.remove('scrolled');
+			};
+			window.addEventListener('scroll', onScroll, { passive: true });
+			onScroll();
+
+			// Mobile menu
+			const mobileToggle = document.getElementById('mobile-toggle');
+			const mobileMenu = document.getElementById('mobile-menu');
+			mobileToggle?.addEventListener('click', () => {
+				const isOpen = mobileToggle.getAttribute('aria-expanded') === 'true';
+				const next = !isOpen;
+				mobileToggle.setAttribute('aria-expanded', String(next));
+				mobileToggle.setAttribute('aria-label', next ? 'Menü schließen' : 'Menü öffnen');
+				if (mobileMenu) {
+					if (next) mobileMenu.removeAttribute('hidden');
+					else mobileMenu.setAttribute('hidden', '');
 				}
+				document.body.classList.toggle('menu-open', next);
+			});
+
+			// Scroll-Reveal: Elemente mit .reveal blenden beim Sichtbarwerden ein
+			const revealEls = document.querySelectorAll('.reveal');
+			if (revealEls.length > 0 && 'IntersectionObserver' in window) {
+				const io = new IntersectionObserver((entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							entry.target.classList.add('is-visible');
+							io.unobserve(entry.target);
+						}
+					});
+				}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+				revealEls.forEach((el) => io.observe(el));
+			} else {
+				// Fallback: ohne IO direkt sichtbar
+				revealEls.forEach((el) => el.classList.add('is-visible'));
+			}
+
+			// Image-Slider: Crossfade-Carousel mit Auto-Rotate
+			const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			document.querySelectorAll<HTMLElement>('[data-slider]').forEach((slider) => {
+				const slides = slider.querySelectorAll<HTMLElement>('.slider__slide');
+				const dots = slider.querySelectorAll<HTMLElement>('[data-slider-dot]');
+				const prevBtn = slider.querySelector<HTMLElement>('[data-slider-prev]');
+				const nextBtn = slider.querySelector<HTMLElement>('[data-slider-next]');
+				const interval = Math.max(2000, Number(slider.dataset.interval || 5000));
+				if (slides.length < 2) return;
+				let current = 0;
+				let timer: number | undefined;
+
+				const go = (idx: number) => {
+					current = (idx + slides.length) % slides.length;
+					slides.forEach((s, i) => {
+						s.classList.toggle('is-active', i === current);
+						s.setAttribute('aria-hidden', i === current ? 'false' : 'true');
+					});
+					dots.forEach((d, i) => {
+						d.classList.toggle('is-active', i === current);
+						d.setAttribute('aria-selected', i === current ? 'true' : 'false');
+					});
+				};
+
+				const next = () => go(current + 1);
+				const prev = () => go(current - 1);
+
+				const start = () => {
+					if (reduceMotion || timer) return;
+					timer = window.setInterval(next, interval);
+				};
+				const stop = () => {
+					if (timer) { window.clearInterval(timer); timer = undefined; }
+				};
+
+				dots.forEach((d, i) => d.addEventListener('click', () => { go(i); stop(); start(); }));
+				prevBtn?.addEventListener('click', () => { prev(); stop(); start(); });
+				nextBtn?.addEventListener('click', () => { next(); stop(); start(); });
+
+				slider.addEventListener('mouseenter', stop);
+				slider.addEventListener('mouseleave', start);
+				slider.addEventListener('focusin', stop);
+				slider.addEventListener('focusout', start);
+				document.addEventListener('visibilitychange', () => {
+					if (document.hidden) stop(); else start();
+				});
+
+				start();
 			});
 		</script>
 	</body>
 </html>
 
 <style>
+	/* ===== Header ===== */
 	.site-header {
 		position: sticky;
 		top: 0;
 		z-index: 50;
+		background: var(--color-header);
+		color: #fff;
+		transition: background-color var(--transition-normal), padding var(--transition-normal), box-shadow var(--transition-normal);
 		padding: var(--space-4) 0;
-		background-color: transparent;
-		transition: all var(--transition-normal);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 	}
 
 	.site-header.scrolled {
-		background-color: var(--glass-bg);
-		backdrop-filter: blur(16px);
-		-webkit-backdrop-filter: blur(16px);
-		border-bottom: 1px solid var(--glass-border);
 		padding: var(--space-3) 0;
-		box-shadow: var(--shadow-sm);
+		box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
 	}
 
 	.header-container {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: var(--space-4);
+		gap: var(--space-6);
 	}
 
 	.logo {
+		display: inline-flex;
+		align-items: center;
+		text-decoration: none;
+		color: #fff;
+	}
+
+	.logo img {
+		height: 44px;
+		width: auto;
+		display: block;
+	}
+
+	.site-header.scrolled .logo img { height: 38px; }
+
+	/* Desktop-Nav */
+	.site-nav { display: none; }
+
+	@media (min-width: 1024px) {
+		.site-nav { display: block; }
+	}
+
+	.site-nav > ul {
 		display: flex;
 		align-items: center;
-		gap: var(--space-3);
-		text-decoration: none;
-		color: var(--color-text);
+		gap: 4px;
 	}
 
-	.logo-mark {
-		display: grid;
-		place-items: center;
-		width: 40px;
-		height: 40px;
-		background: var(--gradient-primary);
-		border-radius: 10px;
-		color: white;
-		box-shadow: 0 4px 12px rgba(1, 105, 111, 0.2);
-	}
-
-	.logo-text {
-		font-weight: 800;
-		font-size: var(--text-lg);
-		letter-spacing: -0.02em;
-	}
-
-	.site-nav {
-		display: none;
-	}
-	
-	@media (min-width: 768px) {
-		.site-nav {
-			display: block;
-			margin: 0 auto;
-		}
-	}
-
-	.site-nav ul {
-		display: flex;
-		gap: var(--space-2);
-		background: var(--color-surface);
-		padding: var(--space-1) var(--space-2);
-		border-radius: 100px;
-		border: 1px solid var(--color-border);
-		box-shadow: var(--shadow-sm);
+	.site-nav > ul > li {
+		position: relative;
 	}
 
 	.site-nav a {
-		display: block;
-		padding: var(--space-2) var(--space-4);
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		padding: 10px 14px;
 		text-decoration: none;
-		color: var(--color-text-muted);
-		font-weight: 500;
-		font-size: var(--text-sm);
-		border-radius: 100px;
-		transition: all var(--transition-fast);
+		color: #f0e2e2;
+		font-family: var(--font-body);
+		font-weight: 600;
+		font-size: 0.95rem;
+		letter-spacing: 0.02em;
+		transition: color var(--transition-fast);
+		white-space: nowrap;
 	}
 
-	.site-nav a:hover {
-		color: var(--color-text);
-		background: var(--color-surface-hover);
+	.site-nav > ul > li > a:hover,
+	.site-nav > ul > li:focus-within > a {
+		color: var(--color-primary-light);
 	}
 
 	.site-nav a.active {
+		color: var(--color-primary);
+		font-weight: 700;
+	}
+
+	/* Dropdown */
+	.site-nav .has-children .dropdown {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		min-width: 220px;
+		background: #ffffff;
+		border-radius: var(--radius-md);
+		box-shadow: var(--shadow-lg);
+		padding: 8px;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(8px);
+		transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+	}
+
+	.site-nav .has-children:hover .dropdown,
+	.site-nav .has-children:focus-within .dropdown {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+
+	.site-nav .dropdown a {
+		display: block;
+		color: #333;
+		padding: 8px 12px;
+		border-radius: var(--radius-sm);
+	}
+
+	.site-nav .dropdown a:hover {
+		background: var(--color-surface-alt);
+		color: var(--color-primary);
+	}
+
+	.site-nav .dropdown a.active {
 		background: var(--color-primary);
-		color: white;
+		color: #fff;
+	}
+
+	/* Header-Aktionen */
+	.header-actions {
+		display: flex;
+		align-items: center;
+		gap: var(--space-3);
 	}
 
 	.theme-toggle {
-		background: var(--color-surface);
-		border: 1px solid var(--color-border);
+		background: transparent;
+		border: 1px solid rgba(255, 255, 255, 0.2);
 		border-radius: 50%;
 		width: 40px;
 		height: 40px;
 		cursor: pointer;
-		color: var(--color-text);
+		color: #fff;
 		display: grid;
 		place-items: center;
-		transition: all var(--transition-bounce);
-		box-shadow: var(--shadow-sm);
+		transition: border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-bounce);
 	}
 
 	.theme-toggle:hover {
-		transform: rotate(15deg) scale(1.1);
 		border-color: var(--color-primary);
 		color: var(--color-primary);
+		transform: rotate(15deg);
 	}
 
 	.theme-toggle .moon { display: none; }
 	:global([data-theme="dark"]) .theme-toggle .sun { display: none; }
 	:global([data-theme="dark"]) .theme-toggle .moon { display: block; }
 
-	/* Footer */
+	/* Mobile-Toggle */
+	.mobile-toggle {
+		display: inline-flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 5px;
+		width: 40px;
+		height: 40px;
+		padding: 0 8px;
+		background: transparent;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: var(--radius-sm);
+		cursor: pointer;
+	}
+
+	.mobile-toggle span {
+		display: block;
+		height: 2px;
+		background: #fff;
+		border-radius: 2px;
+		transition: transform var(--transition-fast), opacity var(--transition-fast);
+	}
+
+	.mobile-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+	.mobile-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+	.mobile-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+	@media (min-width: 1024px) {
+		.mobile-toggle { display: none; }
+	}
+
+	/* Mobile-Menü */
+	.mobile-menu {
+		background: var(--color-header);
+		border-top: 1px solid rgba(255, 255, 255, 0.08);
+		padding: var(--space-4) 0;
+	}
+
+	.mobile-menu > ul {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		padding: 0 var(--space-4);
+		max-width: 1240px;
+		margin: 0 auto;
+	}
+
+	.mobile-menu a {
+		display: block;
+		padding: 12px var(--space-4);
+		color: #f0e2e2;
+		text-decoration: none;
+		font-weight: 600;
+		border-radius: var(--radius-sm);
+	}
+
+	.mobile-menu a:hover, .mobile-menu a.active {
+		background: rgba(200, 16, 46, 0.12);
+		color: var(--color-primary);
+	}
+
+	.mobile-sub {
+		padding-left: var(--space-4);
+		border-left: 2px solid rgba(200, 16, 46, 0.3);
+		margin-left: var(--space-4);
+		margin-bottom: var(--space-2);
+	}
+
+	@media (min-width: 1024px) {
+		.mobile-menu { display: none; }
+	}
+
+	:global(body.menu-open) { overflow: hidden; }
+
+	/* ===== Footer ===== */
 	.site-footer {
-		background-color: var(--color-surface);
-		border-top: 1px solid var(--color-border);
-		padding: var(--space-16) 0 var(--space-8);
+		background: var(--color-footer);
+		color: var(--color-text-on-dark);
+		padding: var(--space-20) 0 var(--space-6);
 		margin-top: var(--space-24);
 	}
 
 	.footer-grid {
 		display: grid;
 		grid-template-columns: 1fr;
-		gap: var(--space-8);
+		gap: var(--space-10);
 		margin-bottom: var(--space-12);
 	}
 
@@ -271,14 +521,33 @@ const navItems = [
 		}
 	}
 
+	.footer-brand img {
+		height: 52px;
+		width: auto;
+		margin-bottom: var(--space-4);
+		filter: brightness(1.1);
+	}
+
 	.footer-brand p {
+		color: #a2a2a2;
+		max-width: 320px;
+	}
+
+	.footer-address {
 		margin-top: var(--space-4);
-		max-width: 300px;
+		font-style: normal;
+		color: #a2a2a2;
+		line-height: 1.7;
 	}
 
 	.footer-links h4 {
-		font-size: var(--text-base);
+		font-family: var(--font-display);
+		font-weight: 400;
+		font-size: 1.25rem;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
 		margin-bottom: var(--space-4);
+		color: var(--color-primary);
 	}
 
 	.footer-links ul {
@@ -289,19 +558,39 @@ const navItems = [
 
 	.footer-links a {
 		text-decoration: none;
-		color: var(--color-text-muted);
+		color: #a2a2a2;
 		transition: color var(--transition-fast);
 	}
 
-	.footer-links a:hover {
-		color: var(--color-primary);
-	}
+	.footer-links a:hover { color: #fff; }
 
 	.footer-bottom {
-		padding-top: var(--space-8);
-		border-top: 1px solid var(--color-border);
-		text-align: center;
-		color: var(--color-text-muted);
+		padding-top: var(--space-6);
+		border-top: 1px solid rgba(255, 255, 255, 0.08);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-3);
+		align-items: center;
+		justify-content: space-between;
+		color: #707070;
 		font-size: var(--text-sm);
 	}
+
+	@media (min-width: 768px) {
+		.footer-bottom {
+			flex-direction: row;
+		}
+	}
+
+	.footer-legal {
+		display: flex;
+		gap: var(--space-5);
+	}
+
+	.footer-legal a {
+		color: #a2a2a2;
+		text-decoration: none;
+	}
+
+	.footer-legal a:hover { color: #fff; }
 </style>

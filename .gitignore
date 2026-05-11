@@ -22,3 +22,14 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# editor / agent state
+.claude/
+.vscode/
+
+# temporäre Dev-Server-Logs
+.tmp_*
+
+# Windows thumbnail cache
+Thumbs.db
+public/**/Thumbs.db

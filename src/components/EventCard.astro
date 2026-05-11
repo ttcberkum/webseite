@@ -1,0 +1,44 @@
+---
+import type { ClubEvent } from '../lib/calendar';
+
+interface Props {
+	event: ClubEvent;
+	compact?: boolean;
+}
+
+const { event, compact = false } = Astro.props;
+
+const dateFmt = new Intl.DateTimeFormat('de-DE', { weekday: 'short', day: '2-digit', month: 'short' });
+const timeFmt = new Intl.DateTimeFormat('de-DE', { hour: '2-digit', minute: '2-digit' });
+
+const dateLabel = dateFmt.format(event.start);
+const timeLabel = event.allDay ? 'ganztägig' : timeFmt.format(event.start);
+const dayNum = event.start.getDate();
+const monthShort = new Intl.DateTimeFormat('de-DE', { month: 'short' }).format(event.start).replace('.', '');
+---
+
+<article class:list={['event-card', { 'event-card--compact': compact }]}>
+	<div class="event-date" aria-hidden="true">
+		<span class="event-date-day">{dayNum}</span>
+		<span class="event-date-month">{monthShort}</span>
+	</div>
+	<div class="event-body">
+		<div class="event-meta">
+			<time datetime={event.start.toISOString()}>{dateLabel} · {timeLabel}</time>
+			{event.category && <span class="event-cat">{event.category}</span>}
+		</div>
+		<h3 class="event-title">{event.title}</h3>
+		{event.location && (
+			<p class="event-location">
+				<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+					<circle cx="12" cy="10" r="3"/>
+				</svg>
+				{event.location}
+			</p>
+		)}
+		{!compact && event.description && (
+			<p class="event-desc">{event.description}</p>
+		)}
+	</div>
+</article>

@@ -1,0 +1,31 @@
+name: Scheduled Rebuild
+
+# Triggert alle 4 Stunden einen Cloudflare-Pages-Deploy, damit Termine aus
+# dem Google-Kalender frisch in den statischen Build kommen. Manuell
+# auslösbar (z.B. per Lesezeichen vom Handy) über "workflow_dispatch".
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'
+  workflow_dispatch:
+
+jobs:
+  trigger-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Cloudflare Pages Deploy Hook
+        env:
+          DEPLOY_HOOK: ${{ secrets.CLOUDFLARE_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$DEPLOY_HOOK" ]; then
+            echo "::error::Secret CLOUDFLARE_DEPLOY_HOOK ist nicht gesetzt."
+            exit 1
+          fi
+          echo "Triggering Cloudflare Pages deploy..."
+          HTTP=$(curl -sS -o /tmp/resp -w "%{http_code}" -X POST "$DEPLOY_HOOK")
+          echo "Response: $HTTP"
+          cat /tmp/resp || true
+          if [ "$HTTP" -lt 200 ] || [ "$HTTP" -ge 300 ]; then
+            echo "::error::Deploy-Hook lieferte HTTP $HTTP"
+            exit 1
+          fi

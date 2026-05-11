@@ -1,0 +1,219 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EventCard from '../components/EventCard.astro';
+import { loadCalendar, groupByMonth, toWebcalUrl } from '../lib/calendar';
+
+const { upcoming, past, ok } = await loadCalendar();
+const grouped = groupByMonth(upcoming);
+const archive = past.slice(0, 50);
+
+const feedUrl = import.meta.env.GOOGLE_CALENDAR_ICAL_URL ?? process.env.GOOGLE_CALENDAR_ICAL_URL;
+const webcal = feedUrl ? toWebcalUrl(feedUrl) : null;
+---
+
+<BaseLayout title="Termine" description="Alle Vereinstermine des TTC Berkum – Punktspiele, Versammlungen, Events. Direkt zum Abonnieren in deinen Kalender.">
+	<div class="page-header section">
+		<div class="container">
+			<span class="badge">Vereinskalender</span>
+			<h1>Termine</h1>
+			<p class="lead-text">Punktspiele, Vereinsmeisterschaften, Versammlungen und Events – alles auf einen Blick. Du kannst den Kalender direkt in deine Kalender-App abonnieren.</p>
+		</div>
+	</div>
+
+	<section class="section">
+		<div class="container">
+			{webcal && (
+				<div class="subscribe reveal">
+					<div class="subscribe-text">
+						<h2>Kalender abonnieren</h2>
+						<p>Mit einem Klick alle Vereinstermine in deine Kalender-App (Apple, Google, Outlook) übernehmen – Aktualisierungen erscheinen automatisch.</p>
+					</div>
+					<div class="subscribe-actions">
+						<a href={webcal} class="btn btn-primary">
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+								<rect x="3" y="4" width="18" height="18" rx="2"/>
+								<line x1="16" y1="2" x2="16" y2="6"/>
+								<line x1="8" y1="2" x2="8" y2="6"/>
+								<line x1="3" y1="10" x2="21" y2="10"/>
+							</svg>
+							In Kalender öffnen
+						</a>
+					</div>
+				</div>
+			)}
+
+			{!ok && (
+				<aside class="cal-warning reveal">
+					<p><strong>Hinweis:</strong> Der Kalender ist gerade nicht erreichbar. Die Anzeige aktualisiert sich beim nächsten Build automatisch.</p>
+				</aside>
+			)}
+
+			{grouped.length === 0 && ok && (
+				<p class="empty-state">Aktuell sind keine kommenden Termine geplant. Schau bald wieder vorbei!</p>
+			)}
+
+			{grouped.map((group, gi) => (
+				<section class="month-group reveal" style={`--delay: ${gi * 60}ms`}>
+					<h2 class="month-label">{group.label}</h2>
+					<div class="month-events">
+						{group.events.map((event) => <EventCard event={event} />)}
+					</div>
+				</section>
+			))}
+
+			{archive.length > 0 && (
+				<details class="archive reveal" style="--delay: 200ms">
+					<summary>
+						<span class="archive-icon" aria-hidden="true">
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<polyline points="21 8 21 21 3 21 3 8"/>
+								<rect x="1" y="3" width="22" height="5"/>
+								<line x1="10" y1="12" x2="14" y2="12"/>
+							</svg>
+						</span>
+						<span>Vergangene Termine</span>
+						<span class="archive-count">{archive.length}</span>
+					</summary>
+					<div class="archive-list">
+						{archive.map((event) => <EventCard event={event} compact={true} />)}
+					</div>
+				</details>
+			)}
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.subscribe {
+		display: flex;
+		gap: var(--space-6);
+		align-items: center;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		padding: var(--space-6) var(--space-7);
+		background: var(--color-surface-alt);
+		border-radius: var(--radius-lg);
+		border-left: 4px solid var(--color-primary);
+		margin-bottom: var(--space-12);
+	}
+
+	.subscribe-text { flex: 1; min-width: 260px; }
+
+	.subscribe-text h2 {
+		margin: 0 0 var(--space-2);
+		text-align: left;
+		font-size: clamp(1.4rem, 1.2rem + 0.6vw, 1.75rem);
+	}
+
+	.subscribe-text p {
+		margin: 0;
+		color: var(--color-text);
+	}
+
+	.subscribe-actions {
+		flex-shrink: 0;
+	}
+
+	.cal-warning {
+		padding: var(--space-4) var(--space-5);
+		background: rgba(200, 16, 46, 0.05);
+		border-left: 4px solid var(--color-primary);
+		border-radius: var(--radius-md);
+		margin-bottom: var(--space-8);
+	}
+
+	.cal-warning p { margin: 0; color: var(--color-text); }
+
+	.empty-state {
+		text-align: center;
+		color: var(--color-text-muted);
+		padding: var(--space-16) 0;
+		font-size: 1.05rem;
+	}
+
+	.month-group {
+		margin-bottom: var(--space-10);
+	}
+
+	.month-label {
+		font-family: var(--font-display);
+		font-weight: 400;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		font-size: clamp(1.5rem, 1.2rem + 0.8vw, 2rem);
+		margin: 0 0 var(--space-5);
+		color: var(--color-text);
+		text-align: left;
+		border-bottom: 1px solid var(--color-border);
+		padding-bottom: var(--space-3);
+	}
+
+	.month-events {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: var(--space-3);
+	}
+
+	@media (min-width: 768px) {
+		.month-events { grid-template-columns: repeat(2, 1fr); }
+	}
+
+	/* Archiv */
+	.archive {
+		margin-top: var(--space-16);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		background: var(--color-surface);
+	}
+
+	.archive summary {
+		display: flex;
+		align-items: center;
+		gap: var(--space-3);
+		padding: var(--space-4) var(--space-5);
+		cursor: pointer;
+		font-family: var(--font-body);
+		font-weight: 700;
+		color: var(--color-text);
+		list-style: none;
+	}
+
+	.archive summary::-webkit-details-marker { display: none; }
+
+	.archive summary::after {
+		content: "▾";
+		margin-left: auto;
+		font-size: 0.85rem;
+		color: var(--color-text-muted);
+		transition: transform var(--transition-fast);
+	}
+
+	.archive[open] summary::after { transform: rotate(180deg); }
+
+	.archive-icon {
+		color: var(--color-primary);
+		display: grid;
+		place-items: center;
+	}
+
+	.archive-count {
+		background: var(--color-surface-alt);
+		color: var(--color-text-muted);
+		font-size: 0.75rem;
+		font-weight: 700;
+		padding: 2px 8px;
+		border-radius: 100px;
+		margin-left: var(--space-2);
+	}
+
+	.archive-list {
+		padding: 0 var(--space-5) var(--space-5);
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: var(--space-3);
+	}
+
+	@media (min-width: 768px) {
+		.archive-list { grid-template-columns: repeat(2, 1fr); }
+	}
+</style>

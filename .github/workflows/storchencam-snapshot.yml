@@ -1,0 +1,57 @@
+name: Storchencam Snapshot
+
+# Stündlicher Cron-Job: Lädt das aktuelle Storchencam-Bild herunter und
+# überschreibt public/storchencam/<HH>.jpg (rollierende 24-Stunden-Sammlung).
+# Damit gibt es nie mehr als 24 Bilder im Archiv und die Git-History bleibt klein.
+
+on:
+  schedule:
+    # Alle Stunden um Minute 05 (UTC). 05 statt 00, weil GitHub-Cron oft
+    # Stoßzeiten verzögert; minute :05 reduziert Wartezeiten.
+    - cron: '5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: storchencam-snapshot
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download current snapshot
+        env:
+          CAM_URL: https://berkum.lima-city.de/wp-content/uploads/2025/04/Storchencam_Berkum.jpg
+        run: |
+          mkdir -p public/storchencam
+          HH=$(date -u +%H)
+          OUT="public/storchencam/${HH}.jpg"
+          echo "Downloading slot ${HH}..."
+          curl -fsSL --retry 3 --retry-delay 5 --max-time 30 -o "$OUT" "$CAM_URL"
+          # Fail if the file is unreasonably small (server returned HTML error page)
+          SIZE=$(stat -c%s "$OUT")
+          if [ "$SIZE" -lt 20000 ]; then
+            echo "Downloaded file too small ($SIZE bytes) – skip commit."
+            rm -f "$OUT"
+            exit 0
+          fi
+          # Sidecar mit Zeitstempel, damit die Seite das "Aufnahmedatum" anzeigen kann
+          date -u --iso-8601=seconds > "public/storchencam/${HH}.txt"
+
+      - name: Commit & Push
+        run: |
+          if [ -z "$(git status --porcelain public/storchencam)" ]; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add public/storchencam
+          git commit -m "chore(storchencam): snapshot $(date -u +%FT%H%MZ)"
+          git push

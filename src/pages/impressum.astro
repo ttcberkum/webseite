@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Impressum" description="Impressum des TTC Berkum e. V.">
+	<div class="page-header section">
+		<div class="container">
+			<span class="badge">Rechtliches</span>
+			<h1>Impressum</h1>
+			<p class="lead-text">Angaben gemäß § 5 TMG</p>
+		</div>
+	</div>
+
+	<section class="section legal">
+		<div class="container legal-container">
+			<article class="legal-card">
+				<h2>Verein</h2>
+				<p>
+					TTC Berkum 1954 e. V.<br/>
+					Pechschwarte 64<br/>
+					31226 Peine
+				</p>
+
+				<h2>Vertretungsberechtigt</h2>
+				<p>Vorstand gemäß § 26 BGB:</p>
+				<ul class="legal-list">
+					<li><strong>Erik Böker</strong> – 1. Vorsitzender</li>
+					<li><strong>Peter Krätzig</strong> – 2. Vorsitzender</li>
+					<li><strong>Cedric Doppelhammer</strong> – Schriftführer</li>
+					<li><strong>Christian Dröse</strong> – Kassenwart</li>
+					<li><strong>Sascha Henke</strong> – Sportwart</li>
+				</ul>
+
+				<h2>Kontakt</h2>
+				<p>
+					E-Mail: <a href="mailto:ttcberkum@gmail.com">ttcberkum@gmail.com</a><br/>
+					Telefon: <a href="tel:+491724350397">+49 172 4350397</a>
+				</p>
+
+				<h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+				<p>
+					Erik Böker<br/>
+					Anschrift wie oben
+				</p>
+
+				<h2>Haftungsausschluss</h2>
+				<h3>Inhalt des Onlineangebotes</h3>
+				<p>Der TTC Berkum 1954 e. V. übernimmt keinerlei Gewähr für die Aktualität, Korrektheit, Vollständigkeit oder Qualität der bereitgestellten Informationen. Haftungsansprüche gegen den Verein, welche sich auf Schäden materieller oder ideeller Art beziehen, die durch die Nutzung oder Nichtnutzung der dargebotenen Informationen bzw. durch die Nutzung fehlerhafter und unvollständiger Informationen verursacht wurden, sind grundsätzlich ausgeschlossen, sofern seitens des Vereins kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden vorliegt.</p>
+
+				<h3>Verweise und Links</h3>
+				<p>Bei direkten oder indirekten Verweisen auf fremde Internetseiten („Links"), die außerhalb des Verantwortungsbereiches des Vereins liegen, würde eine Haftungsverpflichtung ausschließlich in dem Fall in Kraft treten, in dem der Verein von den Inhalten Kenntnis hat und es ihm technisch möglich und zumutbar wäre, die Nutzung im Falle rechtswidriger Inhalte zu verhindern.</p>
+				<p>Der Verein erklärt hiermit ausdrücklich, dass zum Zeitpunkt der Linksetzung keine illegalen Inhalte auf den zu verlinkenden Seiten erkennbar waren. Auf die aktuelle und zukünftige Gestaltung, die Inhalte oder die Urheberschaft der verlinkten Seiten hat der Verein keinerlei Einfluss.</p>
+
+				<h3>Urheber- und Kennzeichenrecht</h3>
+				<p>Der Verein ist bestrebt, in allen Publikationen die Urheberrechte der verwendeten Bilder, Grafiken, Tondokumente, Videosequenzen und Texte zu beachten, von ihm selbst erstellte Bilder, Grafiken, Tondokumente, Videosequenzen und Texte zu nutzen oder auf lizenzfreie Grafiken, Tondokumente, Videosequenzen und Texte zurückzugreifen. Alle innerhalb des Internetangebotes genannten und ggf. durch Dritte geschützten Marken- und Warenzeichen unterliegen uneingeschränkt den Bestimmungen des jeweils gültigen Kennzeichenrechts und den Besitzrechten der jeweiligen eingetragenen Eigentümer.</p>
+
+				<h3>Online-Streitbeilegung</h3>
+				<p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer">https://ec.europa.eu/consumers/odr/</a>. Der TTC Berkum 1954 e. V. ist nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+				<p class="legal-meta">Stand: {new Date().toLocaleDateString('de-DE', { year: 'numeric', month: 'long' })}</p>
+			</article>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.legal-container { max-width: 880px; margin: 0 auto; }
+
+	.legal-card {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		padding: var(--space-10);
+	}
+
+	.legal-card h2 {
+		font-family: var(--font-display);
+		font-weight: 400;
+		font-size: 1.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+		margin-top: var(--space-8);
+		margin-bottom: var(--space-4);
+		color: var(--color-text);
+	}
+
+	.legal-card h2:first-child { margin-top: 0; }
+
+	.legal-card h3 {
+		font-family: var(--font-body);
+		font-weight: 700;
+		font-size: 1.125rem;
+		color: var(--color-primary);
+		margin-top: var(--space-6);
+		margin-bottom: var(--space-3);
+		text-align: left;
+	}
+
+	.legal-card p { color: var(--color-text); line-height: 1.7; }
+	.legal-card p + p { margin-top: var(--space-3); }
+
+	.legal-card a {
+		color: var(--color-primary);
+		font-weight: 600;
+		text-decoration: none;
+		word-break: break-word;
+	}
+	.legal-card a:hover { text-decoration: underline; }
+
+	.legal-list {
+		list-style: none;
+		padding: 0;
+		margin: 0 0 var(--space-4);
+	}
+	.legal-list li {
+		padding: var(--space-2) 0;
+		border-bottom: 1px solid var(--color-border);
+	}
+	.legal-list li:last-child { border-bottom: none; }
+
+	.legal-meta {
+		margin-top: var(--space-8);
+		padding-top: var(--space-4);
+		border-top: 1px solid var(--color-border);
+		color: var(--color-text-muted);
+		font-size: var(--text-sm);
+	}
+
+	@media (max-width: 575px) {
+		.legal-card { padding: var(--space-6) var(--space-5); }
+	}
+</style>

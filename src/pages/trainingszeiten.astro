@@ -1,132 +1,79 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const schedule = [
+	{
+		day: 'Montag',
+		blocks: [
+			{ time: '17:00 – 18:00', group: 'Anfänger (Jugend)', accent: 'youth' },
+			{ time: '18:00 – 19:30', group: 'Jugend', accent: 'youth' },
+			{ time: '19:30 – 22:00', group: 'Erwachsene', accent: 'adult' },
+		],
+	},
+	{
+		day: 'Freitag',
+		blocks: [
+			{ time: '17:00 – 18:00', group: 'Anfänger (Jugend)', accent: 'youth' },
+			{ time: '18:00 – 19:30', group: 'Jugend', accent: 'youth' },
+			{ time: '19:30 – 22:00', group: 'Erwachsene', accent: 'adult' },
+		],
+	},
+	{
+		day: 'Samstag',
+		blocks: [
+			{ time: 'Nach Absprache', group: 'Kadertraining Jüngere', accent: 'kader' },
+		],
+	},
+];
 ---
 
-<BaseLayout title="Leistungen" description="Trainingszeiten und Angebote des TTC Berkum.">
+<BaseLayout title="Trainingszeiten" description="Trainingszeiten und Hallenadresse des TTC Berkum.">
 	<div class="page-header section">
 		<div class="container text-center">
-			<span class="badge">Angebote</span>
-			<h1>Trainingszeiten & <br/>Mannschaften</h1>
-			<p class="lead-text">Finde das passende Training für dein Level.</p>
+			<span class="badge">Trainingsplan</span>
+			<h1>Trainingszeiten</h1>
+			<p class="lead-text">Zweimal pro Woche feste Trainingszeiten – plus Kadertraining am Samstag nach Absprache.</p>
 		</div>
 	</div>
 
 	<section class="section pt-0">
 		<div class="container">
 			<div class="schedule-grid">
-				<div class="schedule-card card animate-fade-up">
-					<div class="card-header youth">
-						<h3>Jugendtraining</h3>
-						<span class="level">Anfänger & Fortgeschrittene</span>
-					</div>
-					<div class="card-body">
-						<ul class="schedule-list">
-							<li>
-								<span class="day">Montag</span>
-								<div class="details">
-									<span class="time">16:30 - 18:30</span>
-									<span class="trainer">Trainer: Max</span>
-								</div>
-							</li>
-							<li>
-								<span class="day">Mittwoch</span>
-								<div class="details">
-									<span class="time">17:00 - 19:00</span>
-									<span class="trainer">Trainer: Lisa</span>
-								</div>
-							</li>
+				{schedule.map((day, i) => (
+					<div class={`schedule-card card animate-fade-up delay-${i * 100}`}>
+						<div class="card-header">
+							<h2>{day.day}</h2>
+						</div>
+						<ul class="block-list">
+							{day.blocks.map((block) => (
+								<li class={`block ${block.accent}`}>
+									<span class="time">{block.time}</span>
+									<span class="group">{block.group}</span>
+								</li>
+							))}
 						</ul>
 					</div>
-				</div>
-
-				<div class="schedule-card card animate-fade-up delay-100">
-					<div class="card-header adult">
-						<h3>Erwachsenentraining</h3>
-						<span class="level">Hobby & Aktive</span>
-					</div>
-					<div class="card-body">
-						<ul class="schedule-list">
-							<li>
-								<span class="day">Montag</span>
-								<div class="details">
-									<span class="time">19:00 - 22:00</span>
-									<span class="trainer">Freies Training</span>
-								</div>
-							</li>
-							<li>
-								<span class="day">Freitag</span>
-								<div class="details">
-									<span class="time">19:30 - 22:00</span>
-									<span class="trainer">Systemtraining</span>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<section class="section bg-surface">
-		<div class="container">
-			<div class="text-center mb-12 animate-fade-up">
-				<h2>Unsere Mitgliedschaften</h2>
-				<p>Transparente Beiträge für den gesamten Verein.</p>
+				))}
 			</div>
 
-			<div class="pricing-grid">
-				<div class="pricing-card card animate-fade-up delay-100">
-					<div class="pricing-header">
-						<h3>Jugend</h3>
-						<div class="price">
-							<span class="currency">€</span>
-							<span class="amount">60</span>
-							<span class="period">/ Jahr</span>
+			<div class="hall-info card glass-panel animate-fade-up delay-300">
+				<div class="hall-grid">
+					<div>
+						<span class="badge">Halle</span>
+						<h2>Sporthalle Rosenthal</h2>
+						<p>Pechschwarte 64<br/>31226 Peine</p>
+						<p class="small">In der Sporthalle Rosenthal stehen unsere Tische bereit – Schläger und Bälle sind für das Schnuppertraining vorhanden.</p>
+						<a href="https://www.google.com/maps/search/?api=1&query=Pechschwarte+64+31226+Peine" target="_blank" rel="noopener noreferrer" class="btn btn-outline">In Google Maps öffnen</a>
+					</div>
+					<div class="hall-cta">
+						<h3>Lust auf ein Probetraining?</h3>
+						<p>Komm einfach zu einer Trainingszeit vorbei – wir freuen uns auf dich. Vorab eine kurze Mail oder ein Anruf hilft uns bei der Planung.</p>
+						<div class="cta-buttons">
+							<a href="mailto:ttcberkum@gmail.com" class="btn btn-primary">E-Mail schreiben</a>
+							<a href="/kontakt" class="btn btn-outline">Kontaktseite</a>
 						</div>
 					</div>
-					<ul class="features">
-						<li>2x wöchentlich geleitetes Training</li>
-						<li>Teilnahme am Jugend-Spielbetrieb</li>
-						<li>Vereinstrikot inklusive</li>
-					</ul>
 				</div>
-
-				<div class="pricing-card card featured animate-fade-up delay-200">
-					<div class="popular-badge">Am beliebtesten</div>
-					<div class="pricing-header">
-						<h3>Erwachsene</h3>
-						<div class="price">
-							<span class="currency">€</span>
-							<span class="amount">90</span>
-							<span class="period">/ Jahr</span>
-						</div>
-					</div>
-					<ul class="features">
-						<li>Bis zu 3x Training pro Woche</li>
-						<li>Teilnahme am Ligabetrieb</li>
-						<li>Alle internen Vereinsturniere</li>
-					</ul>
-				</div>
-
-				<div class="pricing-card card animate-fade-up delay-300">
-					<div class="pricing-header">
-						<h3>Familie</h3>
-						<div class="price">
-							<span class="currency">€</span>
-							<span class="amount">150</span>
-							<span class="period">/ Jahr</span>
-						</div>
-					</div>
-					<ul class="features">
-						<li>Bis zu 2 Erwachsene & 3 Kinder</li>
-						<li>Alle Vorteile der Einzel-Mitgliedschaften</li>
-						<li>Gemeinsame Vereinsaktivitäten</li>
-					</ul>
-				</div>
-			</div>
-			
-			<div class="text-center mt-8 animate-fade-up delay-400">
-				<a href="/kontakt" class="btn btn-primary">Mitgliedsantrag anfragen</a>
 			</div>
 		</div>
 	</section>
@@ -139,185 +86,122 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 		border-bottom: 1px solid var(--color-border);
 		margin-bottom: var(--space-12);
 	}
-	
+
 	.text-center { text-align: center; }
 	.pt-0 { padding-top: 0; }
-	.mb-12 { margin-bottom: var(--space-12); }
-	.mt-8 { margin-top: var(--space-8); }
-	.bg-surface { background-color: var(--color-surface); }
 
 	.lead-text {
 		font-size: var(--text-xl);
-		max-width: 600px;
+		max-width: 640px;
 		margin: 0 auto;
 	}
 
 	.schedule-grid {
 		display: grid;
 		grid-template-columns: 1fr;
-		gap: var(--space-8);
-		max-width: 900px;
-		margin: 0 auto;
+		gap: var(--space-6);
+		margin-bottom: var(--space-12);
 	}
 
 	@media (min-width: 768px) {
 		.schedule-grid {
-			grid-template-columns: 1fr 1fr;
+			grid-template-columns: repeat(3, 1fr);
 		}
 	}
 
 	.schedule-card {
 		padding: 0;
 		overflow: hidden;
-	}
-
-	.card-header {
-		padding: var(--space-6);
-		color: white;
-	}
-
-	.card-header.youth {
-		background: var(--color-accent);
-	}
-
-	.card-header.adult {
-		background: var(--color-primary);
-	}
-
-	.card-header h3 {
-		margin: 0;
-		color: white;
-	}
-
-	.level {
-		font-size: var(--text-sm);
-		opacity: 0.9;
-	}
-
-	.card-body {
-		padding: var(--space-6);
-	}
-
-	.schedule-list {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-4);
 	}
 
-	.schedule-list li {
+	.schedule-card .card-header {
+		background: var(--gradient-primary);
+		color: white;
+		padding: var(--space-5) var(--space-6);
+	}
+
+	.schedule-card .card-header h2 {
+		margin: 0;
+		color: white;
+		font-size: var(--text-xl);
+	}
+
+	.block-list {
+		list-style: none;
+		padding: var(--space-2);
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.block {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-1);
-		padding-bottom: var(--space-4);
-		border-bottom: 1px solid var(--color-border);
+		padding: var(--space-4) var(--space-5);
+		border-radius: 12px;
+		border-left: 3px solid transparent;
 	}
 
-	.schedule-list li:last-child {
-		border-bottom: none;
-		padding-bottom: 0;
+	.block + .block {
+		margin-top: var(--space-1);
 	}
 
-	.day {
+	.block.youth { border-left-color: var(--color-accent); }
+	.block.adult { border-left-color: var(--color-primary); }
+	.block.kader { border-left-color: var(--color-text-muted); }
+
+	.block .time {
 		font-weight: 700;
 		color: var(--color-text);
 	}
 
-	.details {
-		display: flex;
-		justify-content: space-between;
+	.block .group {
 		font-size: var(--text-sm);
+		color: var(--color-text-muted);
 	}
 
-	.time { color: var(--color-primary); font-weight: 600; }
-	.trainer { color: var(--color-text-muted); }
+	.hall-info {
+		padding: var(--space-10);
+		border-radius: 24px;
+	}
 
-	.pricing-grid {
+	.hall-grid {
 		display: grid;
 		grid-template-columns: 1fr;
 		gap: var(--space-8);
-		max-width: 1000px;
-		margin: 0 auto;
-		align-items: center;
 	}
 
 	@media (min-width: 768px) {
-		.pricing-grid {
-			grid-template-columns: repeat(3, 1fr);
+		.hall-grid {
+			grid-template-columns: 1fr 1fr;
+			gap: var(--space-12);
 		}
 	}
 
-	.pricing-card {
-		position: relative;
+	.hall-info h2 {
+		margin: var(--space-2) 0 var(--space-3);
 	}
 
-	.pricing-card.featured {
-		border-color: var(--color-primary);
-		box-shadow: var(--shadow-lg);
-		transform: scale(1.05);
-		z-index: 2;
+	.hall-info p {
+		margin-bottom: var(--space-4);
 	}
 
-	.popular-badge {
-		position: absolute;
-		top: -12px;
-		left: 50%;
-		transform: translateX(-50%);
-		background: var(--color-primary);
-		color: white;
-		padding: 4px 16px;
-		border-radius: 100px;
-		font-size: var(--text-xs);
-		font-weight: 700;
-		text-transform: uppercase;
-		white-space: nowrap;
-	}
-
-	.pricing-header {
-		text-align: center;
-		margin-bottom: var(--space-6);
-		padding-bottom: var(--space-6);
-		border-bottom: 1px solid var(--color-border);
-	}
-
-	.price {
-		margin-top: var(--space-4);
-		color: var(--color-text);
-	}
-
-	.amount {
-		font-size: var(--text-4xl);
-		font-weight: 800;
-		line-height: 1;
-	}
-
-	.currency {
-		font-size: var(--text-xl);
-		vertical-align: super;
-		font-weight: 600;
-	}
-
-	.period {
-		color: var(--color-text-muted);
-		font-size: var(--text-base);
-	}
-
-	.features {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-3);
-	}
-
-	.features li {
-		position: relative;
-		padding-left: var(--space-6);
+	.hall-info p.small {
 		font-size: var(--text-sm);
+		color: var(--color-text-muted);
 	}
 
-	.features li::before {
-		content: "✓";
-		position: absolute;
-		left: 0;
-		color: var(--color-primary);
-		font-weight: bold;
+	.hall-cta h3 {
+		margin-bottom: var(--space-3);
+	}
+
+	.cta-buttons {
+		display: flex;
+		gap: var(--space-3);
+		flex-wrap: wrap;
+		margin-top: var(--space-4);
 	}
 </style>

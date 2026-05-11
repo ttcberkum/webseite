@@ -1,0 +1,80 @@
+---
+import EventCard from './EventCard.astro';
+import { loadCalendar } from '../lib/calendar';
+
+interface Props {
+	limit?: number;
+}
+
+const { limit = 4 } = Astro.props;
+const { upcoming, ok } = await loadCalendar();
+const items = upcoming.slice(0, limit);
+---
+
+<div class="upcoming">
+	<header class="upcoming-head">
+		<span class="badge">Nächste Termine</span>
+		<a href="/termine" class="upcoming-all">Alle Termine →</a>
+	</header>
+
+	{items.length === 0 ? (
+		<div class="upcoming-empty">
+			<p>{ok ? 'Aktuell sind keine Termine geplant.' : 'Termine werden geladen …'}</p>
+			<a href="/termine" class="btn btn-outline">Zur Termine-Seite</a>
+		</div>
+	) : (
+		<div class="upcoming-list">
+			{items.map((event) => <EventCard event={event} compact={true} />)}
+		</div>
+	)}
+</div>
+
+<style>
+	.upcoming {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-5);
+	}
+
+	.upcoming-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: var(--space-4);
+		flex-wrap: wrap;
+	}
+
+	.upcoming-head .badge {
+		margin-bottom: 0;
+	}
+
+	.upcoming-all {
+		text-decoration: none;
+		color: var(--color-primary);
+		font-weight: 700;
+		font-size: 0.9rem;
+		letter-spacing: 0.02em;
+	}
+
+	.upcoming-all:hover {
+		text-decoration: underline;
+	}
+
+	.upcoming-list {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-3);
+	}
+
+	.upcoming-empty {
+		padding: var(--space-8) var(--space-6);
+		background: var(--color-surface-alt);
+		border-radius: var(--radius-md);
+		text-align: center;
+	}
+
+	.upcoming-empty p {
+		margin: 0 0 var(--space-4);
+		color: var(--color-text-muted);
+	}
+</style>

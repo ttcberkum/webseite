@@ -1,0 +1,371 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import fs from 'node:fs';
+import path from 'node:path';
+
+const dir = path.join(process.cwd(), 'public', 'pdfs', 'kellen');
+
+function formatSize(bytes: number): string {
+	const mb = bytes / (1024 * 1024);
+	return `${mb.toFixed(1)} MB`;
+}
+
+function parseIssue(filename: string) {
+	// Erwartetes Schema: "Kelle 36 2024.pdf" oder "kelle 33 2020-21.pdf"
+	const m = filename.match(/(\d+)\s+(\d{4}(?:[-–]\d{2,4})?)/);
+	return {
+		number: m ? parseInt(m[1], 10) : 0,
+		period: m ? m[2].replace('-', '/') : '',
+	};
+}
+
+type Issue = {
+	filename: string;
+	href: string;
+	number: number;
+	period: string;
+	size: string;
+};
+
+let issues: Issue[] = [];
+try {
+	issues = fs.readdirSync(dir)
+		.filter((f) => f.toLowerCase().endsWith('.pdf'))
+		.map((f) => {
+			const stat = fs.statSync(path.join(dir, f));
+			const { number, period } = parseIssue(f);
+			return {
+				filename: f,
+				href: `/pdfs/kellen/${encodeURI(f)}`,
+				number,
+				period,
+				size: formatSize(stat.size),
+			};
+		})
+		.sort((a, b) => b.number - a.number);
+} catch (err) {
+	console.warn('Konnte Kelle-PDFs nicht lesen:', err);
+}
+
+const latest = issues[0];
+const older = issues.slice(1);
+---
+
+<BaseLayout title="Die Kelle" description="Die Vereinszeitschrift des TTC Berkum – alle Ausgaben zum Online-Lesen und Herunterladen.">
+	<div class="page-header section">
+		<div class="container">
+			<span class="badge">Vereinszeitschrift</span>
+			<h1>Die Kelle</h1>
+			<p class="lead-text">Berichte, Geschichten und Rückblicke aus dem TTC Berkum – alle Ausgaben zum Online-Lesen und Herunterladen.</p>
+		</div>
+	</div>
+
+	<section class="section">
+		<div class="container">
+			<aside class="kelle-intro reveal">
+				<p>In den ersten Jahren wurde die Kelle noch gedruckt verteilt, danach nur noch online – und ist daher hier verfügbar. Die vorerst letzte Kelle erschien 2025 als Ausgabe 36. Leider fehlte den Mitarbeitenden die Zeit, dieses Projekt weiter zu erstellen.</p>
+			</aside>
+
+			{issues.length === 0 && (
+				<p class="empty-state">Aktuell sind keine Ausgaben hinterlegt.</p>
+			)}
+
+			{latest && (
+				<article class="kelle-featured reveal">
+					<div class="kelle-cover" aria-hidden="true">
+						<div class="kelle-cover-inner">
+							<span class="kelle-cover-label">Die Kelle</span>
+							<span class="kelle-cover-number">#{latest.number}</span>
+							<span class="kelle-cover-period">{latest.period}</span>
+						</div>
+					</div>
+					<div class="kelle-featured-body">
+						<span class="kelle-tag">Neueste Ausgabe</span>
+						<h2>Ausgabe {latest.number}</h2>
+						<p class="kelle-period">{latest.period}</p>
+						<p class="kelle-meta">PDF · {latest.size}</p>
+						<div class="kelle-actions">
+							<a href={latest.href} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+								Online lesen
+							</a>
+							<a href={latest.href} download class="btn btn-outline">
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+								Herunterladen
+							</a>
+						</div>
+					</div>
+				</article>
+			)}
+
+			{older.length > 0 && (
+				<>
+					<h3 class="archive-title reveal">Archiv</h3>
+					<div class="kelle-grid">
+						{older.map((issue, i) => (
+							<article class="kelle-card reveal" style={`--delay: ${i * 70}ms`}>
+								<div class="kelle-card-cover" aria-hidden="true">
+									<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+										<polyline points="14 2 14 8 20 8"/>
+										<line x1="9" y1="13" x2="15" y2="13"/>
+										<line x1="9" y1="17" x2="15" y2="17"/>
+									</svg>
+								</div>
+								<div class="kelle-card-body">
+									<h4>Ausgabe {issue.number}</h4>
+									<p class="kelle-period">{issue.period}</p>
+									<p class="kelle-meta">PDF · {issue.size}</p>
+								</div>
+								<div class="kelle-card-actions">
+									<a href={issue.href} target="_blank" rel="noopener noreferrer" class="kelle-link">Lesen</a>
+									<a href={issue.href} download class="kelle-link kelle-link--muted">Download</a>
+								</div>
+							</article>
+						))}
+					</div>
+				</>
+			)}
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.empty-state {
+		text-align: center;
+		color: var(--color-text-muted);
+		padding: var(--space-12) 0;
+	}
+
+	.kelle-intro {
+		max-width: 780px;
+		margin: 0 auto var(--space-12);
+		padding: var(--space-5) var(--space-6);
+		background: var(--color-surface-alt);
+		border-left: 4px solid var(--color-primary);
+		border-radius: 0 var(--radius-md) var(--radius-md) 0;
+	}
+
+	.kelle-intro p {
+		margin: 0;
+		font-size: 1.0625rem;
+		line-height: 1.7;
+		color: var(--color-text);
+	}
+
+	/* ===== Featured Issue ===== */
+	.kelle-featured {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: var(--space-8);
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		padding: var(--space-8);
+		margin-bottom: var(--space-16);
+		align-items: center;
+	}
+
+	@media (min-width: 768px) {
+		.kelle-featured {
+			grid-template-columns: 240px 1fr;
+			gap: var(--space-10);
+			padding: var(--space-10);
+		}
+	}
+
+	.kelle-cover {
+		aspect-ratio: 3 / 4;
+		background: linear-gradient(160deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+		border-radius: var(--radius-md);
+		position: relative;
+		overflow: hidden;
+		box-shadow: 0 16px 32px rgba(200, 16, 46, 0.25);
+		max-width: 240px;
+		margin: 0 auto;
+		width: 100%;
+	}
+
+	.kelle-cover::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.18), transparent 60%);
+	}
+
+	.kelle-cover-inner {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		padding: var(--space-5);
+		color: #fff;
+	}
+
+	.kelle-cover-label {
+		font-family: var(--font-display);
+		font-size: 1.1rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		opacity: 0.9;
+	}
+
+	.kelle-cover-number {
+		font-family: var(--font-display);
+		font-size: 4.5rem;
+		line-height: 1;
+		letter-spacing: 0.02em;
+		align-self: flex-end;
+	}
+
+	.kelle-cover-period {
+		font-family: var(--font-body);
+		font-weight: 700;
+		font-size: 0.95rem;
+		letter-spacing: 0.06em;
+		opacity: 0.85;
+	}
+
+	.kelle-tag {
+		display: inline-block;
+		font-size: 0.7rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.16em;
+		color: var(--color-primary);
+		margin-bottom: var(--space-3);
+	}
+
+	.kelle-featured-body h2 {
+		text-align: left;
+		margin: 0 0 var(--space-2);
+		font-size: clamp(2rem, 1.6rem + 1.6vw, 2.75rem);
+	}
+
+	.kelle-period {
+		color: var(--color-text);
+		font-weight: 600;
+		font-size: 1.05rem;
+		margin: 0 0 var(--space-2);
+	}
+
+	.kelle-meta {
+		color: var(--color-text-muted);
+		font-size: 0.9rem;
+		margin: 0 0 var(--space-6);
+		letter-spacing: 0.04em;
+	}
+
+	.kelle-actions {
+		display: flex;
+		gap: var(--space-3);
+		flex-wrap: wrap;
+	}
+
+	/* ===== Archiv-Title ===== */
+	.archive-title {
+		font-family: var(--font-display);
+		font-weight: 400;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		font-size: clamp(1.5rem, 1.2rem + 0.8vw, 2rem);
+		margin-bottom: var(--space-6);
+		color: var(--color-text);
+		text-align: left;
+	}
+
+	/* ===== Archive-Grid ===== */
+	.kelle-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: var(--space-4);
+	}
+
+	@media (min-width: 640px) {
+		.kelle-grid { grid-template-columns: repeat(2, 1fr); }
+	}
+
+	@media (min-width: 1024px) {
+		.kelle-grid { grid-template-columns: repeat(3, 1fr); }
+	}
+
+	.kelle-card {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-3);
+		padding: var(--space-5);
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		transition: border-color var(--transition-normal), transform var(--transition-normal), box-shadow var(--transition-normal);
+		position: relative;
+	}
+
+	.kelle-card:hover {
+		border-color: var(--color-primary);
+		transform: translateY(-2px);
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+	}
+
+	.kelle-card-cover {
+		width: 40px;
+		height: 40px;
+		display: grid;
+		place-items: center;
+		border-radius: 10px;
+		background: rgba(200, 16, 46, 0.10);
+		color: var(--color-primary);
+		transition: background-color var(--transition-normal), color var(--transition-normal);
+	}
+
+	.kelle-card:hover .kelle-card-cover {
+		background: var(--color-primary);
+		color: #fff;
+	}
+
+	.kelle-card-body {
+		flex: 1;
+	}
+
+	.kelle-card h4 {
+		font-family: var(--font-body);
+		font-weight: 700;
+		font-size: 1.1rem;
+		margin: 0 0 var(--space-1);
+		color: var(--color-text);
+		letter-spacing: 0;
+		text-transform: none;
+	}
+
+	.kelle-card .kelle-period {
+		font-size: 0.95rem;
+		font-weight: 600;
+		margin-bottom: 4px;
+	}
+
+	.kelle-card .kelle-meta {
+		font-size: 0.8rem;
+		margin: 0;
+	}
+
+	.kelle-card-actions {
+		display: flex;
+		gap: var(--space-4);
+		padding-top: var(--space-3);
+		border-top: 1px solid var(--color-border);
+	}
+
+	.kelle-link {
+		font-weight: 700;
+		text-decoration: none;
+		color: var(--color-primary);
+		font-size: 0.95rem;
+		transition: color var(--transition-fast);
+	}
+
+	.kelle-link:hover { color: var(--color-primary-dark); text-decoration: underline; }
+
+	.kelle-link--muted { color: var(--color-text-muted); }
+	.kelle-link--muted:hover { color: var(--color-text); }
+</style>
