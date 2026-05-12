@@ -35,6 +35,11 @@ content:
         type: boolean
         default: false
         description: Solange aktiv → Beitrag erscheint NICHT auf der Live-Seite.
+      - name: expires
+        label: Ablaufdatum
+        type: date
+        required: false
+        description: Optional. Nach diesem Tag erscheint der Beitrag NICHT mehr auf der Startseite, bleibt aber im News-Archiv sichtbar.
       - name: body
         label: Inhalt
         type: rich-text

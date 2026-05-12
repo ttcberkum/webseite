@@ -8,6 +8,7 @@ const news = defineCollection({
 		date: z.coerce.date(),
 		description: z.string().optional(),
 		draft: z.boolean().default(false),
+		expires: z.coerce.date().optional(),
 	}),
 });
 

@@ -39,6 +39,16 @@ Wenn du erst mal speichern willst, ohne dass es jemand sieht:
 - Häkchen bei **„Entwurf"** setzen → Beitrag wird gespeichert, erscheint aber **NICHT** auf der Live-Seite.
 - Später Häkchen entfernen + Speichern → beim nächsten Build geht er live.
 
+## Ablaufdatum
+
+Manche Ankündigungen sollen nur bis zu einem bestimmten Datum auf der Startseite stehen (z. B. „Fahrradtour am 12.6." soll nach dem Termin nicht mehr unter „Aktuelles" zu sehen sein).
+
+- Im Feld **„Ablaufdatum"** das gewünschte Datum eintragen.
+- **Verhalten:** Nach diesem Tag verschwindet der Beitrag aus dem „Aktuelles"-Block auf der Startseite. Im News-Archiv unter `/news` bleibt er aber sichtbar.
+- Wer kein Ablauf will, lässt das Feld einfach leer.
+
+*Hinweis:* Da die Seite alle 4 h neu gebaut wird, kann es nach dem Stichtag noch ein paar Stunden dauern, bis der Beitrag wirklich von der Startseite verschwindet.
+
 ## Bild hochladen — was passiert?
 
 - Pages CMS lädt das Bild nach `public/images/news/` im Repo.

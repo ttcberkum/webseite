@@ -4,8 +4,11 @@ import ImageSlider from '../components/ImageSlider.astro';
 import UpcomingEvents from '../components/UpcomingEvents.astro';
 import { getCollection } from 'astro:content';
 
+const today = new Date();
+today.setHours(0, 0, 0, 0);
 const allNews = await getCollection('news', ({ data }) => import.meta.env.PROD ? !data.draft : true);
 const latestNews = allNews
+	.filter(p => !p.data.expires || p.data.expires.valueOf() >= today.valueOf())
 	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
 	.slice(0, 3);
 
