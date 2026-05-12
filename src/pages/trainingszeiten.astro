@@ -83,6 +83,54 @@ const schedule = [
 					loading="lazy"
 					referrerpolicy="no-referrer-when-downgrade"
 				></iframe>
+
+				<div class="hall-routing">
+					<span class="hall-routing-label">Route planen ab deinem Standort:</span>
+					<div class="hall-routing-actions">
+						<a
+							class="route-btn"
+							href="https://www.openstreetmap.org/directions?engine=fossgis_osrm_car&route=%3B52.3026119%2C10.1646978"
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="Routenplanung Auto öffnen"
+						>
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+								<path d="M5 17h14M6 11l2-5h8l2 5M7 11h10v6H7z"/>
+								<circle cx="8.5" cy="14.5" r="1"/>
+								<circle cx="15.5" cy="14.5" r="1"/>
+							</svg>
+							Auto
+						</a>
+						<a
+							class="route-btn"
+							href="https://www.openstreetmap.org/directions?engine=fossgis_osrm_bike&route=%3B52.3026119%2C10.1646978"
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="Routenplanung Fahrrad öffnen"
+						>
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+								<circle cx="5.5" cy="17.5" r="3.5"/>
+								<circle cx="18.5" cy="17.5" r="3.5"/>
+								<path d="M15 6h3M9 18l4-9 4 9M9 18l-3-5"/>
+							</svg>
+							Fahrrad
+						</a>
+						<a
+							class="route-btn"
+							href="https://www.openstreetmap.org/directions?engine=fossgis_osrm_foot&route=%3B52.3026119%2C10.1646978"
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="Routenplanung zu Fuß öffnen"
+						>
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+								<circle cx="13" cy="4" r="2"/>
+								<path d="M9 22l3-7 3 4 4-1M9 12l3-4 3 4M7 17l4-2"/>
+							</svg>
+							Zu Fuß
+						</a>
+					</div>
+				</div>
+
 				<a
 					class="hall-map-link"
 					href="https://www.openstreetmap.org/?mlat=52.3026119&mlon=10.1646978#map=17/52.3026119/10.1646978"
@@ -236,6 +284,55 @@ const schedule = [
 		border: 0;
 		filter: saturate(0.9);
 	}
+
+	.hall-routing {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-3) var(--space-5);
+		padding: var(--space-4) var(--space-5);
+		border-top: 1px solid var(--color-border);
+		background: var(--color-surface-alt);
+	}
+
+	.hall-routing-label {
+		font-size: 0.85rem;
+		color: var(--color-text-muted);
+		font-weight: 600;
+	}
+
+	.hall-routing-actions {
+		display: flex;
+		gap: var(--space-2);
+		flex-wrap: wrap;
+	}
+
+	.route-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		padding: 8px 14px;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 100px;
+		font-weight: 700;
+		font-size: 0.85rem;
+		color: var(--color-text);
+		text-decoration: none;
+		transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+	}
+
+	.route-btn svg { color: var(--color-primary); flex-shrink: 0; }
+
+	.route-btn:hover {
+		background: var(--color-primary);
+		border-color: var(--color-primary);
+		color: #fff;
+		transform: translateY(-1px);
+	}
+
+	.route-btn:hover svg { color: #fff; }
 
 	.hall-map-link {
 		display: block;
