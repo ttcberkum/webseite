@@ -29,15 +29,23 @@ const impressionen = [
 					<a href="/trainingszeiten" class="btn btn-outline-light">Probetraining</a>
 				</div>
 			</div>
-			<img
-				class="bierdeckel"
-				src="/images/TTC Bierdeckel.png"
-				alt="TTC Berkum Bierdeckel"
-				width="280"
-				height="280"
-				loading="eager"
-				decoding="async"
-			/>
+		</div>
+	</section>
+
+	<section class="section bierdeckel-section">
+		<div class="container">
+			<div class="bierdeckel-stage reveal">
+				<img
+					class="bierdeckel-coin"
+					src="/images/TTC Bierdeckel.png"
+					alt="TTC Berkum Bierdeckel"
+					width="320"
+					height="320"
+					loading="lazy"
+					decoding="async"
+				/>
+				<p class="bierdeckel-caption">Seit 1954 · Tischtennis in Peine</p>
+			</div>
 		</div>
 	</section>
 
@@ -268,66 +276,79 @@ const impressionen = [
 		flex-wrap: wrap;
 	}
 
-	/* ===== Bierdeckel-Sticker ===== */
-	.bierdeckel {
-		position: absolute;
-		right: clamp(1rem, 4vw, 4rem);
-		top: clamp(7rem, 12vw, 9rem);
-		width: clamp(140px, 18vw, 260px);
-		height: auto;
-		aspect-ratio: 1;
-		z-index: 3;
-		display: none;
-		pointer-events: auto;
-		filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.45));
-		transform-origin: center center;
-		opacity: 0;
-		animation: bierdeckel-spin-in 1.4s cubic-bezier(0.22, 1.4, 0.36, 1) 0.5s forwards;
-		will-change: transform, opacity;
+	/* ===== Bierdeckel-Section ===== */
+	.bierdeckel-section {
+		padding-top: var(--space-12);
+		padding-bottom: var(--space-12);
+		background: var(--color-surface);
 	}
 
-	@media (min-width: 768px) {
-		.bierdeckel { display: block; }
+	.bierdeckel-stage {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-5);
+		perspective: 1200px;
+		/* Override globales .reveal — Stage selbst soll sich nicht bewegen,
+		   nur der Bierdeckel innen wird animiert. */
+		opacity: 1;
+		transform: none;
+		transition: none;
+	}
+
+	.bierdeckel-coin {
+		width: clamp(180px, 28vw, 320px);
+		height: auto;
+		aspect-ratio: 1;
+		filter: drop-shadow(0 22px 34px rgba(0, 0, 0, 0.28));
+		transform-origin: center center;
+		opacity: 0;
+		transform: scale(2.4) rotate(-540deg);
+		will-change: transform, opacity;
+		transition: filter var(--transition-normal);
+	}
+
+	.bierdeckel-stage.is-visible .bierdeckel-coin {
+		animation: bierdeckel-spin-in 1.4s cubic-bezier(0.22, 1.4, 0.36, 1) forwards;
 	}
 
 	@keyframes bierdeckel-spin-in {
-		0% {
-			transform: scale(2.4) rotate(-540deg);
-			opacity: 0;
-		}
-		55% {
-			opacity: 1;
-		}
-		70% {
-			transform: scale(0.92) rotate(12deg);
-		}
-		85% {
-			transform: scale(1.04) rotate(-5deg);
-		}
-		100% {
-			transform: scale(1) rotate(-6deg);
-			opacity: 1;
-		}
+		0%   { transform: scale(2.4) rotate(-540deg); opacity: 0; }
+		55%  { opacity: 1; }
+		70%  { transform: scale(0.92) rotate(12deg); opacity: 1; }
+		85%  { transform: scale(1.04) rotate(-5deg); }
+		100% { transform: scale(1) rotate(-6deg); opacity: 1; }
 	}
 
-	.bierdeckel:hover {
-		animation: bierdeckel-wobble 0.6s ease-in-out;
+	.bierdeckel-coin:hover {
+		animation: bierdeckel-wobble 0.7s ease-in-out;
+		filter: drop-shadow(0 28px 40px rgba(0, 0, 0, 0.32));
 	}
 
 	@keyframes bierdeckel-wobble {
 		0%, 100% { transform: scale(1) rotate(-6deg); }
-		25% { transform: scale(1.05) rotate(4deg); }
-		50% { transform: scale(1.05) rotate(-14deg); }
-		75% { transform: scale(1.05) rotate(2deg); }
+		25% { transform: scale(1.04) rotate(4deg); }
+		50% { transform: scale(1.04) rotate(-16deg); }
+		75% { transform: scale(1.04) rotate(2deg); }
+	}
+
+	.bierdeckel-caption {
+		font-family: var(--font-display);
+		font-weight: 400;
+		font-size: clamp(1.1rem, 1rem + 0.6vw, 1.5rem);
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--color-text);
+		margin: 0;
+		text-align: center;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.bierdeckel {
-			animation: none;
+		.bierdeckel-coin {
 			opacity: 1;
 			transform: rotate(-6deg);
+			animation: none !important;
 		}
-		.bierdeckel:hover { animation: none; }
 	}
 
 	/* ===== Section Head ===== */
