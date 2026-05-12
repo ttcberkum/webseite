@@ -6,9 +6,11 @@ name: Storchencam Snapshot
 
 on:
   schedule:
-    # Alle Stunden um Minute 05 (UTC). 05 statt 00, weil GitHub-Cron oft
-    # Stoßzeiten verzögert; minute :05 reduziert Wartezeiten.
-    - cron: '5 * * * *'
+    # Alle 30 Minuten. GitHub-Cron ist "best effort" und überspringt Runs
+    # bei hoher Last – mit 30-Min-Schedule landen trotzdem zuverlässig 1+
+    # Snapshots pro Stunde im Archiv. Die <HH>.jpg-Slot-Logik sorgt dafür,
+    # dass mehrere Runs in derselben Stunde denselben Slot überschreiben.
+    - cron: '*/30 * * * *'
   workflow_dispatch:
 
 permissions:
