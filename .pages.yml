@@ -1,0 +1,47 @@
+# Pages CMS — Konfiguration für ttcberkum/webseite
+# https://pagescms.org/docs/
+#
+# Editor: https://app.pagescms.org/ttcberkum/webseite
+
+content:
+  - name: news
+    label: News
+    type: collection
+    path: src/content/news
+    filename: '{fields.date | date_format("yyyy-MM-dd")}-{fields.title | slugify}.md'
+    view:
+      fields: [date, title, draft]
+      primary: title
+      sort:
+        - field: date
+          direction: desc
+    fields:
+      - name: title
+        label: Titel
+        type: string
+        required: true
+      - name: date
+        label: Datum
+        type: date
+        required: true
+        default:
+          type: now
+      - name: description
+        label: Kurzbeschreibung
+        type: text
+        description: Wird in der News-Übersicht als Anriss angezeigt.
+      - name: draft
+        label: Entwurf
+        type: boolean
+        default: false
+        description: Solange aktiv → Beitrag erscheint NICHT auf der Live-Seite.
+      - name: body
+        label: Inhalt
+        type: rich-text
+
+media:
+  - name: news-images
+    label: News-Bilder
+    input: public/images/news
+    output: /images/news
+    extensions: [jpg, jpeg, png, webp, gif]

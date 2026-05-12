@@ -21,7 +21,7 @@ GOOGLE_CALENDAR_ICAL_URL="https://calendar.google.com/calendar/ical/.../basic.ic
 | Aufgabe | Pfad |
 |---|---|
 | **Termine pflegen** | [docs/termine-pflegen.md](docs/termine-pflegen.md) – Google-Kalender-App, kein Code |
-| **News-Beitrag** | `src/content/news/<slug>.md` (Markdown, Frontmatter `title`, `date`, `description`) |
+| **News-Beitrag** | [docs/news-pflegen.md](docs/news-pflegen.md) – Pages CMS, vom Handy aus, kein Code |
 | **Neue Kelle-Ausgabe** | `public/pdfs/kellen/Kelle <Nr> <Jahr>.pdf` (wird automatisch sortiert) |
 | **Vorstandsdaten** | `src/pages/ueber-uns.astro` (Vorstands-Cards) |
 | **Trainingsplan** | `src/pages/trainingszeiten.astro` (Schedule-Array oben) |

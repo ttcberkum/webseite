@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import PageHeader from '../../components/PageHeader.astro';
 
-const allNews = await getCollection('news');
+const allNews = await getCollection('news', ({ data }) => import.meta.env.PROD ? !data.draft : true);
 const sortedNews = allNews.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
