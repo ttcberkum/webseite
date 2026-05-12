@@ -67,13 +67,28 @@ const schedule = [
 					</div>
 					<div class="hall-cta">
 						<h3>Lust auf ein Probetraining?</h3>
-						<p>Komm einfach zu einer Trainingszeit vorbei – wir freuen uns auf dich. Vorab eine kurze Mail oder ein Anruf hilft uns bei der Planung.</p>
+						<p>Komm einfach zu einer Trainingszeit vorbei – wir freuen uns auf dich.</p>
 						<div class="cta-buttons">
 							<a href="mailto:ttcberkum@gmail.com" class="btn btn-primary">E-Mail schreiben</a>
 							<a href="/kontakt" class="btn btn-outline">Kontaktseite</a>
 						</div>
 					</div>
 				</div>
+			</div>
+
+			<div class="hall-map animate-fade-up delay-400">
+				<iframe
+					title="Karte: Sporthalle Rosenthal, Pechschwarte 64, Peine"
+					src="https://www.openstreetmap.org/export/embed.html?bbox=10.1547%2C52.2986%2C10.1747%2C52.3066&layer=mapnik&marker=52.3026119%2C10.1646978"
+					loading="lazy"
+					referrerpolicy="no-referrer-when-downgrade"
+				></iframe>
+				<a
+					class="hall-map-link"
+					href="https://www.openstreetmap.org/?mlat=52.3026119&mlon=10.1646978#map=17/52.3026119/10.1646978"
+					target="_blank"
+					rel="noopener noreferrer"
+				>Größere Karte auf OpenStreetMap öffnen ↗</a>
 			</div>
 		</div>
 	</section>
@@ -203,5 +218,39 @@ const schedule = [
 		gap: var(--space-3);
 		flex-wrap: wrap;
 		margin-top: var(--space-4);
+	}
+
+	.hall-map {
+		margin-top: var(--space-8);
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 24px;
+		overflow: hidden;
+		position: relative;
+	}
+
+	.hall-map iframe {
+		display: block;
+		width: 100%;
+		height: clamp(280px, 38vw, 420px);
+		border: 0;
+		filter: saturate(0.9);
+	}
+
+	.hall-map-link {
+		display: block;
+		padding: var(--space-3) var(--space-5);
+		font-size: 0.85rem;
+		color: var(--color-text-muted);
+		text-decoration: none;
+		text-align: right;
+		border-top: 1px solid var(--color-border);
+		background: var(--color-surface);
+		transition: color var(--transition-fast), background-color var(--transition-fast);
+	}
+
+	.hall-map-link:hover {
+		color: var(--color-primary);
+		background: var(--color-surface-alt);
 	}
 </style>
