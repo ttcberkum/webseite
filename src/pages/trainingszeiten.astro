@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
 
 const schedule = [
 	{
@@ -28,13 +29,7 @@ const schedule = [
 ---
 
 <BaseLayout title="Trainingszeiten" description="Trainingszeiten und Hallenadresse des TTC Berkum.">
-	<div class="page-header section">
-		<div class="container text-center">
-			<span class="badge">Trainingsplan</span>
-			<h1>Trainingszeiten</h1>
-			<p class="lead-text">Zweimal pro Woche feste Trainingszeiten – plus Kadertraining am Samstag nach Absprache.</p>
-		</div>
-	</div>
+	<PageHeader badge="Trainingsplan" title="Trainingszeiten" lead="Zweimal pro Woche feste Trainingszeiten – plus Kadertraining am Samstag nach Absprache." />
 
 	<section class="section pt-0">
 		<div class="container">
@@ -127,6 +122,22 @@ const schedule = [
 								<path d="M9 22l3-7 3 4 4-1M9 12l3-4 3 4M7 17l4-2"/>
 							</svg>
 							Zu Fuß
+						</a>
+						<a
+							class="route-btn"
+							href="https://reiseauskunft.bahn.de/bin/query.exe/dn?S=&Z=Peine+Pechschwarte&start=Suchen&REQ0JourneyProduct_prod_list_1=11111111"
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="ÖPNV-Verbindung zur Halle suchen (Bahn-Reiseauskunft)"
+						>
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+								<rect x="4" y="3" width="16" height="16" rx="2"/>
+								<line x1="4" y1="11" x2="20" y2="11"/>
+								<circle cx="8.5" cy="15" r="1"/>
+								<circle cx="15.5" cy="15" r="1"/>
+								<path d="M8 19l-2 3M16 19l2 3"/>
+							</svg>
+							ÖPNV
 						</a>
 					</div>
 				</div>

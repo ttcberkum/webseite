@@ -1,15 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
 ---
 
 <BaseLayout title="Impressum" description="Impressum des TTC Berkum e. V.">
-	<div class="page-header section">
-		<div class="container">
-			<span class="badge">Rechtliches</span>
-			<h1>Impressum</h1>
-			<p class="lead-text">Angaben gemäß § 5 TMG</p>
-		</div>
-	</div>
+	<PageHeader badge="Rechtliches" title="Impressum" lead="Angaben gemäß § 5 TMG" />
 
 	<section class="section legal">
 		<div class="container legal-container">

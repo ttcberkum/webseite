@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
 
 const sections = [
 	{
@@ -76,13 +77,7 @@ const letter = (i: number) => String.fromCharCode(97 + i);
 ---
 
 <BaseLayout title="Spielregeln" description="Regelwerk Tischtennis – die offiziellen Spielregeln für Satz, Spiel, Aufschlag, Ballwechsel und Doppel.">
-	<div class="page-header section">
-		<div class="container">
-			<span class="badge">Regelwerk</span>
-			<h1>Regelwerk Tischtennis</h1>
-			<p class="lead-text">Die wichtigsten Regeln auf einen Blick – kompakt zusammengefasst für Trainings­einsteiger und Punktspielerinnen.</p>
-		</div>
-	</div>
+	<PageHeader badge="Regelwerk" title="Regelwerk Tischtennis" lead="Die wichtigsten Regeln auf einen Blick – kompakt zusammengefasst für Trainings­einsteiger und Punktspielerinnen." />
 
 	<section class="section rules">
 		<div class="container rules-container">

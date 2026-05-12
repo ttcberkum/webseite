@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ImageSlider from '../components/ImageSlider.astro';
+import PageHeader from '../components/PageHeader.astro';
 
 const sliderSlides = [
 	{ src: '/images/sascha_henke.jpg', alt: 'Spielbetrieb beim TTC Berkum' },
@@ -10,13 +11,7 @@ const sliderSlides = [
 ---
 
 <BaseLayout title="Über uns" description="Lerne den TTC Berkum kennen.">
-	<div class="page-header section">
-		<div class="container text-center">
-			<span class="badge">Seit 1954</span>
-			<h1>Unser Verein</h1>
-			<p class="lead-text">Mehr als nur ein Tischtennisverein. Wir sind eine Gemeinschaft.</p>
-		</div>
-	</div>
+	<PageHeader badge="Seit 1954" title="Unser Verein" lead="Mehr als nur ein Tischtennisverein. Wir sind eine Gemeinschaft." />
 
 	<section class="section pt-0">
 		<div class="container">

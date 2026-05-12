@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import fs from 'node:fs';
 import path from 'node:path';
+import PageHeader from '../components/PageHeader.astro';
 
 const dir = path.join(process.cwd(), 'public', 'pdfs', 'kellen');
 
@@ -52,13 +53,7 @@ const older = issues.slice(1);
 ---
 
 <BaseLayout title="Die Kelle" description="Die Vereinszeitschrift des TTC Berkum – alle Ausgaben zum Online-Lesen und Herunterladen.">
-	<div class="page-header section">
-		<div class="container">
-			<span class="badge">Vereinszeitschrift</span>
-			<h1>Die Kelle</h1>
-			<p class="lead-text">Berichte, Geschichten und Rückblicke aus dem TTC Berkum – alle Ausgaben zum Online-Lesen und Herunterladen.</p>
-		</div>
-	</div>
+	<PageHeader badge="Vereinszeitschrift" title="Die Kelle" lead="Berichte, Geschichten und Rückblicke aus dem TTC Berkum – alle Ausgaben zum Online-Lesen und Herunterladen." />
 
 	<section class="section">
 		<div class="container">

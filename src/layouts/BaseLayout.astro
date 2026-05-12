@@ -4,9 +4,19 @@ import '../styles/global.css';
 interface Props {
 	title: string;
 	description?: string;
+	image?: string;
 }
 
-const { title, description = "TTC Berkum e. V. – Tischtennis in Peine. Training für Jugend und Erwachsene, Punktspielbetrieb und Vereinsleben seit 1954." } = Astro.props;
+const {
+	title,
+	description = "TTC Berkum e. V. – Tischtennis in Peine. Training für Jugend und Erwachsene, Punktspielbetrieb und Vereinsleben seit 1954.",
+	image = "/images/intro_bg.jpg",
+} = Astro.props;
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://ttc-berkum.de';
+const canonical = new URL(Astro.url.pathname, siteUrl).toString();
+const absoluteImage = new URL(image, siteUrl).toString();
+const fullTitle = `${title} | TTC Berkum e. V.`;
 
 const navItems = [
   { name: 'Home', href: '/' },
@@ -39,11 +49,28 @@ const isActive = (href: string) => {
 <html lang="de">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title} | TTC Berkum e. V.</title>
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="canonical" href={canonical} />
+		<title>{fullTitle}</title>
+		<meta name="description" content={description} />
+		<meta name="theme-color" content="#c8102e" />
+
+		<!-- Open Graph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="TTC Berkum e. V." />
+		<meta property="og:locale" content="de_DE" />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:title" content={fullTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={absoluteImage} />
+
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={fullTitle} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={absoluteImage} />
 	</head>
 	<body>
 		<a href="#main-content" class="skip-link">Zum Inhalt springen</a>

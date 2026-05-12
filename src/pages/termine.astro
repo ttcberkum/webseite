@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import EventCard from '../components/EventCard.astro';
 import { loadCalendar, groupByMonth, toWebcalUrl } from '../lib/calendar';
+import PageHeader from '../components/PageHeader.astro';
 
 const { upcoming, past, ok } = await loadCalendar();
 const grouped = groupByMonth(upcoming);
@@ -12,13 +13,7 @@ const webcal = feedUrl ? toWebcalUrl(feedUrl) : null;
 ---
 
 <BaseLayout title="Termine" description="Alle Vereinstermine des TTC Berkum – Punktspiele, Versammlungen, Events. Direkt zum Abonnieren in deinen Kalender.">
-	<div class="page-header section">
-		<div class="container">
-			<span class="badge">Vereinskalender</span>
-			<h1>Termine</h1>
-			<p class="lead-text">Punktspiele, Vereinsmeisterschaften, Versammlungen und Events – alles auf einen Blick. Du kannst den Kalender direkt in deine Kalender-App abonnieren.</p>
-		</div>
-	</div>
+	<PageHeader badge="Vereinskalender" title="Termine" lead="Punktspiele, Vereinsmeisterschaften, Versammlungen und Events – alles auf einen Blick. Du kannst den Kalender direkt in deine Kalender-App abonnieren." />
 
 	<section class="section">
 		<div class="container">

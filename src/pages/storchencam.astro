@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import fs from 'node:fs';
 import path from 'node:path';
+import PageHeader from '../components/PageHeader.astro';
 
 const camUrl = 'https://berkum.lima-city.de/wp-content/uploads/2025/04/Storchencam_Berkum.jpg';
 
@@ -33,13 +34,7 @@ try {
 ---
 
 <BaseLayout title="Storchencam Berkum" description="Live-Bild aus dem Berkumer Storchennest – aktualisiert sich automatisch jede Minute.">
-	<div class="page-header section">
-		<div class="container">
-			<span class="badge">Live</span>
-			<h1>Storchencam Berkum</h1>
-			<p class="lead-text">Ein Live-Blick in das Berkumer Storchennest. Das Bild aktualisiert sich automatisch jede Minute.</p>
-		</div>
-	</div>
+	<PageHeader badge="Live" title="Storchencam Berkum" lead="Ein Live-Blick in das Berkumer Storchennest. Das Bild aktualisiert sich automatisch jede Minute." />
 
 	<section class="section">
 		<div class="container">

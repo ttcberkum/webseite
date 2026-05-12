@@ -134,6 +134,26 @@ a { text-decoration-skip-ink: auto; color: inherit; }
 img, picture, svg { max-width: 100%; display: block; }
 input, button, textarea, select { font: inherit; }
 
+/* Globaler Tastatur-Fokus: deutlich sichtbar, nur bei Tastatur-Navigation */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Dunkler Header: Fokus heller sichtbar */
+.site-header :focus-visible,
+.site-footer :focus-visible,
+.hero :focus-visible,
+.notfound-section :focus-visible {
+  outline-color: #fff;
+}
+
+/* Buttons mit eigenem Focus-Ring (statt Outline-Offset, der bei Pill-Buttons komisch aussieht) */
+.btn:focus-visible {
+  outline-offset: 4px;
+}
+
 /* Typografie – Anton für Display, weite letter-spacing wirkt sportlich */
 h1, h2 {
   font-family: var(--font-display);

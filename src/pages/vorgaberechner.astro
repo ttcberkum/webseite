@@ -1,15 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
 ---
 
 <BaseLayout title="Vorgaberechner" description="Berechne die Punkte-Vorgabe für vereinsinterne Turniere.">
-	<div class="page-header section">
-		<div class="container text-center">
-			<span class="badge">Tool</span>
-			<h1>Vorgaberechner</h1>
-			<p class="lead-text">Berechne die Punkte-Vorgabe basierend auf den TTR-Werten.</p>
-		</div>
-	</div>
+	<PageHeader badge="Tool" title="Vorgaberechner" lead="Berechne die Punkte-Vorgabe basierend auf den TTR-Werten." />
 
 	<section class="section pt-0">
 		<div class="container">

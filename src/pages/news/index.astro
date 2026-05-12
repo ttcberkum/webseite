@@ -1,19 +1,14 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import PageHeader from '../../components/PageHeader.astro';
 
 const allNews = await getCollection('news');
 const sortedNews = allNews.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <BaseLayout title="News" description="Aktuelle Nachrichten und Spielberichte vom TTC Berkum.">
-	<div class="page-header section">
-		<div class="container text-center">
-			<span class="badge">Aktuelles</span>
-			<h1>News & Spielberichte</h1>
-			<p class="lead-text">Bleib auf dem Laufenden rund um unseren Verein.</p>
-		</div>
-	</div>
+	<PageHeader badge="Aktuelles" title="News & Spielberichte" lead="Bleib auf dem Laufenden rund um unseren Verein." />
 
 	<section class="section pt-0">
 		<div class="container">

@@ -17,6 +17,42 @@ const impressionen = [
 ---
 
 <BaseLayout title="Tischtennis in Peine" description="TTC Berkum e. V. – Tischtennis mit Action und Teamgeist. Training für Jugend und Erwachsene in Peine-Berkum seit 1954.">
+	<script type="application/ld+json" set:html={JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "SportsClub",
+		"name": "TTC Berkum 1954 e. V.",
+		"alternateName": "TTC Berkum",
+		"sport": "Tischtennis",
+		"url": "https://ttc-berkum.de",
+		"logo": "https://ttc-berkum.de/images/logo.svg",
+		"image": "https://ttc-berkum.de/images/intro_bg.jpg",
+		"foundingDate": "1954",
+		"email": "ttcberkum@gmail.com",
+		"telephone": "+49-172-4350397",
+		"address": {
+			"@type": "PostalAddress",
+			"streetAddress": "Pechschwarte 64",
+			"postalCode": "31226",
+			"addressLocality": "Peine",
+			"addressRegion": "Niedersachsen",
+			"addressCountry": "DE"
+		},
+		"geo": {
+			"@type": "GeoCoordinates",
+			"latitude": 52.3026119,
+			"longitude": 10.1646978
+		},
+		"location": {
+			"@type": "Place",
+			"name": "Sporthalle Rosenthal",
+			"address": {
+				"@type": "PostalAddress",
+				"streetAddress": "Pechschwarte 64",
+				"postalCode": "31226",
+				"addressLocality": "Peine"
+			}
+		}
+	})} />
 	<section class="hero">
 		<div class="hero-overlay"></div>
 		<div class="container hero-container">
@@ -35,15 +71,18 @@ const impressionen = [
 	<section class="section bierdeckel-section">
 		<div class="container">
 			<div class="bierdeckel-stage reveal">
-				<img
-					class="bierdeckel-coin"
-					src="/images/TTC Bierdeckel.png"
-					alt="TTC Berkum Bierdeckel"
-					width="320"
-					height="320"
-					loading="lazy"
-					decoding="async"
-				/>
+				<picture>
+					<source srcset="/images/bierdeckel.webp" type="image/webp" />
+					<img
+						class="bierdeckel-coin"
+						src="/images/bierdeckel.png"
+						alt="TTC Berkum Bierdeckel"
+						width="320"
+						height="320"
+						loading="lazy"
+						decoding="async"
+					/>
+				</picture>
 				<p class="bierdeckel-caption">Seit 1954 · Tischtennis in Peine</p>
 			</div>
 		</div>

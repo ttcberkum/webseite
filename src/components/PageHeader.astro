@@ -1,0 +1,22 @@
+---
+/**
+ * Einheitlicher Page-Header für Unterseiten.
+ * Styles liegen in global.css unter ".page-header" — diese Komponente
+ * kapselt nur das wiederkehrende Markup-Pattern.
+ */
+interface Props {
+	badge?: string;
+	title: string;
+	lead?: string;
+}
+
+const { badge, title, lead } = Astro.props;
+---
+
+<div class="page-header section">
+	<div class="container">
+		{badge && <span class="badge">{badge}</span>}
+		<h1>{title}</h1>
+		{lead && <p class="lead-text">{lead}</p>}
+	</div>
+</div>

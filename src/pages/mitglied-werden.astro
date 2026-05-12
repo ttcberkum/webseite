@@ -1,15 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
 ---
 
 <BaseLayout title="Mitglied werden" description="Werde Mitglied beim TTC Berkum e. V. – Anmeldung direkt online über das Vereinsportal.">
-	<div class="page-header section">
-		<div class="container">
-			<span class="badge">Mitgliedschaft</span>
-			<h1>Mitglied werden</h1>
-			<p class="lead-text">Anmeldung direkt online: einfach das Formular ausfüllen und absenden. Wir melden uns kurz darauf bei dir.</p>
-		</div>
-	</div>
+	<PageHeader badge="Mitgliedschaft" title="Mitglied werden" lead="Anmeldung direkt online: einfach das Formular ausfüllen und absenden. Wir melden uns kurz darauf bei dir." />
 
 	<section class="section signup">
 		<div class="container">

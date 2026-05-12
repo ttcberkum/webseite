@@ -1,15 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
 ---
 
 <BaseLayout title="Datenschutz" description="Datenschutzerklärung des TTC Berkum e. V.">
-	<div class="page-header section">
-		<div class="container">
-			<span class="badge">Rechtliches</span>
-			<h1>Datenschutzerklärung</h1>
-			<p class="lead-text">Informationen zur Verarbeitung personenbezogener Daten beim Besuch dieser Webseite.</p>
-		</div>
-	</div>
+	<PageHeader badge="Rechtliches" title="Datenschutzerklärung" lead="Informationen zur Verarbeitung personenbezogener Daten beim Besuch dieser Webseite." />
 
 	<section class="section legal">
 		<div class="container legal-container">
