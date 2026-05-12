@@ -1,36 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import fs from 'node:fs';
-import path from 'node:path';
 import PageHeader from '../components/PageHeader.astro';
 
 const camUrl = 'https://berkum.lima-city.de/wp-content/uploads/2025/04/Storchencam_Berkum.jpg';
-
-type Snapshot = { hour: number; src: string; takenAt?: string };
-
-const snapDir = path.join(process.cwd(), 'public', 'storchencam');
-let snapshots: Snapshot[] = [];
-try {
-	const files = fs.readdirSync(snapDir);
-	snapshots = files
-		.filter((f) => /^\d{2}\.jpg$/.test(f))
-		.map((f) => {
-			const hour = parseInt(f.slice(0, 2), 10);
-			const txt = path.join(snapDir, `${f.slice(0, 2)}.txt`);
-			let takenAt: string | undefined;
-			try {
-				takenAt = fs.readFileSync(txt, 'utf-8').trim();
-			} catch {}
-			const stat = fs.statSync(path.join(snapDir, f));
-			return {
-				hour,
-				src: `/storchencam/${f}?v=${stat.mtimeMs.toFixed(0)}`,
-				takenAt,
-			};
-		})
-		.slice(0, 24)
-		.sort((a, b) => a.hour - b.hour);
-} catch {}
 ---
 
 <BaseLayout title="Storchencam Berkum" description="Live-Bild aus dem Berkumer Storchennest – aktualisiert sich automatisch jede Minute.">
@@ -82,25 +54,7 @@ try {
 				</figcaption>
 			</figure>
 
-			{snapshots.length > 0 && (
-				<section class="cam-archive reveal" style="--delay: 100ms">
-					<header class="cam-archive-head">
-						<h2>Stunden-Archiv</h2>
-						<p>Pro vollendete Stunde wird ein Schnappschuss gespeichert – maximal 24 Bilder rollierend.</p>
-					</header>
-					<div class="cam-archive-grid">
-						{snapshots.map((s) => (
-							<a href={s.src} target="_blank" rel="noopener noreferrer" class="cam-thumb" aria-label={`Schnappschuss ${String(s.hour).padStart(2, '0')}:00 UTC`}>
-								<img src={s.src} alt={`Storchennest, Schnappschuss ${String(s.hour).padStart(2, '0')}:00 UTC`} loading="lazy" decoding="async" />
-								<span class="cam-thumb-time">{String(s.hour).padStart(2, '0')}:00</span>
-							</a>
-						))}
-					</div>
-					<p class="cam-archive-note">Zeiten in UTC – das entspricht aktuell deutscher {Intl.DateTimeFormat('de-DE', { timeZoneName: 'short' }).formatToParts(new Date()).find(p => p.type === 'timeZoneName')?.value || 'Zeit'}-Zeit minus 1 bzw. 2 Stunden.</p>
-				</section>
-			)}
-
-			<aside class="cam-note reveal" style="--delay: 150ms">
+			<aside class="cam-note reveal" style="--delay: 100ms">
 				<p><strong>Hinweis:</strong> Die Storchencam wird unabhängig vom TTC Berkum betrieben – wir verlinken sie als Service für die Berkumer Nachbarschaft. Bei Fragen oder Ausfällen wende dich bitte an die Betreiber:innen der Cam direkt.</p>
 			</aside>
 		</div>
@@ -141,7 +95,6 @@ try {
 				}
 			}
 
-			// Initial: setze Zeitstempel
 			if (updated) {
 				updated.textContent = fmtTime(new Date());
 				updated.setAttribute('datetime', new Date().toISOString());
@@ -300,85 +253,6 @@ try {
 		background: var(--color-primary);
 		color: #fff;
 		border-color: var(--color-primary);
-	}
-
-	/* ===== Archiv ===== */
-	.cam-archive {
-		max-width: 960px;
-		margin: var(--space-16) auto 0;
-	}
-
-	.cam-archive-head {
-		text-align: center;
-		margin-bottom: var(--space-8);
-	}
-
-	.cam-archive-head h2 {
-		margin-bottom: var(--space-2);
-	}
-
-	.cam-archive-head p {
-		color: var(--color-text-muted);
-		margin: 0;
-	}
-
-	.cam-archive-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: var(--space-3);
-	}
-
-	@media (min-width: 640px) {
-		.cam-archive-grid { grid-template-columns: repeat(4, 1fr); }
-	}
-
-	@media (min-width: 1024px) {
-		.cam-archive-grid { grid-template-columns: repeat(6, 1fr); }
-	}
-
-	.cam-thumb {
-		position: relative;
-		aspect-ratio: 16 / 9;
-		border-radius: var(--radius-sm);
-		overflow: hidden;
-		background: #1a1a1a;
-		text-decoration: none;
-		display: block;
-		transition: transform var(--transition-normal), box-shadow var(--transition-normal);
-	}
-
-	.cam-thumb:hover {
-		transform: translateY(-2px) scale(1.03);
-		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
-		z-index: 1;
-	}
-
-	.cam-thumb img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		display: block;
-	}
-
-	.cam-thumb-time {
-		position: absolute;
-		bottom: 4px;
-		right: 4px;
-		background: rgba(15, 15, 15, 0.7);
-		color: #fff;
-		font-size: 0.7rem;
-		font-weight: 700;
-		letter-spacing: 0.04em;
-		padding: 2px 6px;
-		border-radius: 4px;
-		backdrop-filter: blur(4px);
-	}
-
-	.cam-archive-note {
-		margin-top: var(--space-5);
-		text-align: center;
-		color: var(--color-text-muted);
-		font-size: 0.85rem;
 	}
 
 	.cam-note {

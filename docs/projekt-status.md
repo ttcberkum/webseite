@@ -120,20 +120,15 @@ GitHub Action (Cron, alle 4 h) ┘
 
 ## 6. Wartungs-Workflows
 
-### `.github/workflows/storchencam-snapshot.yml`
-
-- Läuft **stündlich** (`5 * * * *`)
-- Lädt das aktuelle Storchencam-Bild von `berkum.lima-city.de`
-- Speichert als `public/storchencam/<HH>.jpg` (UTC-Stunde, 24 Slots rollierend)
-- Commit + Push (auto), löst dadurch Cloudflare-Rebuild aus
-
 ### `.github/workflows/scheduled-rebuild.yml`
 
 - Läuft **alle 4 Stunden** (`0 */4 * * *`)
 - Postet HTTP POST an `CLOUDFLARE_DEPLOY_HOOK`
 - Cloudflare baut neu → frische Termine aus dem Kalender
 
-Beide Workflows lassen sich manuell via „Run workflow"-Button auf GitHub triggern.
+Manuell triggerbar via „Run workflow"-Button auf GitHub.
+
+> **Hinweis:** Ein früherer `storchencam-snapshot.yml`-Workflow für stündliche Snapshots wurde wieder entfernt — GitHub's `schedule`-Cron ist im Free-Tier zu unzuverlässig (max. 2 Runs in 36 h). Die Storchencam zeigt jetzt nur das Live-Bild, kein Archiv.
 
 ---
 

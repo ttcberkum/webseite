@@ -32,7 +32,7 @@ Vereinswebsite des TTC Berkum (Peine), migriert von Joomla zu **Astro**. Statisc
 | `/kelle` | PDF-Archiv der Vereinszeitschrift (`public/pdfs/kellen/`) |
 | `/spielregeln` | Vollständiges Regelwerk (5 Abschnitte) |
 | `/vorgaberechner` | TTR-Vorgaberechner (clientseitig) |
-| `/storchencam` | Live-Bild (60 s Refresh) + 24-Slot-Stunden-Archiv |
+| `/storchencam` | Live-Bild der externen Storchencam (60 s Refresh) |
 | `/ueber-uns` | Vereinsgeschichte, Vorstand, Slider |
 | `/kontakt` | Kontaktdaten, Anfahrtshinweis |
 | `/impressum`, `/datenschutz` | Rechtliches |

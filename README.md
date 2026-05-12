@@ -40,10 +40,9 @@ GOOGLE_CALENDAR_ICAL_URL="https://calendar.google.com/calendar/ical/.../basic.ic
 
 | Workflow | Wann | Was |
 |---|---|---|
-| `.github/workflows/storchencam-snapshot.yml` | alle 30 Min | Stunden-Snapshot der Storchencam in `public/storchencam/<HH>.jpg` |
 | `.github/workflows/scheduled-rebuild.yml` | alle 4 h | Cloudflare-Build-Hook triggern (frische Kalender-Daten) |
 
-Beide auch manuell auslösbar: GitHub → Actions → „Run workflow".
+Manuell auslösbar: GitHub → Actions → „Run workflow".
 
 ## Deployment
 
