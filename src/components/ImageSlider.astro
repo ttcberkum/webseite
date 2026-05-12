@@ -17,12 +17,24 @@ const { slides, interval = 5000, ratio = '4 / 3', className = '' } = Astro.props
 
 <div class={`slider ${className}`} data-slider data-interval={interval} style={`--slider-ratio: ${ratio};`}>
 	<div class="slider__track" aria-live="polite">
-		{slides.map((slide, i) => (
-			<figure class:list={['slider__slide', { 'is-active': i === 0 }]} aria-hidden={i === 0 ? 'false' : 'true'}>
-				<img src={slide.src} alt={slide.alt} loading={i === 0 ? 'eager' : 'lazy'} draggable="false" />
-				{slide.caption && <figcaption>{slide.caption}</figcaption>}
-			</figure>
-		))}
+		{slides.map((slide, i) => {
+			// Falls .jpg/.png angegeben: zusätzlich WebP-Variante als <source>
+			const webp = slide.src.replace(/\.(jpe?g|png)$/i, '.webp');
+			const hasWebp = webp !== slide.src;
+			return (
+				<figure class:list={['slider__slide', { 'is-active': i === 0 }]} aria-hidden={i === 0 ? 'false' : 'true'}>
+					{hasWebp ? (
+						<picture>
+							<source srcset={webp} type="image/webp" />
+							<img src={slide.src} alt={slide.alt} loading={i === 0 ? 'eager' : 'lazy'} draggable="false" />
+						</picture>
+					) : (
+						<img src={slide.src} alt={slide.alt} loading={i === 0 ? 'eager' : 'lazy'} draggable="false" />
+					)}
+					{slide.caption && <figcaption>{slide.caption}</figcaption>}
+				</figure>
+			);
+		})}
 	</div>
 
 	<button class="slider__btn slider__btn--prev" data-slider-prev type="button" aria-label="Vorheriges Bild">
