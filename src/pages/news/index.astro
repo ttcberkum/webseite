@@ -5,6 +5,7 @@ import PageHeader from '../../components/PageHeader.astro';
 
 const allNews = await getCollection('news', ({ data }) => import.meta.env.PROD ? !data.draft : true);
 const sortedNews = allNews.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const FALLBACK_COVER = '/images/logo-alt.png';
 ---
 
 <BaseLayout title="News" description="Aktuelle Nachrichten und Spielberichte vom TTC Berkum.">
@@ -15,11 +16,14 @@ const sortedNews = allNews.sort((a, b) => b.data.date.valueOf() - a.data.date.va
 			<div class="news-grid">
 				{sortedNews.map((post) => (
 					<article class="news-card card animate-fade-up">
-						{post.data.cover && (
-							<a href={`/news/${post.id}`} class="news-card__cover" aria-hidden="true" tabindex="-1">
-								<img src={post.data.cover} alt="" loading="lazy" />
-							</a>
-						)}
+						<a
+							href={`/news/${post.id}`}
+							class:list={["news-card__cover", { "news-card__cover--fallback": !post.data.cover }]}
+							aria-hidden="true"
+							tabindex="-1"
+						>
+							<img src={post.data.cover ?? FALLBACK_COVER} alt="" loading="lazy" />
+						</a>
 						<div class="news-card__body">
 							<div class="card-meta">
 								<time datetime={post.data.date.toISOString()}>
@@ -106,6 +110,20 @@ const sortedNews = allNews.sort((a, b) => b.data.date.valueOf() - a.data.date.va
 	}
 
 	.news-card:hover .news-card__cover img {
+		transform: scale(1.04);
+	}
+
+	.news-card__cover--fallback {
+		background: var(--color-surface-alt);
+	}
+
+	.news-card__cover--fallback img {
+		object-fit: contain;
+		padding: var(--space-6);
+		transform: none;
+	}
+
+	.news-card:hover .news-card__cover--fallback img {
 		transform: scale(1.04);
 	}
 

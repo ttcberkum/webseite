@@ -17,6 +17,7 @@ const impressionen = [
 	{ src: '/images/sascha_henke.jpg', alt: 'Spielbetrieb beim TTC Berkum' },
 	{ src: '/images/benny_weiss.jpg', alt: 'Aktiver Spieler am Tisch' },
 ];
+const FALLBACK_COVER = '/images/logo-alt.png';
 ---
 
 <BaseLayout title="Tischtennis in Peine" description="TTC Berkum e. V. – Tischtennis mit Action und Teamgeist. Training für Jugend und Erwachsene in Peine-Berkum seit 1954.">
@@ -216,7 +217,7 @@ const impressionen = [
 					</header>
 					<div class="actuals-news">
 						{latestNews.map((post, i) => (
-							<article class={`news-row${post.data.cover ? ' has-cover' : ''}`} style={`--delay: ${i * 80}ms`}>
+							<article class="news-row has-cover" style={`--delay: ${i * 80}ms`}>
 								<div class="news-row-meta">
 									<time datetime={post.data.date.toISOString()}>
 										{post.data.date.toLocaleDateString('de-DE', { year: 'numeric', month: 'short', day: '2-digit' })}
@@ -226,11 +227,14 @@ const impressionen = [
 									<h3><a href={`/news/${post.id}`}>{post.data.title}</a></h3>
 									{post.data.description && <p>{post.data.description}</p>}
 								</div>
-								{post.data.cover && (
-									<a href={`/news/${post.id}`} class="news-row-cover" aria-hidden="true" tabindex="-1">
-										<img src={post.data.cover} alt="" loading="lazy" />
-									</a>
-								)}
+								<a
+									href={`/news/${post.id}`}
+									class:list={["news-row-cover", { "news-row-cover--fallback": !post.data.cover }]}
+									aria-hidden="true"
+									tabindex="-1"
+								>
+									<img src={post.data.cover ?? FALLBACK_COVER} alt="" loading="lazy" />
+								</a>
 							</article>
 						))}
 					</div>
@@ -605,6 +609,11 @@ const impressionen = [
 		height: 100%;
 		object-fit: cover;
 		display: block;
+	}
+
+	.news-row-cover--fallback img {
+		object-fit: contain;
+		padding: 6px;
 	}
 
 	@media (max-width: 575px) {
