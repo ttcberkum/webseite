@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import ContactLink from '../components/ContactLink.astro';
 ---
 
 <BaseLayout title="Datenschutz" description="Datenschutzerklärung des TTC Berkum e. V.">
@@ -14,7 +15,7 @@ import PageHeader from '../components/PageHeader.astro';
 					TTC Berkum 1954 e. V.<br/>
 					Pechschwarte 64<br/>
 					31226 Peine<br/>
-					E-Mail: <a href="mailto:ttcberkum@gmail.com">ttcberkum@gmail.com</a>
+					E-Mail: <ContactLink type="mail" user="ttcberkum" domain="gmail.com" />
 				</p>
 
 				<h2>2. Allgemeines</h2>
@@ -45,7 +46,7 @@ import PageHeader from '../components/PageHeader.astro';
 
 				<h2>10. Deine Rechte</h2>
 				<p>Du hast jederzeit das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Widerspruch (Art. 21) und Datenübertragbarkeit (Art. 20). Außerdem steht dir ein Beschwerderecht bei einer Aufsichtsbehörde zu – in Niedersachsen ist das die <a href="https://lfd.niedersachsen.de" target="_blank" rel="noopener noreferrer">Landesbeauftragte für den Datenschutz Niedersachsen</a>.</p>
-				<p>Für Anfragen rund um deine Daten erreichst du uns unter <a href="mailto:ttcberkum@gmail.com">ttcberkum@gmail.com</a>.</p>
+				<p>Für Anfragen rund um deine Daten erreichst du uns unter <ContactLink type="mail" user="ttcberkum" domain="gmail.com" />.</p>
 
 				<h2>11. Speicherdauer</h2>
 				<p>Wir speichern personenbezogene Daten nur so lange, wie es für die jeweiligen Zwecke erforderlich ist bzw. wie es gesetzliche Aufbewahrungsfristen vorgeben.</p>

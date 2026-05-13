@@ -1,0 +1,54 @@
+---
+/**
+ * Spam-Schutz-Komponente fuer E-Mail/Telefon.
+ *
+ * Rendert serverseitig nur einen Platzhalter wie "user [at] domain" bzw.
+ * eine maskierte Nummer; das Decoding-Script in BaseLayout setzt beim
+ * Laden im Browser den echten <a href="mailto:...">/<a href="tel:...">.
+ *
+ * Verwendung:
+ *   <ContactLink type="mail" user="ttcberkum" domain="gmail.com" />
+ *   <ContactLink type="mail" user="erik.boeker" domain="gmail.com" class="email-link" />
+ *   <ContactLink type="tel" number="+491724350397" display="+49 172 4350397" />
+ */
+interface Props {
+	type: 'mail' | 'tel';
+	user?: string;
+	domain?: string;
+	number?: string;
+	display?: string;
+	subject?: string;
+	class?: string;
+}
+
+const { type, user, domain, number, display, subject, class: cls = '' } = Astro.props;
+
+function obfuscateMail(u: string, d: string): string {
+	return `${u} [at] ${d.replace(/\./g, ' [dot] ')}`;
+}
+
+function maskTel(n: string): string {
+	const clean = n.replace(/[^\d+]/g, '');
+	return clean.slice(0, 5) + '…';
+}
+---
+
+{type === 'mail' && user && domain && (
+	<span
+		class:list={['contact-mail', cls]}
+		data-contact-mail
+		data-user={user}
+		data-domain={domain}
+		data-subject={subject}
+		data-display={display}
+	>{obfuscateMail(user, domain)}</span>
+)}
+
+{type === 'tel' && number && (
+	<span
+		class:list={['contact-tel', cls]}
+		data-contact-tel
+		data-number={number}
+		data-display={display}
+	>{maskTel(number)}</span>
+)}

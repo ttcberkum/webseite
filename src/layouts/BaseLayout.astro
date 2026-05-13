@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import ContactLink from '../components/ContactLink.astro';
 
 interface Props {
 	title: string;
@@ -180,8 +181,8 @@ const isActive = (href: string) => {
 					<div class="footer-links">
 						<h4>Kontakt</h4>
 						<ul role="list">
-							<li><a href="mailto:ttcberkum@gmail.com">ttcberkum@gmail.com</a></li>
-							<li><a href="tel:+491724350397">+49 172 4350397</a></li>
+							<li><ContactLink type="mail" user="ttcberkum" domain="gmail.com" /></li>
+							<li><ContactLink type="tel" number="+491724350397" display="+49 172 4350397" /></li>
 							<li><a href="/kontakt">Kontaktseite</a></li>
 						</ul>
 					</div>
@@ -203,6 +204,51 @@ const isActive = (href: string) => {
 			toggle?.addEventListener('click', () => {
 				theme = theme === 'light' ? 'dark' : 'light';
 				document.documentElement.setAttribute('data-theme', theme);
+			});
+
+			// Spam-Schutz: serverseitig stehen nur "user [at] domain"-Platzhalter
+			// im HTML, hier zur Laufzeit in echte mailto:/tel:-Links umwandeln.
+			document.querySelectorAll<HTMLSpanElement>('span[data-contact-mail]').forEach((el) => {
+				const user = el.dataset.user;
+				const domain = el.dataset.domain;
+				const subject = el.dataset.subject;
+				if (!user || !domain) return;
+				const addr = `${user}@${domain}`;
+				const href = subject ? `mailto:${addr}?subject=${encodeURIComponent(subject)}` : `mailto:${addr}`;
+				const a = document.createElement('a');
+				a.href = href;
+				if (el.className) a.className = el.className;
+				a.textContent = el.dataset.display || addr;
+				el.replaceWith(a);
+			});
+
+			document.querySelectorAll<HTMLSpanElement>('span[data-contact-tel]').forEach((el) => {
+				const number = el.dataset.number;
+				if (!number) return;
+				const a = document.createElement('a');
+				a.href = `tel:${number}`;
+				if (el.className) a.className = el.className;
+				a.textContent = el.dataset.display || number;
+				el.replaceWith(a);
+			});
+
+			document.querySelectorAll<HTMLAnchorElement>('a[data-contact-mail]').forEach((a) => {
+				const user = a.dataset.user;
+				const domain = a.dataset.domain;
+				if (!user || !domain) return;
+				a.href = `mailto:${user}@${domain}`;
+				a.removeAttribute('data-contact-mail');
+				const inner = a.querySelector<HTMLElement>('[data-contact-display]');
+				if (inner) inner.textContent = `${user}@${domain}`;
+			});
+
+			document.querySelectorAll<HTMLAnchorElement>('a[data-contact-tel]').forEach((a) => {
+				const number = a.dataset.number;
+				if (!number) return;
+				a.href = `tel:${number}`;
+				a.removeAttribute('data-contact-tel');
+				const inner = a.querySelector<HTMLElement>('[data-contact-display]');
+				if (inner) inner.textContent = a.dataset.display || number;
 			});
 
 			// Header scroll state

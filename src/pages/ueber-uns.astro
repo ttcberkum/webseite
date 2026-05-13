@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ImageSlider from '../components/ImageSlider.astro';
 import PageHeader from '../components/PageHeader.astro';
+import ContactLink from '../components/ContactLink.astro';
 
 const sliderSlides = [
 	{ src: '/images/sascha_henke.jpg', alt: 'Spielbetrieb beim TTC Berkum' },
@@ -56,31 +57,31 @@ const sliderSlides = [
 					<div class="avatar">EB</div>
 					<h3>Erik Böker</h3>
 					<p class="role">1. Vorsitzender</p>
-					<a href="mailto:erik.boeker@gmail.com" class="email-link">erik.boeker@gmail.com</a>
+					<ContactLink type="mail" user="erik.boeker" domain="gmail.com" class="email-link" />
 				</div>
 				<div class="card text-center animate-fade-up delay-200">
 					<div class="avatar">PK</div>
 					<h3>Peter Krätzig</h3>
 					<p class="role">2. Vorsitzender</p>
-					<a href="mailto:peter.kraetzig@arcor.de" class="email-link">peter.kraetzig@arcor.de</a>
+					<ContactLink type="mail" user="peter.kraetzig" domain="arcor.de" class="email-link" />
 				</div>
 				<div class="card text-center animate-fade-up delay-300">
 					<div class="avatar">CD</div>
 					<h3>Christian Dröse</h3>
 					<p class="role">Kassenwart</p>
-					<a href="mailto:christian.droese@arcor.de" class="email-link">christian.droese@arcor.de</a>
+					<ContactLink type="mail" user="christian.droese" domain="arcor.de" class="email-link" />
 				</div>
 				<div class="card text-center animate-fade-up delay-400">
 					<div class="avatar">CeD</div>
 					<h3>Cedric Doppelhammer</h3>
 					<p class="role">Schriftführer</p>
-					<a href="mailto:ceddy.doppelhammer@yahoo.de" class="email-link">ceddy.doppelhammer@yahoo.de</a>
+					<ContactLink type="mail" user="ceddy.doppelhammer" domain="yahoo.de" class="email-link" />
 				</div>
 				<div class="card text-center animate-fade-up delay-500">
 					<div class="avatar">SH</div>
 					<h3>Sascha Henke</h3>
 					<p class="role">Sportwart</p>
-					<a href="mailto:sascha-henke@web.de" class="email-link">sascha-henke@web.de</a>
+					<ContactLink type="mail" user="sascha-henke" domain="web.de" class="email-link" />
 				</div>
 			</div>
 		</div>

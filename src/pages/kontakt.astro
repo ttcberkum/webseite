@@ -9,7 +9,7 @@ import PageHeader from '../components/PageHeader.astro';
 	<section class="section">
 		<div class="container">
 			<div class="contact-grid">
-				<a href="mailto:ttcberkum@gmail.com" class="contact-card contact-card--primary reveal">
+				<a class="contact-card contact-card--primary reveal" data-contact-mail data-user="ttcberkum" data-domain="gmail.com">
 					<span class="contact-card__icon" aria-hidden="true">
 						<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 							<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
@@ -18,12 +18,12 @@ import PageHeader from '../components/PageHeader.astro';
 					</span>
 					<div class="contact-card__body">
 						<span class="contact-card__label">E-Mail</span>
-						<span class="contact-card__value">ttcberkum@gmail.com</span>
+						<span class="contact-card__value" data-contact-display>ttcberkum [at] gmail [dot] com</span>
 						<span class="contact-card__hint">Schreib uns einfach – wir antworten meist innerhalb weniger Tage.</span>
 					</div>
 				</a>
 
-				<a href="tel:+491724350397" class="contact-card reveal" style="--delay: 80ms">
+				<a class="contact-card reveal" style="--delay: 80ms" data-contact-tel data-number="+491724350397" data-display="+49 172 4350397">
 					<span class="contact-card__icon" aria-hidden="true">
 						<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 							<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>
@@ -31,7 +31,7 @@ import PageHeader from '../components/PageHeader.astro';
 					</span>
 					<div class="contact-card__body">
 						<span class="contact-card__label">Telefon · 1. Vorsitzender</span>
-						<span class="contact-card__value">+49 172 4350397</span>
+						<span class="contact-card__value" data-contact-display>+49 172 …</span>
 						<span class="contact-card__hint">Erik Böker · gerne auch per WhatsApp</span>
 					</div>
 				</a>
