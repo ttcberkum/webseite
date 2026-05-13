@@ -1,8 +1,12 @@
 name: Scheduled Rebuild
 
-# Triggert alle 4 Stunden einen Cloudflare-Pages-Deploy, damit Termine aus
-# dem Google-Kalender frisch in den statischen Build kommen. Manuell
-# auslösbar (z.B. per Lesezeichen vom Handy) über "workflow_dispatch".
+# Alle 4 Stunden:
+#  1. Termine aus dem Google-Kalender holen + als JSON-Cache ins Repo schreiben
+#  2. Wenn der Cache sich geaendert hat -> Commit + Push (loest Cloudflare-Build aus)
+#  3. Wenn nicht -> Cloudflare-Deploy-Hook trotzdem triggern, damit Datums-
+#     abhaengige Logik (expires, draft, aktuelle Saison) trotzdem nachzieht.
+#
+# Manuell ausloesbar via "workflow_dispatch".
 
 on:
   schedule:
@@ -10,10 +14,48 @@ on:
   workflow_dispatch:
 
 jobs:
-  trigger-deploy:
+  rebuild:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: Trigger Cloudflare Pages Deploy Hook
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Calendar-Cache aktualisieren
+        id: fetch
+        continue-on-error: true
+        env:
+          GOOGLE_CALENDAR_ICAL_URL: ${{ secrets.GOOGLE_CALENDAR_ICAL_URL }}
+        run: node scripts/fetch-calendar.mjs
+
+      - name: Commit bei Aenderung
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/calendar-cache.json
+          if git diff --staged --quiet; then
+            echo "Cache unveraendert."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "chore: calendar cache aktualisiert"
+            git push
+            echo "Cache committed + gepusht."
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Cloudflare-Deploy triggern (falls kein Push)
+        if: steps.commit.outputs.changed != 'true'
         env:
           DEPLOY_HOOK: ${{ secrets.CLOUDFLARE_DEPLOY_HOOK }}
         run: |
@@ -21,7 +63,6 @@ jobs:
             echo "::error::Secret CLOUDFLARE_DEPLOY_HOOK ist nicht gesetzt."
             exit 1
           fi
-          echo "Triggering Cloudflare Pages deploy..."
           HTTP=$(curl -sS -o /tmp/resp -w "%{http_code}" -X POST "$DEPLOY_HOOK")
           echo "Response: $HTTP"
           cat /tmp/resp || true

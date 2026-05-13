@@ -87,23 +87,52 @@ function expandRecurring(data: ical.CalendarResponse, horizonDays: number): Club
 	return out;
 }
 
+type CachedEvent = Omit<ClubEvent, 'start' | 'end'> & { start: string; end?: string };
+
+async function loadCacheFile(): Promise<ClubEvent[]> {
+	try {
+		const cache = (await import('../data/calendar-cache.json')) as unknown as { default?: { events?: CachedEvent[] }; events?: CachedEvent[] };
+		const raw = cache.default ?? cache;
+		const events = raw.events ?? [];
+		return events.map((e) => ({
+			...e,
+			start: new Date(e.start),
+			end: e.end ? new Date(e.end) : undefined,
+		}));
+	} catch (err) {
+		console.warn('[calendar] Cache-Datei nicht lesbar:', err);
+		return [];
+	}
+}
+
+function splitByDate(events: ClubEvent[]): { upcoming: ClubEvent[]; past: ClubEvent[] } {
+	const now = Date.now();
+	const upcoming = events.filter((e) => +e.start >= now).sort((a, b) => +a.start - +b.start);
+	const past = events.filter((e) => +e.start < now).sort((a, b) => +b.start - +a.start);
+	return { upcoming, past };
+}
+
 export async function loadCalendar(): Promise<{ upcoming: ClubEvent[]; past: ClubEvent[]; ok: boolean }> {
 	const feed = import.meta.env.GOOGLE_CALENDAR_ICAL_URL ?? process.env.GOOGLE_CALENDAR_ICAL_URL;
-	if (!feed) {
-		console.warn('[calendar] GOOGLE_CALENDAR_ICAL_URL nicht gesetzt – keine Termine verfügbar.');
-		return { upcoming: [], past: [], ok: false };
+
+	if (feed) {
+		try {
+			const data = await ical.async.fromURL(feed);
+			const events = expandRecurring(data, HORIZON_DAYS);
+			return { ...splitByDate(events), ok: true };
+		} catch (err) {
+			console.warn('[calendar] Feed nicht erreichbar – versuche Cache:', err);
+		}
+	} else {
+		console.warn('[calendar] GOOGLE_CALENDAR_ICAL_URL nicht gesetzt – nutze Cache.');
 	}
-	try {
-		const data = await ical.async.fromURL(feed);
-		const events = expandRecurring(data, HORIZON_DAYS);
-		const now = Date.now();
-		const upcoming = events.filter((e) => +e.start >= now).sort((a, b) => +a.start - +b.start);
-		const past = events.filter((e) => +e.start < now).sort((a, b) => +b.start - +a.start);
-		return { upcoming, past, ok: true };
-	} catch (err) {
-		console.warn('[calendar] Feed nicht erreichbar – Termine werden leer angezeigt:', err);
-		return { upcoming: [], past: [], ok: false };
+
+	const cached = await loadCacheFile();
+	if (cached.length > 0) {
+		console.warn(`[calendar] Cache-Fallback aktiv: ${cached.length} Termine.`);
+		return { ...splitByDate(cached), ok: true };
 	}
+	return { upcoming: [], past: [], ok: false };
 }
 
 /** Hilfsfunktion: Termine nach Monat gruppieren (für die Termine-Seite). */
