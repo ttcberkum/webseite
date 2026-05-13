@@ -4,7 +4,6 @@ date: 2025-04-22
 description: Ab sofort können sich neue Mitglieder direkt über unsere Webseite anmelden.
 draft: false
 expires: 2026-06-30
-cover: /images/news/Klinge Schläger.webp
 ---
 Wir haben Neuigkeiten! Ab sofort können sich neue Mitglieder direkt über unsere Webseite anmelden. 
 
