@@ -26,7 +26,15 @@ type Issue = {
 	number: number;
 	period: string;
 	size: string;
+	cover: string | null;
 };
+
+const coverDir = path.join(process.cwd(), 'public', 'images', 'kelle');
+
+function resolveCover(number: number): string | null {
+	const file = `kelle-${number}.webp`;
+	return fs.existsSync(path.join(coverDir, file)) ? `/images/kelle/${file}` : null;
+}
 
 let issues: Issue[] = [];
 try {
@@ -41,6 +49,7 @@ try {
 				number,
 				period,
 				size: formatSize(stat.size),
+				cover: resolveCover(number),
 			};
 		})
 		.sort((a, b) => b.number - a.number);
@@ -67,13 +76,17 @@ const older = issues.slice(1);
 
 			{latest && (
 				<article class="kelle-featured reveal">
-					<div class="kelle-cover" aria-hidden="true">
-						<div class="kelle-cover-inner">
-							<span class="kelle-cover-label">Die Kelle</span>
-							<span class="kelle-cover-number">#{latest.number}</span>
-							<span class="kelle-cover-period">{latest.period}</span>
-						</div>
-					</div>
+					<a href={latest.href} target="_blank" rel="noopener noreferrer" class="kelle-cover" aria-label={`Ausgabe ${latest.number} öffnen`}>
+						{latest.cover ? (
+							<img src={latest.cover} alt={`Titelseite Kelle Ausgabe ${latest.number}`} loading="eager" width="600" height="800" />
+						) : (
+							<div class="kelle-cover-inner">
+								<span class="kelle-cover-label">Die Kelle</span>
+								<span class="kelle-cover-number">#{latest.number}</span>
+								<span class="kelle-cover-period">{latest.period}</span>
+							</div>
+						)}
+					</a>
 					<div class="kelle-featured-body">
 						<span class="kelle-tag">Neueste Ausgabe</span>
 						<h2>Ausgabe {latest.number}</h2>
@@ -98,15 +111,21 @@ const older = issues.slice(1);
 					<h3 class="archive-title reveal">Archiv</h3>
 					<div class="kelle-grid">
 						{older.map((issue, i) => (
-							<article class="kelle-card reveal" style={`--delay: ${i * 70}ms`}>
-								<div class="kelle-card-cover" aria-hidden="true">
-									<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-										<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-										<polyline points="14 2 14 8 20 8"/>
-										<line x1="9" y1="13" x2="15" y2="13"/>
-										<line x1="9" y1="17" x2="15" y2="17"/>
-									</svg>
-								</div>
+							<article class={`kelle-card reveal${issue.cover ? ' kelle-card--with-cover' : ''}`} style={`--delay: ${i * 70}ms`}>
+								{issue.cover ? (
+									<a href={issue.href} target="_blank" rel="noopener noreferrer" class="kelle-card-thumb" aria-label={`Ausgabe ${issue.number} öffnen`}>
+										<img src={issue.cover} alt={`Titelseite Kelle Ausgabe ${issue.number}`} loading="lazy" width="600" height="800" />
+									</a>
+								) : (
+									<div class="kelle-card-cover" aria-hidden="true">
+										<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+											<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+											<polyline points="14 2 14 8 20 8"/>
+											<line x1="9" y1="13" x2="15" y2="13"/>
+											<line x1="9" y1="17" x2="15" y2="17"/>
+										</svg>
+									</div>
+								)}
 								<div class="kelle-card-body">
 									<h4>Ausgabe {issue.number}</h4>
 									<p class="kelle-period">{issue.period}</p>
@@ -170,18 +189,38 @@ const older = issues.slice(1);
 	}
 
 	.kelle-cover {
+		display: block;
 		aspect-ratio: 3 / 4;
 		background: linear-gradient(160deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
 		border-radius: var(--radius-md);
 		position: relative;
 		overflow: hidden;
-		box-shadow: 0 16px 32px rgba(200, 16, 46, 0.25);
+		box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
 		max-width: 240px;
 		margin: 0 auto;
 		width: 100%;
+		text-decoration: none;
+		transition: transform var(--transition-normal), box-shadow var(--transition-normal);
 	}
 
-	.kelle-cover::before {
+	.kelle-cover:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.20);
+	}
+
+	.kelle-cover img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+
+	.kelle-cover:has(img) {
+		background: var(--color-surface-alt);
+		box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+	}
+
+	.kelle-cover:not(:has(img))::before {
 		content: "";
 		position: absolute;
 		inset: 0;
@@ -317,6 +356,41 @@ const older = issues.slice(1);
 	.kelle-card:hover .kelle-card-cover {
 		background: var(--color-primary);
 		color: #fff;
+	}
+
+	.kelle-card--with-cover {
+		padding: 0;
+		overflow: hidden;
+	}
+
+	.kelle-card--with-cover .kelle-card-body,
+	.kelle-card--with-cover .kelle-card-actions {
+		padding-left: var(--space-5);
+		padding-right: var(--space-5);
+	}
+
+	.kelle-card--with-cover .kelle-card-actions {
+		padding-bottom: var(--space-5);
+	}
+
+	.kelle-card-thumb {
+		display: block;
+		aspect-ratio: 3 / 4;
+		overflow: hidden;
+		background: var(--color-surface-alt);
+		max-height: 320px;
+	}
+
+	.kelle-card-thumb img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+		transition: transform var(--transition-normal);
+	}
+
+	.kelle-card--with-cover:hover .kelle-card-thumb img {
+		transform: scale(1.03);
 	}
 
 	.kelle-card-body {
