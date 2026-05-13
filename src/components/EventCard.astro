@@ -11,15 +11,30 @@ const { event, compact = false } = Astro.props;
 const dateFmt = new Intl.DateTimeFormat('de-DE', { weekday: 'short', day: '2-digit', month: 'short' });
 const timeFmt = new Intl.DateTimeFormat('de-DE', { hour: '2-digit', minute: '2-digit' });
 
-const dateLabel = dateFmt.format(event.start);
+// All-day-Events haben in iCal ein EXKLUSIVES Enddatum (Tag nach dem letzten Tag).
+// Fuer die Anzeige ziehen wir bei Ganztags-Events einen Tag ab.
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
+const lastDay = event.allDay && event.end
+	? new Date(event.end.getTime() - MS_PER_DAY)
+	: event.end;
+const isMultiDay = !!lastDay && (
+	lastDay.getFullYear() !== event.start.getFullYear() ||
+	lastDay.getMonth() !== event.start.getMonth() ||
+	lastDay.getDate() !== event.start.getDate()
+);
+
+const dateLabel = isMultiDay
+	? `${dateFmt.format(event.start)} – ${dateFmt.format(lastDay!)}`
+	: dateFmt.format(event.start);
 const timeLabel = event.allDay ? 'ganztägig' : timeFmt.format(event.start);
 const dayNum = event.start.getDate();
+const endDayNum = isMultiDay ? lastDay!.getDate() : null;
 const monthShort = new Intl.DateTimeFormat('de-DE', { month: 'short' }).format(event.start).replace('.', '');
 ---
 
 <article class:list={['event-card', { 'event-card--compact': compact }]}>
 	<div class="event-date" aria-hidden="true">
-		<span class="event-date-day">{dayNum}</span>
+		<span class:list={["event-date-day", { "event-date-day--range": endDayNum !== null }]}>{endDayNum !== null ? `${dayNum}–${endDayNum}` : dayNum}</span>
 		<span class="event-date-month">{monthShort}</span>
 	</div>
 	<div class="event-body">

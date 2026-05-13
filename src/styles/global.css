@@ -364,6 +364,11 @@ p { font-size: var(--text-base); margin-bottom: var(--space-4); color: var(--col
   line-height: 1;
 }
 
+.event-date-day--range {
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+}
+
 .event-date-month {
   font-family: var(--font-body);
   font-weight: 700;
