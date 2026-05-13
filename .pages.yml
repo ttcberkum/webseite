@@ -46,8 +46,8 @@ content:
         required: false
         description: Optional. Wird als Thumbnail in der News-Übersicht und auf der Startseite angezeigt.
         options:
-          input: public/images/news
-          output: /images/news
+          media: news-images
+          extensions: [jpg, jpeg, png, webp]
       - name: body
         label: Inhalt
         type: rich-text
