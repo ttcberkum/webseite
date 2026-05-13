@@ -55,6 +55,15 @@ Manche Ankündigungen sollen nur bis zu einem bestimmten Datum auf der Startseit
 - Im Beitrag wird automatisch der Link eingefügt (`/images/news/dein-foto.jpg`).
 - **Tipp:** Vor dem Hochladen das Foto auf dem Handy etwas verkleinern (z. B. WhatsApp-Format oder mit der Foto-App auf max. 2000 px Breite) — das macht die Seite schneller.
 
+## Titelbild für die Übersicht
+
+Das Feld **„Titelbild"** ist optional, sehr empfehlenswert für Aufmerksamkeit:
+
+- Erscheint als **Thumbnail** in der News-Übersicht (`/news`) und auf der **Startseite** unter „Aktuelles".
+- Im Beitrag selbst wird das Titelbild **nicht** automatisch angezeigt — wenn du es auch im Text sehen willst, füge es zusätzlich im Inhalt ein.
+- Format-Empfehlung: querformatig (z. B. 1200 × 800 px). Hochformat-Fotos werden zugeschnitten.
+- Leer lassen → Beitrag erscheint in der Übersicht ohne Bild (so wie bisher).
+
 ## Beitrag bearbeiten oder löschen
 
 - Im Pages CMS Collection „News" öffnen → Beitrag antippen.

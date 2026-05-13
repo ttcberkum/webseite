@@ -40,6 +40,14 @@ content:
         type: date
         required: false
         description: Optional. Nach diesem Tag erscheint der Beitrag NICHT mehr auf der Startseite, bleibt aber im News-Archiv sichtbar.
+      - name: cover
+        label: Titelbild
+        type: image
+        required: false
+        description: Optional. Wird als Thumbnail in der News-Übersicht und auf der Startseite angezeigt.
+        options:
+          input: public/images/news
+          output: /images/news
       - name: body
         label: Inhalt
         type: rich-text
