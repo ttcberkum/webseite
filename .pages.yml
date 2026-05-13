@@ -43,11 +43,9 @@ content:
       - name: cover
         label: Titelbild
         type: image
-        required: false
         description: Optional. Wird als Thumbnail in der News-Übersicht und auf der Startseite angezeigt.
         options:
           media: news-images
-          extensions: [jpg, jpeg, png, webp]
       - name: body
         label: Inhalt
         type: rich-text
