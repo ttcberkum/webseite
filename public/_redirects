@@ -1,0 +1,32 @@
+# Alte Joomla-URLs (ttc-berkum.de) → neue Astro-Seiten (301 = dauerhaft)
+
+# Startseite
+/index.php                                    /                 301
+
+# Hauptseiten
+/index.php/aktuelle-saison                    /aktuelle-saison  301
+/index.php/mitglied-werden                    /mitglied-werden  301
+/index.php/trainingszeiten                    /trainingszeiten  301
+/index.php/ueber-uns                          /ueber-uns        301
+/index.php/kontakt                            /kontakt          301
+
+# Untermenü „Sonstiges"
+/index.php/sonstiges/spielregeln              /spielregeln      301
+/index.php/sonstiges/vorgaberechner           /vorgaberechner   301
+/index.php/sonstiges/storchencam-berkum       /storchencam      301
+
+# News & Termine
+/index.php/news-1                             /news             301
+/index.php/news-1/news-und-termine            /news             301
+/index.php/news-1/archive-3                   /news             301
+/index.php/component/content/*                /news             301
+
+# Impressum / Datenschutz (Joomla SP Page Builder)
+/index.php/component/sppagebuilder/page/20    /impressum        301
+/index.php/component/sppagebuilder/page/21    /datenschutz      301
+
+# Login (kein Pendant) → Startseite
+/index.php/login                              /                 301
+
+# Sicherheitsnetz: jeder andere /index.php-Link landet auf der Startseite (kein 404)
+/index.php/*                                  /                 301
