@@ -38,13 +38,22 @@ import PageHeader from '../components/PageHeader.astro';
 					<span aria-hidden="true">🔑</span> Login: <strong>ttcberkum@gmail.com</strong> · Kalender <strong>„TTC Berkum Termine"</strong>
 				</p>
 
-				<a class="btn btn-primary task-card__cta" href="https://calendar.google.com" target="_blank" rel="noopener noreferrer">
-					Google-Kalender öffnen →
-				</a>
+				<p class="tip">
+					<span aria-hidden="true">💡</span> <strong>Nur TTC-Termine sehen (einmalig):</strong> In der Kalender-App das Menü <strong>☰</strong> öffnen und alle Kalender <strong>außer „TTC Berkum Termine"</strong> abhaken – das bleibt gespeichert. Die App merkt sich auch den zuletzt gewählten Kalender für neue Termine.
+				</p>
+
+				<div class="task-card__actions">
+					<a class="btn btn-primary task-card__cta" href="https://calendar.google.com/calendar/r/eventedit" target="_blank" rel="noopener noreferrer">
+						➕ Neuen Termin anlegen
+					</a>
+					<a class="task-card__link" href="https://calendar.google.com" target="_blank" rel="noopener noreferrer">
+						Kalender ansehen / Termin bearbeiten →
+					</a>
+				</div>
 
 				<ol class="steps">
-					<li>„Google-Kalender öffnen" antippen → mit <strong>ttcberkum@gmail.com</strong> anmelden.</li>
-					<li>Kalender <strong>„TTC Berkum Termine"</strong> wählen → <strong>+</strong> für einen neuen Termin.</li>
+					<li>„Neuen Termin anlegen" antippen → das Termin-Formular öffnet sich (ggf. mit <strong>ttcberkum@gmail.com</strong> anmelden).</li>
+					<li>Beim Kalender-Feld <strong>„TTC Berkum Termine"</strong> wählen (nicht deinen privaten) – die App merkt es sich fürs nächste Mal.</li>
 					<li>Titel mit Kategorie-Präfix in eckigen Klammern, dann speichern:
 						<span class="prefixes">
 							<code>[Punktspiel]</code> <code>[Event]</code> <code>[Verein]</code> <code>[Training]</code>
@@ -209,10 +218,35 @@ import PageHeader from '../components/PageHeader.astro';
 		line-height: 1.5;
 	}
 
+	.tip {
+		margin: 0;
+		padding: var(--space-3) var(--space-4);
+		background: rgba(200, 16, 46, 0.06);
+		border: 1px dashed var(--color-primary);
+		border-radius: var(--radius-sm);
+		font-size: 0.92rem;
+		line-height: 1.55;
+	}
+
+	.task-card__actions {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-3);
+		align-items: flex-start;
+	}
+
 	.task-card__cta {
 		align-self: flex-start;
 		font-size: 1.05rem;
 	}
+
+	.task-card__link {
+		font-weight: 600;
+		color: var(--color-primary);
+		text-decoration: none;
+	}
+
+	.task-card__link:hover { text-decoration: underline; }
 
 	/* Auf dem Handy Buttons volle Breite = große Tap-Fläche */
 	@media (max-width: 575px) {
