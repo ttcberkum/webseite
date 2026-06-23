@@ -1,0 +1,350 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+---
+
+<BaseLayout
+	title="Vereins-Cockpit"
+	description="Interne Pflegeseite des TTC Berkum."
+	noindex={true}
+>
+	<PageHeader
+		badge="Intern"
+		title="Vereins-Cockpit"
+		lead="Schnellzugriff zum Pflegen von Terminen und News – mit Login-Hinweisen. Dieser Link ist nicht öffentlich: bitte nicht weitergeben."
+	/>
+
+	<section class="section">
+		<div class="container cockpit">
+
+			<!-- ============ TERMINE ============ -->
+			<article class="task-card reveal">
+				<header class="task-card__head">
+					<span class="task-card__icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<rect x="3" y="4" width="18" height="18" rx="2" />
+							<line x1="16" y1="2" x2="16" y2="6" />
+							<line x1="8" y1="2" x2="8" y2="6" />
+							<line x1="3" y1="10" x2="21" y2="10" />
+						</svg>
+					</span>
+					<div>
+						<h2>Termine</h2>
+						<p class="task-card__sub">Spiele, Events & Vereinstermine im Google-Kalender</p>
+					</div>
+				</header>
+
+				<p class="login-hint">
+					<span aria-hidden="true">🔑</span> Login: <strong>ttcberkum@gmail.com</strong> · Kalender <strong>„TTC Berkum Termine"</strong>
+				</p>
+
+				<a class="btn btn-primary task-card__cta" href="https://calendar.google.com" target="_blank" rel="noopener noreferrer">
+					Google-Kalender öffnen →
+				</a>
+
+				<ol class="steps">
+					<li>„Google-Kalender öffnen" antippen → mit <strong>ttcberkum@gmail.com</strong> anmelden.</li>
+					<li>Kalender <strong>„TTC Berkum Termine"</strong> wählen → <strong>+</strong> für einen neuen Termin.</li>
+					<li>Titel mit Kategorie-Präfix in eckigen Klammern, dann speichern:
+						<span class="prefixes">
+							<code>[Punktspiel]</code> <code>[Event]</code> <code>[Verein]</code> <code>[Training]</code>
+						</span>
+					</li>
+				</ol>
+
+				<div class="rebuild">
+					<button id="rebuild-btn" class="btn btn-outline" type="button">
+						⚡ Termine sofort veröffentlichen
+					</button>
+					<p id="rebuild-status" class="rebuild__status" role="status" aria-live="polite">
+						Termine erscheinen sonst automatisch in spätestens 4 Stunden online.
+					</p>
+				</div>
+			</article>
+
+			<!-- ============ NEWS ============ -->
+			<article class="task-card reveal" style="--delay: 100ms">
+				<header class="task-card__head">
+					<span class="task-card__icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M4 22h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2" />
+							<line x1="10" y1="7" x2="16" y2="7" />
+							<line x1="10" y1="11" x2="16" y2="11" />
+							<line x1="10" y1="15" x2="14" y2="15" />
+						</svg>
+					</span>
+					<div>
+						<h2>News</h2>
+						<p class="task-card__sub">Beiträge schreiben & veröffentlichen (Pages CMS)</p>
+					</div>
+				</header>
+
+				<p class="login-hint">
+					<span aria-hidden="true">🔑</span> Login: <strong>„Sign in with GitHub"</strong> · Konto <strong>ttcberkum</strong>
+				</p>
+
+				<a class="btn btn-primary task-card__cta" href="https://app.pagescms.org/ttcberkum/webseite" target="_blank" rel="noopener noreferrer">
+					News-Editor öffnen →
+				</a>
+
+				<ol class="steps">
+					<li>„News-Editor öffnen" antippen → <strong>„Sign in with GitHub"</strong> (Konto <strong>ttcberkum</strong>).</li>
+					<li>Sammlung <strong>„News"</strong> wählen → <strong>„Neuer Eintrag"</strong>.</li>
+					<li>Titel, Datum, Kurzbeschreibung & Inhalt ausfüllen (Bilder via 🖼️-Button), <strong>„Entwurf" aus</strong> lassen → <strong>Save</strong>.</li>
+				</ol>
+				<p class="note">Nach dem Speichern ist der Beitrag in ~1–2 Minuten automatisch online.</p>
+			</article>
+
+			<!-- ============ ADMIN ============ -->
+			<details class="admin reveal" style="--delay: 160ms">
+				<summary>Admin &amp; Technik <span>(für den Webmaster)</span></summary>
+				<div class="admin__links">
+					<a href="https://dash.cloudflare.com" target="_blank" rel="noopener noreferrer">
+						<strong>Cloudflare-Dashboard</strong>
+						<span>Deployments & Einstellungen · Login ttcberkum@gmail.com · Projekt „ttc-berkum"</span>
+					</a>
+					<a href="https://github.com/ttcberkum/webseite" target="_blank" rel="noopener noreferrer">
+						<strong>GitHub-Repo</strong>
+						<span>Code, Workflows & Secrets · Konto ttcberkum</span>
+					</a>
+					<a href="https://github.com/ttcberkum/webseite/actions/workflows/scheduled-rebuild.yml" target="_blank" rel="noopener noreferrer">
+						<strong>Neubau über GitHub Actions</strong>
+						<span>Alternative zum „sofort veröffentlichen"-Knopf → „Run workflow"</span>
+					</a>
+				</div>
+			</details>
+
+			<!-- ============ DOKU ============ -->
+			<div class="docs reveal" style="--delay: 200ms">
+				<h3>Ausführliche Anleitungen</h3>
+				<ul>
+					<li><a href="https://github.com/ttcberkum/webseite/blob/main/docs/termine-pflegen.md" target="_blank" rel="noopener noreferrer">Termine pflegen – Schritt für Schritt</a></li>
+					<li><a href="https://github.com/ttcberkum/webseite/blob/main/docs/news-pflegen.md" target="_blank" rel="noopener noreferrer">News pflegen – Schritt für Schritt</a></li>
+					<li><a href="https://github.com/ttcberkum/webseite/blob/main/docs/projekt-status.md" target="_blank" rel="noopener noreferrer">Projekt-Status & alle Zugänge</a></li>
+				</ul>
+			</div>
+
+		</div>
+	</section>
+</BaseLayout>
+
+<script>
+	const btn = document.getElementById('rebuild-btn');
+	const status = document.getElementById('rebuild-status');
+	btn?.addEventListener('click', async () => {
+		btn.setAttribute('disabled', '');
+		if (status) status.textContent = '⏳ Neubau wird gestartet …';
+		try {
+			const res = await fetch('/api/rebuild', { method: 'POST' });
+			if (res.ok) {
+				if (status) status.textContent = '✅ Neubau gestartet – in 1–2 Minuten sind die Termine live.';
+			} else {
+				if (status) status.textContent = '⚠️ Auslösen fehlgeschlagen (Status ' + res.status + '). Tipp: über „Admin → GitHub Actions" neu bauen.';
+				btn.removeAttribute('disabled');
+			}
+		} catch {
+			if (status) status.textContent = '⚠️ Keine Verbindung zum Server. Bist du online? Sonst über „Admin → GitHub Actions" neu bauen.';
+			btn.removeAttribute('disabled');
+		}
+	});
+</script>
+
+<style>
+	.cockpit {
+		max-width: 760px;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-8);
+	}
+
+	/* ===== Task-Karte (Termine / News) ===== */
+	.task-card {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		padding: var(--space-8) var(--space-7);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-5);
+	}
+
+	.task-card__head {
+		display: flex;
+		align-items: center;
+		gap: var(--space-4);
+	}
+
+	.task-card__icon {
+		width: 52px;
+		height: 52px;
+		flex-shrink: 0;
+		display: grid;
+		place-items: center;
+		border-radius: 14px;
+		background: rgba(200, 16, 46, 0.10);
+		color: var(--color-primary);
+	}
+
+	.task-card__head h2 {
+		font-family: var(--font-display);
+		font-weight: 400;
+		letter-spacing: 0.03em;
+		line-height: 1;
+		margin: 0;
+	}
+
+	.task-card__sub {
+		margin: var(--space-1) 0 0;
+		color: var(--color-text-muted, #666);
+		font-size: 0.95rem;
+	}
+
+	.login-hint {
+		margin: 0;
+		padding: var(--space-3) var(--space-4);
+		background: var(--color-surface-alt);
+		border-left: 3px solid var(--color-primary);
+		border-radius: var(--radius-sm);
+		font-size: 0.95rem;
+		line-height: 1.5;
+	}
+
+	.task-card__cta {
+		align-self: flex-start;
+		font-size: 1.05rem;
+	}
+
+	/* Auf dem Handy Buttons volle Breite = große Tap-Fläche */
+	@media (max-width: 575px) {
+		.task-card__cta,
+		.rebuild .btn { width: 100%; }
+		.task-card { padding: var(--space-7) var(--space-5); }
+	}
+
+	.steps {
+		margin: 0;
+		padding-left: 1.3em;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-3);
+		line-height: 1.55;
+	}
+
+	.steps li::marker {
+		color: var(--color-primary);
+		font-weight: 700;
+	}
+
+	.prefixes {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2);
+		margin-top: var(--space-2);
+	}
+
+	.prefixes code,
+	.steps code {
+		background: rgba(200, 16, 46, 0.10);
+		color: var(--color-primary);
+		padding: 2px 8px;
+		border-radius: var(--radius-sm);
+		font-size: 0.9rem;
+		white-space: nowrap;
+	}
+
+	.note {
+		margin: 0;
+		font-size: 0.9rem;
+		color: var(--color-text-muted, #666);
+	}
+
+	/* ===== „Sofort veröffentlichen" ===== */
+	.rebuild {
+		margin-top: var(--space-1);
+		padding-top: var(--space-5);
+		border-top: 1px dashed var(--color-border);
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-3);
+		align-items: flex-start;
+	}
+
+	.rebuild__status {
+		margin: 0;
+		font-size: 0.9rem;
+		line-height: 1.5;
+		color: var(--color-text-muted, #666);
+	}
+
+	/* ===== Admin (ausklappbar) ===== */
+	.admin {
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		padding: var(--space-4) var(--space-6);
+	}
+
+	.admin summary {
+		cursor: pointer;
+		font-family: var(--font-display);
+		font-weight: 400;
+		font-size: 1.15rem;
+		letter-spacing: 0.03em;
+		padding: var(--space-2) 0;
+	}
+
+	.admin summary span {
+		font-family: var(--font-body);
+		font-size: 0.85rem;
+		color: var(--color-text-muted, #666);
+		letter-spacing: 0;
+	}
+
+	.admin__links {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-3);
+		margin-top: var(--space-4);
+	}
+
+	.admin__links a {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		padding: var(--space-3) var(--space-4);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		text-decoration: none;
+		color: inherit;
+		transition: border-color var(--transition-fast), background var(--transition-fast);
+	}
+
+	.admin__links a:hover {
+		border-color: var(--color-primary);
+		background: var(--color-surface-alt);
+	}
+
+	.admin__links strong { color: var(--color-primary); }
+	.admin__links span { font-size: 0.88rem; color: var(--color-text-muted, #666); }
+
+	/* ===== Doku ===== */
+	.docs h3 {
+		font-family: var(--font-display);
+		font-weight: 400;
+		letter-spacing: 0.03em;
+		margin: 0 0 var(--space-3);
+	}
+
+	.docs ul {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+		margin: 0;
+		padding-left: 1.2em;
+	}
+
+	.docs a {
+		color: var(--color-primary);
+		font-weight: 600;
+	}
+</style>

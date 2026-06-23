@@ -6,5 +6,8 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
 	site: 'https://ttc-berkum.de',
 	output: 'static',
-	integrations: [sitemap()],
+	integrations: [
+		// /intern-* ist die geheime Pflegeseite – aus der Sitemap ausschließen
+		sitemap({ filter: (page) => !page.includes('/intern') }),
+	],
 });
