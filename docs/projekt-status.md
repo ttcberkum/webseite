@@ -1,7 +1,7 @@
 # TTC Berkum Webseite — Projekt-Status & Zugänge
 
 > Versions-, Zugangs- und Wartungs-Doku. Wird mit jedem größeren Schritt aktualisiert.
-> **Stand: 2026-05-11**
+> **Stand: 2026-06-22**
 
 ---
 
@@ -11,7 +11,7 @@
 
 | Dienst | URL | Login |
 | :--- | :--- | :--- |
-| **Live-Seite** | [https://ttc-berkum.pages.dev](https://ttc-berkum.pages.dev) | (öffentlich) |
+| **Live-Seite** | [https://ttc-berkum.de](https://ttc-berkum.de) (auch `ttc-berkum.pages.dev`) | (öffentlich) |
 | **GitHub-Repo** | [https://github.com/ttcberkum/webseite](https://github.com/ttcberkum/webseite) | GitHub `ttcberkum` |
 | **Cloudflare Pages** | [dash.cloudflare.com](https://dash.cloudflare.com) → Workers & Pages → `ttc-berkum` | Cloudflare `ttcberkum@gmail.com` |
 | **Google-Kalender** | [calendar.google.com](https://calendar.google.com) → „TTC Berkum Termine" | Google `ttcberkum@gmail.com` |
@@ -48,7 +48,7 @@ Google-Kalender ──(iCal-Feed)──┐
                                │
                                ▼
                     ┌─────────────────────┐
-GitHub Repo ──(push)│  Cloudflare Pages   │── ttc-berkum.pages.dev
+GitHub Repo ──(push)│  Cloudflare Pages   │── ttc-berkum.de
                     │  • Astro build      │
                     │  • static output    │
                     └─────────────────────┘
@@ -171,11 +171,18 @@ Manuell triggerbar via „Run workflow"-Button auf GitHub.
 - Cron-Workflow + Storchencam-Workflow aktiv
 - Google-Kalender „TTC Berkum Termine" mit öffentlicher iCal-URL angelegt
 
+### Phase 6 — Domain-Umzug `ttc-berkum.de`
+- Domain lag bei Host Europe (inzwischen GoDaddy), Nameserver auf `ns57/ns58.domaincontrol.com`
+- Nameserver im **Host-Europe-KIS** auf Cloudflare umgestellt (`angelina`/`seamus.ns.cloudflare.com`)
+- Domain als Zone ins Cloudflare-Konto geholt; in Pages `ttc-berkum` als **Custom Domain** verbunden: `ttc-berkum.de` **und** `www.ttc-berkum.de` (beide „Active", SSL automatisch)
+- `public/_redirects` angelegt: alte Joomla-URLs (`/index.php/...`) → neue Astro-Seiten (301)
+- `astro.config.mjs` `site` stand bereits auf `https://ttc-berkum.de`
+
 ---
 
 ## 8. Bekannte Issues / Offene Punkte
 
-- **Eigene Domain** `ttc-berkum.de` noch nicht mit Cloudflare Pages verbunden (DNS-Setup erforderlich)
+- **Altes Host-Europe-Webhosting** (alter Joomla-Webspace) kann gekündigt werden — Domain bleibt
 - **Altes `webseite`-Worker-Projekt** in Cloudflare kann gelöscht werden (Cosmetik)
 - **News-Demo-Beiträge** (Fahrradtour 2025) — beim ersten echten neuen Beitrag prüfen, ob die Demo-Inhalte raus sollen
 - **Datenschutzerklärung** ist eine schlanke Eigenfassung — sollte bei Erweiterung der Tools (Analytics, externe Embeds) angepasst werden
@@ -209,6 +216,7 @@ src/
     └── global.css           # Design-System, Brand-Tokens, Komponenten-Styles
 
 public/
+├── _redirects               # 301-Weiterleitungen alter Joomla-URLs (Cloudflare Pages)
 ├── images/                  # Logos, Slider-Bilder, Hero-Bg
 ├── pdfs/kellen/             # Vereinszeitschriften
 └── storchencam/             # Stunden-Snapshots (00.jpg–23.jpg)

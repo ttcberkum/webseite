@@ -30,7 +30,7 @@ News-Beiträge auf der Website (`/news` + Startseite) schreibst du bequem vom Ha
 ## Wann ist der Beitrag online?
 
 - **Automatisch:** Cloudflare Pages startet sofort einen neuen Build → ~1–2 Min später ist der Beitrag live.
-- **Prüfen:** Cloudflare-Dashboard → Pages → `webseite` → Deployments (oder einfach `ttc-berkum.pages.dev/news` neu laden).
+- **Prüfen:** Cloudflare-Dashboard → Pages → `ttc-berkum` → Deployments (oder einfach `ttc-berkum.de/news` neu laden).
 
 ## Entwurf-Modus (Draft)
 

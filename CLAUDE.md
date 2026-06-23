@@ -6,7 +6,7 @@ Vereinswebsite des TTC Berkum (Peine), migriert von Joomla zu **Astro**. Statisc
 
 ## Eckdaten
 
-- **Live:** [ttc-berkum.pages.dev](https://ttc-berkum.pages.dev) (eigene Domain folgt)
+- **Live:** [ttc-berkum.de](https://ttc-berkum.de) (auch erreichbar unter [ttc-berkum.pages.dev](https://ttc-berkum.pages.dev))
 - **Repo:** [github.com/ttcberkum/webseite](https://github.com/ttcberkum/webseite) (Branch: `main`)
 - **Framework:** Astro v5+, statischer Build (`output: 'static'`)
 - **Hosting:** Cloudflare Pages (Account: `ttcberkum@gmail.com`)

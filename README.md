@@ -1,6 +1,6 @@
 # TTC Berkum e. V. — Webseite
 
-Vereinswebsite des [TTC Berkum 1954 e. V.](https://ttc-berkum.pages.dev) — Tischtennis in Peine. Migriert von Joomla zu **Astro**, statisch gebaut, deployed auf **Cloudflare Pages**.
+Vereinswebsite des [TTC Berkum 1954 e. V.](https://ttc-berkum.de) — Tischtennis in Peine. Migriert von Joomla zu **Astro**, statisch gebaut, deployed auf **Cloudflare Pages**.
 
 ## Schnellstart
 
@@ -48,7 +48,7 @@ Manuell auslösbar: GitHub → Actions → „Run workflow".
 
 - **Hosting:** Cloudflare Pages, Account `ttcberkum@gmail.com`
 - **Repo:** [github.com/ttcberkum/webseite](https://github.com/ttcberkum/webseite)
-- **Live:** [ttc-berkum.pages.dev](https://ttc-berkum.pages.dev) (eigene Domain `ttc-berkum.de` folgt)
+- **Live:** [ttc-berkum.de](https://ttc-berkum.de) (auch erreichbar unter `ttc-berkum.pages.dev`)
 - **Env-Variable (in Cloudflare):** `GOOGLE_CALENDAR_ICAL_URL` (Production, Secret)
 - **GitHub-Secret:** `CLOUDFLARE_DEPLOY_HOOK` (für scheduled-rebuild)
 
